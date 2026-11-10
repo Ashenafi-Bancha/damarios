@@ -1,0 +1,18 @@
+# Local PostgreSQL for development.
+# Start:  docker compose up -d
+# It listens on port 5436 so it does not clash with a PostgreSQL already installed on 5432.
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: damarios
+      POSTGRES_PASSWORD: damarios
+      POSTGRES_DB: damarios
+    ports:
+      - "5436:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:

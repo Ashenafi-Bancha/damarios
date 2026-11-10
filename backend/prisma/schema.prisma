@@ -1,0 +1,665 @@
+// Da Marios fashion house: database schema
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ───────────── Users & access ─────────────
+
+enum Role {
+  OWNER
+  MANAGER
+  DESIGNER
+  ACCOUNTANT
+  STOREKEEPER
+  SALES
+}
+
+model User {
+  id           String        @id @default(cuid())
+  name         String
+  email        String        @unique
+  phone        String?
+  passwordHash String
+  role         Role          @default(SALES)
+  active       Boolean       @default(true)
+  lastActiveAt DateTime?
+  createdAt    DateTime      @default(now())
+  activities   ActivityLog[]
+}
+
+model RolePermission {
+  id     String @id @default(cuid())
+  role   Role
+  module String
+
+  @@unique([role, module])
+}
+
+model ActivityLog {
+  id        String   @id @default(cuid())
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  action    String
+  entity    String?
+  entityId  String?
+  createdAt DateTime @default(now())
+}
+
+model Setting {
+  key   String @id
+  value Json
+}
+
+// ───────────── Website content ─────────────
+
+model SiteContent {
+  id       String  @id @default(cuid())
+  section  String
+  lang     String  @default("en")
+  headline String
+  body     String  @default("")
+  visible  Boolean @default(true)
+  data     Json?
+
+  @@unique([section, lang])
+}
+
+enum LookCategory {
+  READY_TO_WEAR
+  CULTURAL
+  BRIDAL
+  MENSWEAR
+}
+
+model Collection {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  season      String?
+  description String   @default("")
+  coverUrl    String?
+  featured    Boolean  @default(false)
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  looks       Look[]
+}
+
+model Look {
+  id           String       @id @default(cuid())
+  collectionId String?
+  collection   Collection?  @relation(fields: [collectionId], references: [id], onDelete: SetNull)
+  name         String
+  category     LookCategory @default(READY_TO_WEAR)
+  imageUrl     String?
+  sortOrder    Int          @default(0)
+  published    Boolean      @default(true)
+}
+
+enum GalleryCategory {
+  GARMENTS
+  SPICES
+  TRAINING
+  EVENTS
+}
+
+// ───────────── Products & news (public website) ─────────────
+
+enum Division {
+  GARMENT
+  SPICE
+}
+
+/// Garments and spices shown on the website's Production section.
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  division    Division @default(GARMENT)
+  description String   @default("")
+  packSizes   String   @default("") // e.g. "250 g · 500 g · 1 kg"
+  markets     String   @default("") // e.g. "Local · Export"
+  imageUrl    String?
+  sortOrder   Int      @default(0)
+  published   Boolean  @default(true)
+}
+
+model NewsPost {
+  id        String   @id @default(cuid())
+  title     String
+  kind      String   @default("News") // News, Graduation, New intake, Production…
+  body      String   @default("")
+  date      DateTime @default(now())
+  imageUrl  String?
+  published Boolean  @default(true)
+}
+
+model GalleryItem {
+  id        String          @id @default(cuid())
+  title     String
+  category  GalleryCategory @default(GARMENTS)
+  imageUrl  String?
+  tall      Boolean         @default(false)
+  published Boolean         @default(true)
+  createdAt DateTime        @default(now())
+}
+
+model Subscriber {
+  id        String   @id @default(cuid())
+  contact   String   @unique
+  createdAt DateTime @default(now())
+}
+
+// ───────────── Customers, requests & orders ─────────────
+
+enum CustomerType {
+  INDIVIDUAL
+  BUSINESS
+  GROUP
+}
+
+model Customer {
+  id           String       @id @default(cuid())
+  name         String
+  type         CustomerType @default(INDIVIDUAL)
+  phone        String?
+  telegram     String?
+  email        String?
+  measurements Json?
+  notes        String       @default("")
+  createdAt    DateTime     @default(now())
+  orders       Order[]
+}
+
+enum OrderType {
+  CUSTOM_DESIGN
+  BESPOKE
+  CULTURAL
+  PRODUCTION
+  MODEL_BOOKING
+  MODEL_CASTING
+  SHOW_SEAT
+  WHOLESALE
+  EXPORT
+}
+
+enum RequestStatus {
+  NEW
+  CONTACTED
+  CONVERTED
+  CLOSED
+}
+
+// A request sent from the public website's order form.
+model Request {
+  id            String        @id @default(cuid())
+  type          OrderType
+  name          String
+  phone         String
+  telegram      String?
+  neededBy      DateTime?
+  budget        String?
+  // Wholesale / export enquiries
+  company       String?
+  country       String?
+  product       String?
+  quantity      String?
+  currency      String?
+  email         String?
+  message       String        @default("")
+  attachmentUrl String?
+  status        RequestStatus @default(NEW)
+  orderId       String?       @unique
+  order         Order?        @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  createdAt     DateTime      @default(now())
+}
+
+enum OrderStage {
+  NEW
+  QUOTED
+  SAMPLE
+  IN_PRODUCTION
+  QUALITY_CHECK
+  READY
+  DELIVERED
+  CANCELLED
+}
+
+model Order {
+  id          String        @id @default(cuid())
+  code        String        @unique
+  customerId  String?
+  customer    Customer?     @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  type        OrderType     @default(CUSTOM_DESIGN)
+  stage       OrderStage    @default(NEW)
+  title       String
+  quantity    Int           @default(1)
+  total       Decimal       @default(0) @db.Decimal(12, 2)
+  dueDate     DateTime?
+  assignedTo  String?
+  designId    String?
+  design      Design?       @relation(fields: [designId], references: [id], onDelete: SetNull)
+  notes       String        @default("")
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  events      OrderEvent[]
+  payments    Transaction[]
+  workOrders  WorkOrder[]
+  request     Request?
+}
+
+model OrderEvent {
+  id        String   @id @default(cuid())
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  text      String
+  createdAt DateTime @default(now())
+}
+
+// ───────────── Finance ─────────────
+
+enum TxKind {
+  INCOME
+  EXPENSE
+}
+
+enum PayMethod {
+  TELEBIRR
+  CBE_BIRR
+  BANK
+  CASH
+}
+
+model Transaction {
+  id          String    @id @default(cuid())
+  kind        TxKind
+  category    String
+  amount      Decimal   @db.Decimal(12, 2)
+  method      PayMethod @default(CASH)
+  description String    @default("")
+  date        DateTime  @default(now())
+  orderId     String?
+  order       Order?    @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  createdAt   DateTime  @default(now())
+}
+
+// ───────────── Production ─────────────
+
+model ProductionLine {
+  id         String      @id @default(cuid())
+  name       String      @unique
+  division   Division    @default(GARMENT)
+  workers    Int         @default(0)
+  workOrders WorkOrder[]
+}
+
+enum WorkStatus {
+  PLANNED
+  ON_TRACK
+  BEHIND
+  DONE
+}
+
+model WorkOrder {
+  id      String         @id @default(cuid())
+  orderId String?
+  order   Order?         @relation(fields: [orderId], references: [id], onDelete: SetNull)
+  lineId  String
+  line    ProductionLine @relation(fields: [lineId], references: [id], onDelete: Cascade)
+  title   String
+  unit    String         @default("pcs") // pcs for garments, kg or packs for spices
+  target  Int
+  done    Int            @default(0)
+  dueDate DateTime?
+  status  WorkStatus     @default(PLANNED)
+  outputs OutputLog[]
+}
+
+model OutputLog {
+  id          String    @id @default(cuid())
+  workOrderId String
+  workOrder   WorkOrder @relation(fields: [workOrderId], references: [id], onDelete: Cascade)
+  employeeId  String
+  employee    Employee  @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  pieces      Int
+  defects     Int       @default(0)
+  createdAt   DateTime  @default(now())
+}
+
+// ───────────── Inventory ─────────────
+
+enum StockCategory {
+  FABRIC
+  THREAD
+  TRIMS
+  PACKAGING
+  RAW_SPICE
+  PACKED_SPICE
+  TRAINING_SUPPLIES
+}
+
+model Supplier {
+  id       String          @id @default(cuid())
+  name     String
+  location String?
+  phone    String?
+  supplies String          @default("")
+  items    InventoryItem[]
+}
+
+model InventoryItem {
+  id         String          @id @default(cuid())
+  name       String
+  category   StockCategory   @default(FABRIC)
+  unit       String          @default("pcs")
+  quantity   Decimal         @default(0) @db.Decimal(12, 2)
+  minLevel   Decimal         @default(0) @db.Decimal(12, 2)
+  unitCost   Decimal         @default(0) @db.Decimal(12, 2)
+  supplierId String?
+  supplier   Supplier?       @relation(fields: [supplierId], references: [id], onDelete: SetNull)
+  movements  StockMovement[]
+}
+
+enum Direction {
+  IN
+  OUT
+}
+
+model StockMovement {
+  id        String        @id @default(cuid())
+  itemId    String
+  item      InventoryItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  direction Direction
+  quantity  Decimal       @db.Decimal(12, 2)
+  reference String?
+  createdAt DateTime      @default(now())
+}
+
+// ───────────── Designs, models & events ─────────────
+
+enum DesignCategory {
+  CULTURAL
+  FASHION
+  BRIDAL
+  MENSWEAR
+  PRODUCTION
+}
+
+model Design {
+  id       String         @id @default(cuid())
+  code     String         @unique
+  name     String
+  category DesignCategory @default(FASHION)
+  fabric   String?
+  notes    String         @default("")
+  imageUrl String?
+  orders   Order[]
+}
+
+model FashionModel {
+  id          String   @id @default(cuid())
+  name        String
+  info        String   @default("")
+  heightCm    Int?
+  specialties String   @default("")
+  available   Boolean  @default(true)
+  imageUrl    String?
+  published   Boolean  @default(true)
+  createdAt   DateTime @default(now())
+}
+
+enum PayStatus {
+  UNPAID
+  DEPOSIT
+  PAID
+}
+
+model ModelBooking {
+  id          String    @id @default(cuid())
+  client      String
+  kind        String
+  date        DateTime
+  modelsCount Int       @default(1)
+  fee         Decimal   @default(0) @db.Decimal(12, 2)
+  payStatus   PayStatus @default(UNPAID)
+  notes       String    @default("")
+}
+
+model FashionEvent {
+  id          String   @id @default(cuid())
+  name        String
+  date        DateTime
+  venue       String
+  description String   @default("")
+  budget      Decimal  @default(0) @db.Decimal(12, 2)
+  spent       Decimal  @default(0) @db.Decimal(12, 2)
+  tasks       Json?
+  published   Boolean  @default(true)
+}
+
+// ───────────── People ─────────────
+
+enum PayType {
+  MONTHLY
+  PIECE_RATE
+  PER_BOOKING
+}
+
+model Employee {
+  id          String         @id @default(cuid())
+  code        String         @unique
+  name        String
+  role        String
+  department  String
+  payType     PayType        @default(MONTHLY)
+  rate        Decimal        @default(0) @db.Decimal(12, 2)
+  phone       String?
+  joinedAt    DateTime       @default(now())
+  active      Boolean        @default(true)
+  attendance  Attendance[]
+  leaves      LeaveRequest[]
+  outputs     OutputLog[]
+  payrollRows PayrollItem[]
+}
+
+enum AttendanceStatus {
+  PRESENT
+  LATE
+  ABSENT
+  LEAVE
+}
+
+model Attendance {
+  id         String           @id @default(cuid())
+  employeeId String
+  employee   Employee         @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  date       DateTime         @db.Date
+  checkIn    DateTime?
+  checkOut   DateTime?
+  status     AttendanceStatus @default(PRESENT)
+
+  @@unique([employeeId, date])
+}
+
+enum LeaveStatus {
+  PENDING
+  APPROVED
+  DECLINED
+}
+
+model LeaveRequest {
+  id         String      @id @default(cuid())
+  employeeId String
+  employee   Employee    @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  kind       String
+  fromDate   DateTime    @db.Date
+  toDate     DateTime    @db.Date
+  status     LeaveStatus @default(PENDING)
+  createdAt  DateTime    @default(now())
+}
+
+enum PayrollStatus {
+  DRAFT
+  APPROVED
+  PAID
+}
+
+model PayrollRun {
+  id        String        @id @default(cuid())
+  period    String        @unique // Ethiopian month, e.g. "2019-02" for Tikimt 2019
+  status    PayrollStatus @default(DRAFT)
+  createdAt DateTime      @default(now())
+  items     PayrollItem[]
+}
+
+model PayrollItem {
+  id               String     @id @default(cuid())
+  runId            String
+  run              PayrollRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+  employeeId       String
+  employee         Employee   @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+  basic            Decimal    @db.Decimal(12, 2)
+  overtime         Decimal    @default(0) @db.Decimal(12, 2)
+  gross            Decimal    @db.Decimal(12, 2)
+  tax              Decimal    @db.Decimal(12, 2)
+  pensionEmployee  Decimal    @db.Decimal(12, 2)
+  pensionEmployer  Decimal    @db.Decimal(12, 2)
+  net              Decimal    @db.Decimal(12, 2)
+}
+
+// ───────────── Recruitment ─────────────
+
+model Job {
+  id          String      @id @default(cuid())
+  title       String
+  kind        String      @default("Full time")
+  description String      @default("")
+  published   Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  applicants  Applicant[]
+}
+
+enum ApplicantStage {
+  NEW
+  INTERVIEW
+  OFFER
+  HIRED
+  REJECTED
+}
+
+model Applicant {
+  id            String         @id @default(cuid())
+  jobId         String?
+  job           Job?           @relation(fields: [jobId], references: [id], onDelete: SetNull)
+  name          String
+  phone         String
+  note          String         @default("")
+  attachmentUrl String?
+  stage         ApplicantStage @default(NEW)
+  createdAt     DateTime       @default(now())
+}
+
+// ───────────── Skill training center ─────────────
+
+enum TrainingDept {
+  FASHION
+  CULINARY
+  BEAUTY
+}
+
+model Course {
+  id          String          @id @default(cuid())
+  name        String
+  department  TrainingDept
+  duration    String          @default("") // e.g. "3 months"
+  fee         Decimal         @default(0) @db.Decimal(12, 2)
+  description String          @default("")
+  published   Boolean         @default(true)
+  sortOrder   Int             @default(0)
+  classes     TrainingClass[]
+  applications TrainingApplication[]
+}
+
+model TrainingClass {
+  id          String       @id @default(cuid())
+  courseId    String
+  course      Course       @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  name        String       // e.g. "Morning group"
+  instructor  String       @default("")
+  schedule    String       @default("") // e.g. "Mon–Fri 8:30–11:30"
+  capacity    Int          @default(20)
+  startDate   DateTime?
+  endDate     DateTime?
+  enrollments Enrollment[]
+}
+
+model Student {
+  id          String       @id @default(cuid())
+  code        String       @unique
+  name        String
+  phone       String
+  gender      String?
+  age         Int?
+  education   String?
+  notes       String       @default("")
+  createdAt   DateTime     @default(now())
+  enrollments Enrollment[]
+}
+
+enum EnrollmentStatus {
+  ENROLLED
+  COMPLETED
+  DROPPED
+}
+
+model Enrollment {
+  id              String           @id @default(cuid())
+  studentId       String
+  student         Student          @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  classId         String
+  class           TrainingClass    @relation(fields: [classId], references: [id], onDelete: Cascade)
+  status          EnrollmentStatus @default(ENROLLED)
+  fee             Decimal          @default(0) @db.Decimal(12, 2)
+  attendancePct   Int?
+  result          String?          // exam result / grade
+  certificateNo   String?          @unique
+  certificateDate DateTime?
+  createdAt       DateTime         @default(now())
+  payments        FeePayment[]
+
+  @@unique([studentId, classId])
+}
+
+model FeePayment {
+  id           String     @id @default(cuid())
+  enrollmentId String
+  enrollment   Enrollment @relation(fields: [enrollmentId], references: [id], onDelete: Cascade)
+  amount       Decimal    @db.Decimal(12, 2)
+  method       PayMethod  @default(CASH)
+  date         DateTime   @default(now())
+}
+
+enum ApplicationStatus {
+  NEW
+  ACCEPTED
+  REJECTED
+}
+
+/// A training application sent from the website.
+model TrainingApplication {
+  id            String            @id @default(cuid())
+  department    TrainingDept
+  courseId      String?
+  course        Course?           @relation(fields: [courseId], references: [id], onDelete: SetNull)
+  name          String
+  phone         String
+  preferredTime String?
+  education     String?
+  age           Int?
+  message       String            @default("")
+  status        ApplicationStatus @default(NEW)
+  createdAt     DateTime          @default(now())
+}

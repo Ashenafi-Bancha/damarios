@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+  body { @apply bg-ivory text-ink font-sans antialiased; }
+  :focus-visible { outline: 2px solid #0051A1; outline-offset: 3px; }
+  ::selection { background: #8CC4FF; color: #0B1F3F; }
+}
+
+@layer components {
+  .wrap { @apply mx-auto w-full max-w-[1240px] px-5 sm:px-8; }
+  .section { @apply py-20 md:py-28 lg:py-32; }
+  .eyebrow { @apply mb-4 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-widest2 md:text-xs; }
+  .eyebrow::before { content: ""; @apply h-px w-7 bg-current; }
+  .h2 { @apply font-serif text-[40px] font-medium leading-[1.02] tracking-tight md:text-5xl lg:text-[58px]; }
+  .h2 em { @apply italic text-teal; }
+  .dark .h2 em { @apply text-gold; }
+  .lead { @apply max-w-[600px] text-base leading-relaxed md:text-lg md:leading-[1.7]; }
+
+  .btn { @apply inline-flex min-h-[52px] items-center justify-center gap-2.5 rounded-full border-[1.5px] border-transparent px-7 text-[15px] font-semibold tracking-wide transition-colors duration-200 disabled:opacity-60; }
+  .btn-gold { @apply bg-gold text-ink hover:bg-gold-light; }
+  .btn-ink { @apply bg-ink text-white hover:bg-teal; }
+  .btn-line { @apply border-ink text-ink hover:bg-ink hover:text-white; }
+  .btn-ghost { @apply border-white/55 text-white hover:bg-white hover:text-ink; }
+
+  .chip { @apply min-h-[42px] rounded-full border px-[18px] text-sm font-medium transition-colors; }
+
+  .field { @apply flex flex-col gap-2 text-[13px] font-medium tracking-wide text-ink; }
+  .input { @apply min-h-[50px] w-full rounded-xl border border-[#C9D5E8] bg-white px-4 py-3 text-[15px] font-normal text-ink placeholder:text-muted/70 focus:border-teal focus:outline-none; }
+
+  /* Placeholder photo frames until real photos are uploaded */
+  .ph { background: repeating-linear-gradient(135deg, #E8EEF7 0 16px, #DEE6F2 16px 32px); }
+  .phd { background: repeating-linear-gradient(135deg, #15305C 0 16px, #122A52 16px 32px); }
+  .tag { @apply rounded bg-white/90 px-2.5 py-1.5 text-xs font-medium text-[#2A313B]; }
+
+  /* Admin */
+  .card { @apply min-w-0 rounded-[14px] border border-[#DCE4F0] bg-white p-5; }
+  .a-btn { @apply inline-flex min-h-[42px] items-center justify-center gap-2 rounded-[10px] px-4 text-sm font-semibold transition-colors disabled:opacity-50; }
+  .a-btn-gold { @apply bg-gold-admin text-ink hover:bg-[#B5D9FF]; }
+  .a-btn-ink { @apply bg-ink-soft text-white hover:bg-teal; }
+  .a-btn-line { @apply border border-ink-soft bg-white text-ink-soft hover:bg-paper; }
+  .a-input { @apply min-h-[42px] w-full rounded-[10px] border border-[#C9D5E8] bg-white px-3 text-sm text-ink-soft focus:border-teal focus:outline-none; }
+  .a-label { @apply flex flex-col gap-1.5 text-[13px] font-medium text-ink-soft; }
+  .th { @apply whitespace-nowrap border-b border-[#DCE4F0] px-3 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-muted; }
+  .td { @apply whitespace-nowrap border-b border-[#ECF1F8] px-3 py-3 text-sm; }
+  .pill { @apply inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee, .animate-rise, .animate-fadeup { animation: none; }
+  html { scroll-behavior: auto; }
+}
+
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+/* When a certificate is open, print only the certificate. */
+@media print {
+  body:has(#certificate) * { visibility: hidden; }
+  body:has(#certificate) #certificate, body:has(#certificate) #certificate * { visibility: visible; }
+  body:has(#certificate) #certificate { position: fixed; inset: 0; margin: 0; }
+}
