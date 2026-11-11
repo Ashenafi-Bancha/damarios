@@ -35,15 +35,15 @@ export const FALLBACK_SITE: SiteData = {
     ['c7', 'Makeup artistry', 'BEAUTY', '[3 months]'], ['c8', 'Hairdressing & braiding', 'BEAUTY', '[4 months]'], ['c9', 'Salon business basics', 'BEAUTY', '[1 month]'],
   ] as [string, string, TrainingDept, string][]).map(([id, name, department, duration]) => ({ id, name, department, duration, fee: 0, description: '' })),
   news: [
-    { id: 'n1', title: 'Registration open for all three departments', kind: 'New intake', body: '', date: '2026-11-01' },
-    { id: 'n2', title: 'First graduation ceremony', kind: 'Graduation', body: '', date: '2026-10-20' },
-    { id: 'n3', title: '[First export shipment / market fair]', kind: 'Production', body: '', date: '2026-09-25' },
+    { id: 'n1', title: 'Registration open for all three departments', kind: 'New intake', body: '', date: '2026-11-01', imageUrl: '/images/news-intake.jpg' },
+    { id: 'n2', title: 'First graduation ceremony', kind: 'Graduation', body: '', date: '2026-10-20', imageUrl: '/images/news-graduation.jpg' },
+    { id: 'n3', title: '[First export shipment / market fair]', kind: 'Production', body: '', date: '2026-09-25', imageUrl: '/images/news-market.jpg' },
   ],
   gallery: [
-    { id: 'g1', title: 'Garment production line', category: 'GARMENTS', tall: true }, { id: 'g2', title: 'Spice cleaning & grinding', category: 'SPICES', tall: false },
-    { id: 'g3', title: 'Fashion students at work', category: 'TRAINING', tall: false }, { id: 'g4', title: 'Culinary class', category: 'TRAINING', tall: true },
-    { id: 'g5', title: 'Packed spices ready for market', category: 'SPICES', tall: false }, { id: 'g6', title: 'Bridal makeup practice', category: 'TRAINING', tall: false },
-    { id: 'g7', title: 'Finished garments', category: 'GARMENTS', tall: false }, { id: 'g8', title: 'Graduation day', category: 'EVENTS', tall: true },
+    { id: 'g1', title: 'Garment production line', category: 'GARMENTS', tall: true, imageUrl: '/images/gallery-tailor.jpg' }, { id: 'g2', title: 'Spice cleaning & grinding', category: 'SPICES', tall: false, imageUrl: '/images/gallery-chili.jpg' },
+    { id: 'g3', title: 'Fashion students at work', category: 'TRAINING', tall: false, imageUrl: '/images/gallery-studio.jpg' }, { id: 'g4', title: 'Culinary class', category: 'TRAINING', tall: false, imageUrl: '/images/gallery-chef.jpg' },
+    { id: 'g5', title: 'Packed spices ready for market', category: 'SPICES', tall: true, imageUrl: '/images/gallery-spice-shop.jpg' }, { id: 'g6', title: 'Bridal makeup practice', category: 'TRAINING', tall: true, imageUrl: '/images/gallery-makeup.jpg' },
+    { id: 'g7', title: 'Finished garments', category: 'GARMENTS', tall: false, imageUrl: '/images/gallery-fabric.jpg' }, { id: 'g8', title: 'Graduation day', category: 'EVENTS', tall: false, imageUrl: '/images/gallery-graduation.jpg' },
   ],
   contact: {
     phone: '+251 [sales phone]', trainingPhone: '+251 [training phone]', email: 'info@[domain]', telegram: '@[damarios]',

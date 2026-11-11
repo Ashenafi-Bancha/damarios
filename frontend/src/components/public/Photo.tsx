@@ -1,12 +1,22 @@
+import Image from 'next/image';
 import clsx from 'clsx';
 
-/** A real photo when one is uploaded, otherwise a labelled placeholder frame. */
-export default function Photo({ src, label, dark, className, style }: { src?: string | null; label: string; dark?: boolean; className?: string; style?: React.CSSProperties }) {
+/**
+ * A photo, or a labelled placeholder frame when there is none yet.
+ * Site photos in /images are optimized by Next (resized, WebP); photos uploaded from the admin are shown as they are.
+ */
+export default function Photo({ src, label, dark, className, style, sizes = '(min-width: 1024px) 50vw, 100vw', priority }: {
+  src?: string | null; label: string; dark?: boolean; className?: string; style?: React.CSSProperties; sizes?: string; priority?: boolean;
+}) {
   if (src) {
     return (
-      <div className={clsx('relative overflow-hidden', className)} style={style}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={label} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.04]" />
+      <div className={clsx('relative overflow-hidden bg-ivory-warm', className)} style={style}>
+        {src.startsWith('/images/') ? (
+          <Image src={src} alt={label} fill sizes={sizes} priority={priority} className="object-cover transition-transform duration-700 hover:scale-[1.04]" />
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={src} alt={label} loading="lazy" className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.04]" />
+        )}
       </div>
     );
   }

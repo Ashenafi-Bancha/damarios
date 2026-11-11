@@ -26,7 +26,7 @@ function DivisionCard({ division, products }: { division: Division; products: Pr
   const sizes = Array.from(new Set(products.flatMap((p) => p.packSizes.split('·').map((s) => s.trim())).filter(Boolean)));
   return (
     <article className="flex flex-col overflow-hidden rounded-[10px] bg-white">
-      <Photo label={spice ? 'Photo: spices and packaging' : 'Photo: garment production line'} className={clsx('h-[260px] md:h-[320px]', spice && '[background:repeating-linear-gradient(135deg,#EBD9C2_0_16px,#E3CDB1_16px_32px)]')} />
+      <Photo src={spice ? '/images/spices.jpg' : '/images/garments.jpg'} label={spice ? 'Bowls of colourful ground spices' : 'Tailor smiling at his sewing machine'} sizes="(min-width: 1024px) 50vw, 100vw" className="h-[260px] md:h-[320px]" />
       <div className="flex flex-1 flex-col gap-3.5 p-7 md:p-[34px]">
         <span className={clsx('text-xs font-semibold tracking-[.2em]', spice ? 'text-[#8A3B0A]' : 'text-teal')}>{spice ? 'SPICE PRODUCTION' : 'GARMENT PRODUCTION'}</span>
         <h3 className="font-serif text-[32px] font-medium leading-tight md:text-[38px]">{block.headline}</h3>

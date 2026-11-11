@@ -13,9 +13,9 @@ import { etb } from '@/lib/format';
 import type { TrainingDept } from '@/lib/types';
 
 export const DEPTS: { id: TrainingDept; key: string; short: string; photo: string }[] = [
-  { id: 'FASHION', key: 'dept-fashion', short: 'Pattern making, sewing, design', photo: 'fashion design class at the sewing tables' },
-  { id: 'CULINARY', key: 'dept-culinary', short: 'Ethiopian & international cooking', photo: 'culinary students in the training kitchen' },
-  { id: 'BEAUTY', key: 'dept-beauty', short: 'Makeup & hairdressing', photo: 'makeup and hairdressing practice' },
+  { id: 'FASHION', key: 'dept-fashion', short: 'Pattern making, sewing, design', photo: 'Student drafting a garment pattern with a ruler' },
+  { id: 'CULINARY', key: 'dept-culinary', short: 'Ethiopian & international cooking', photo: 'Cook smiling at the stove in a kitchen' },
+  { id: 'BEAUTY', key: 'dept-beauty', short: 'Makeup & hairdressing', photo: 'Woman smiling while her hair is braided' },
 ];
 
 const fee = (f: string | number) => (Number(f) > 0 ? etb(f) : 'ETB [·]');
@@ -49,7 +49,7 @@ export function Training() {
         <AnimatePresence mode="wait">
           <motion.div key={dept} role="tabpanel" initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.35 }}
             className="flex flex-wrap overflow-hidden rounded-[10px] bg-white">
-            <Photo label={`Photo: ${current.photo}`} className="min-h-[300px] flex-[1_1_440px] md:min-h-[460px]" />
+            <Photo src={`/images/${current.key}.jpg`} label={current.photo} sizes="(min-width: 1024px) 45vw, 100vw" className="min-h-[300px] flex-[1_1_440px] md:min-h-[460px]" />
             <div className="flex flex-[1.2_1_480px] flex-col gap-4 p-7 md:p-10">
               <h3 className="font-serif text-[36px] font-medium md:text-[40px]">{blocks[dept].headline}</h3>
               <p className="leading-relaxed text-muted">{blocks[dept].body}</p>

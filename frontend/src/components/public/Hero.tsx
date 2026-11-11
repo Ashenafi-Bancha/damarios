@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import Image from 'next/image';
 import { useReducedMotion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { useBlock, useSite } from './SiteContext';
@@ -66,17 +67,16 @@ export default function Hero() {
 
         <div className="grid gap-5 md:grid-cols-2">
           <a href="#production" className={'group relative flex min-h-[300px] flex-col justify-end overflow-hidden rounded-[10px] p-7 text-white transition-transform duration-300 hover:-translate-y-1 md:min-h-[340px] md:p-8 ' + fade(0.75).className} style={fade(0.75).style}>
-            <span className="phd absolute inset-0 transition-transform duration-700 group-hover:scale-105" />
-            <span className="absolute inset-0 bg-gradient-to-t from-ink via-ink/40 to-transparent" />
-            <span className="tag absolute left-4 top-4">Photo: production floor / spice packing</span>
+            <Image src="/images/hero-production.jpg" alt="" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
+            <span className="absolute inset-0 bg-gradient-to-t from-ink via-ink/60 to-ink/10" />
             <span className="relative text-xs font-semibold tracking-widest2 text-gold">01 · {t.production.toUpperCase()}</span>
             <span className="relative mb-3 mt-2.5 font-serif text-[40px] leading-none md:text-[46px]">Garments &amp; spices</span>
             <span className="relative max-w-[440px] leading-relaxed text-muted-mist">Made in Wolaita Sodo for local and international markets.</span>
             <span className="relative mt-5 inline-flex items-center gap-2.5 font-semibold">{t.ourProduction} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
           </a>
           <a href="#training" className={'group relative flex min-h-[300px] flex-col justify-end overflow-hidden rounded-[10px] p-7 text-white transition-transform duration-300 hover:-translate-y-1 md:min-h-[340px] md:p-8 ' + fade(0.85).className} style={fade(0.85).style}>
-            <span className="absolute inset-0 bg-gradient-to-br from-teal to-[#003F87] transition-transform duration-700 group-hover:scale-105" />
-            <span className="tag absolute left-4 top-4">Photo: students in class</span>
+            <Image src="/images/hero-training.jpg" alt="" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
+            <span className="absolute inset-0 bg-gradient-to-t from-[#003F87] via-teal/70 to-teal/20" />
             <span className="relative text-xs font-semibold tracking-widest2 text-gold">02 · {t.training.toUpperCase()}</span>
             <span className="relative mb-3 mt-2.5 font-serif text-[40px] leading-none md:text-[46px]">Learn a skill for life</span>
             <span className="relative max-w-[440px] leading-relaxed text-[#D6E4F5]">Fashion design · Culinary arts · Beautification (makeup &amp; hairdressing)</span>

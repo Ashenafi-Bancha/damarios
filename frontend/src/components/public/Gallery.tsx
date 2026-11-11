@@ -50,7 +50,7 @@ export function Gallery() {
               <motion.button key={g.id} type="button" layout onClick={() => setOpen(g)} aria-label={`Open ${g.title}`}
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.4 }}
                 className={clsx('group overflow-hidden rounded-md text-left', g.tall && 'row-span-2')}>
-                <Photo src={g.imageUrl} label={g.title} className="h-full w-full transition-transform duration-700 group-hover:scale-[1.04]" />
+                <Photo src={g.imageUrl} label={g.title} sizes="(min-width: 1024px) 25vw, 50vw" className="h-full w-full transition-transform duration-700 group-hover:scale-[1.04]" />
               </motion.button>
             ))}
           </AnimatePresence>
@@ -63,7 +63,7 @@ export function Gallery() {
           <motion.div className="fixed inset-0 z-50 flex items-center justify-center bg-ink/90 p-4 backdrop-blur" role="dialog" aria-modal="true" aria-label={open.title}
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setOpen(null)}>
             <motion.div initial={{ scale: 0.92, y: 20 }} animate={{ scale: 1, y: 0 }} exit={{ scale: 0.92 }} className="relative w-full max-w-3xl" onClick={(e) => e.stopPropagation()}>
-              <Photo src={open.imageUrl} label={open.title} className="h-[70vh] rounded-lg" />
+              <Photo src={open.imageUrl} label={open.title} sizes="(min-width: 768px) 768px, 100vw" className="h-[70vh] rounded-lg" />
               <p className="mt-3 font-serif text-2xl text-white">{open.title}</p>
               <button type="button" onClick={() => setOpen(null)} aria-label="Close" className="absolute -top-3 right-0 flex h-11 w-11 -translate-y-full items-center justify-center rounded-full bg-white text-ink">
                 <X className="h-5 w-5" />
@@ -93,7 +93,7 @@ export function News() {
           {site.news.slice(0, 3).map((n, i) => (
             <Reveal key={n.id} delay={i * 0.07} className="w-[260px] flex-none snap-start md:w-auto">
               <article className="flex flex-col gap-3">
-                <Photo dark src={n.imageUrl} label={n.title} className="h-[200px] rounded-md md:h-[220px]" />
+                <Photo dark src={n.imageUrl} label={n.title} sizes="(min-width: 768px) 33vw, 260px" className="h-[200px] rounded-md md:h-[220px]" />
                 <span className="text-[11px] font-semibold tracking-[.2em] text-gold">{n.kind.toUpperCase()}</span>
                 <h3 className="font-serif text-[26px] font-medium leading-tight md:text-[28px]">{n.title}</h3>
                 <span className="text-sm text-[#A9BBD6]">{gcDate(n.date, { day: 'numeric', month: 'long', year: 'numeric' })}</span>

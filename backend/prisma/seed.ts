@@ -115,15 +115,15 @@ async function sample() {
   ] });
 
   await prisma.newsPost.createMany({ data: [
-    { title: 'Registration open for all three departments', kind: 'New intake', body: '[Details of the next intake.]' },
-    { title: 'First graduation ceremony', kind: 'Graduation', body: '[Photos and names of the graduates.]', date: new Date(Date.now() - 20 * day) },
-    { title: '[First export shipment / market fair]', kind: 'Production', body: '[Details.]', date: new Date(Date.now() - 45 * day) },
+    { title: 'Registration open for all three departments', kind: 'New intake', body: '[Details of the next intake.]', imageUrl: '/images/news-intake.jpg' },
+    { title: 'First graduation ceremony', kind: 'Graduation', body: '[Photos and names of the graduates.]', date: new Date(Date.now() - 20 * day), imageUrl: '/images/news-graduation.jpg' },
+    { title: '[First export shipment / market fair]', kind: 'Production', body: '[Details.]', date: new Date(Date.now() - 45 * day), imageUrl: '/images/news-market.jpg' },
   ] });
   await prisma.galleryItem.createMany({ data: [
-    { title: 'Garment production line', category: 'GARMENTS', tall: true }, { title: 'Spice cleaning & grinding', category: 'SPICES' },
-    { title: 'Fashion students at work', category: 'TRAINING' }, { title: 'Culinary class', category: 'TRAINING', tall: true },
-    { title: 'Packed spices ready for market', category: 'SPICES' }, { title: 'Bridal makeup practice', category: 'TRAINING' },
-    { title: 'Finished garments', category: 'GARMENTS' }, { title: 'Graduation day', category: 'EVENTS', tall: true },
+    { title: 'Garment production line', category: 'GARMENTS', tall: true, imageUrl: '/images/gallery-tailor.jpg' }, { title: 'Spice cleaning & grinding', category: 'SPICES', imageUrl: '/images/gallery-chili.jpg' },
+    { title: 'Fashion students at work', category: 'TRAINING', imageUrl: '/images/gallery-studio.jpg' }, { title: 'Culinary class', category: 'TRAINING', imageUrl: '/images/gallery-chef.jpg' },
+    { title: 'Packed spices ready for market', category: 'SPICES', tall: true, imageUrl: '/images/gallery-spice-shop.jpg' }, { title: 'Bridal makeup practice', category: 'TRAINING', tall: true, imageUrl: '/images/gallery-makeup.jpg' },
+    { title: 'Finished garments', category: 'GARMENTS', imageUrl: '/images/gallery-fabric.jpg' }, { title: 'Graduation day', category: 'EVENTS', imageUrl: '/images/gallery-graduation.jpg' },
   ] });
 
   await prisma.job.create({ data: { title: 'Sewing machine operator', description: 'Industrial machine experience preferred.' } });

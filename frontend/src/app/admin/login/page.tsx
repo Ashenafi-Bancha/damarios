@@ -43,7 +43,8 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen bg-ink">
       <div className="relative hidden flex-1 overflow-hidden lg:block">
-        <div className="phd absolute inset-0" />
+        <Image src="/images/login.jpg" alt="" fill sizes="50vw" className="object-cover" priority />
+        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/40" />
         <Image src="/brand/logo-full-white.png" alt="" width={900} height={859} className="absolute left-14 top-14 h-40 w-auto opacity-90" />
         <div className="absolute inset-0 flex flex-col justify-end p-14 text-white">
           <p className="font-serif text-6xl leading-none">Quality we <em className="text-gold">make</em>.<br />Skills we <em className="text-gold">share</em>.</p>
