@@ -37,7 +37,7 @@ export function About() {
     <section id="about" className="section">
       <div className="wrap flex flex-wrap items-center gap-16 lg:gap-[72px]">
         <Reveal className="relative min-w-0 flex-[1_1_420px]">
-          <Photo src="/images/about.jpg" label="Ethiopian woman in a traditional white and blue dress" sizes="(min-width: 1024px) 45vw, 100vw" className="h-[440px] rounded-lg md:h-[560px]" />
+          <Photo src="/images/founder-senait-wolaita.jpg" label="Dr. Senait Mario, founder of DaMarios, in a Wolaita dinguza blazer" sizes="(min-width: 1024px) 45vw, 100vw" position="50% 20%" className="h-[440px] rounded-lg md:h-[560px]" />
           <motion.div className="absolute -bottom-8 right-3 w-[230px] rounded-lg bg-ink p-6 text-white md:-right-6"
             initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.8 }}>
             <p className="font-serif text-[22px] italic leading-snug">“[A short line from the founder about her vision.]”</p>

@@ -5,7 +5,7 @@ Replace them with real DaMarios photos from the admin panel when available.
 
 - hero-production.jpg: https://unsplash.com/photos/people-working-at-factory-assembly-line-KP6XQIEjjPA
 - hero-training.jpg: https://unsplash.com/photos/a-teacher-instructs-students-in-a-classroom-CXa6E3krENE
-- about.jpg: https://unsplash.com/photos/woman-in-white-and-blue-dress-standing-on-green-grass-field-during-daytime-mGGCBXdKDY0
+- founder-senait-wolaita.jpg, collection/*: owner's own photos (DaMarios)
 - garments.jpg: https://unsplash.com/photos/a-man-smiles-as-he-uses-a-sewing-machine-cU3xxfbB9Es
 - spices.jpg: https://unsplash.com/photos/a-variety-of-different-colored-spices-in-bowls-ob3t8XVTWF4
 - dept-fashion.jpg: https://unsplash.com/photos/a-student-carefully-draws-lines-with-a-ruler-zzcHmwBaG0w

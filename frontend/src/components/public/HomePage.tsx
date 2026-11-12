@@ -8,6 +8,7 @@ import Header from './Header';
 import Hero from './Hero';
 import { About, Marquee } from './Sections';
 import { Enquiry, Production } from './Production';
+import { Collection } from './Collection';
 import { Admissions, Training } from './Training';
 import { Gallery, News } from './Gallery';
 import { Contact, Footer, telUrl, tgUrl } from './Contact';
@@ -63,6 +64,7 @@ function Page({ initial }: { initial: SiteData }) {
           <Marquee />
           <About />
           <Production />
+          <Collection />
           <Enquiry />
           <Training />
           <Admissions />
