@@ -57,6 +57,16 @@ export default function Hero() {
             </h1>
           </div>
           <div className={'flex min-w-0 flex-[1_1_380px] flex-col gap-6 ' + fade(0.55).className} style={fade(0.55).style}>
+            <a href="#vision" className="group flex max-w-[460px] items-center gap-4 rounded-[10px] border border-white/15 bg-white/[.06] p-2.5 pr-5 backdrop-blur-sm transition-colors hover:border-gold/60">
+              <span className="relative block h-[96px] w-[82px] flex-none overflow-hidden rounded-md">
+                <Image src="/images/shimena-loom.jpg" alt="Handwoven fabric on a loom" fill sizes="82px" priority className="object-cover transition-transform duration-700 group-hover:scale-110" />
+              </span>
+              <span className="flex min-w-0 flex-col gap-1">
+                <span className="w-fit rounded-full bg-gold px-2.5 py-0.5 text-[11px] font-bold tracking-wider text-ink">COMING SOON</span>
+                <span className="font-serif text-xl leading-tight text-white">Ethiopian weaving, made modern</span>
+                <span className="inline-flex items-center gap-1.5 text-sm text-muted-mist">Our vision for ሽመና <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" /></span>
+              </span>
+            </a>
             <p className="lead text-muted-mist">{hero.body}</p>
             <div className="flex flex-wrap gap-3">
               <a href="#production" className="btn btn-gold">{t.ourProduction}</a>

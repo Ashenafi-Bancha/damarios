@@ -5,7 +5,7 @@ import { useBlock } from './SiteContext';
 import Reveal from './Reveal';
 import Photo from './Photo';
 
-const CRAFTS = ['Garment production', 'Spice production', 'Fashion design training', 'Culinary arts', 'Makeup & hairdressing'];
+const CRAFTS = ['Ethiopian handweaving', 'Garment production', 'Spice production', 'Fashion design training', 'Culinary arts', 'Makeup & hairdressing'];
 
 export function Marquee() {
   const items = [...CRAFTS, ...CRAFTS];
@@ -40,7 +40,7 @@ export function About() {
           <Photo src="/images/founder-senait-wolaita.jpg" label="Dr. Senait Mario, founder of DaMarios, in a Wolaita dinguza blazer" sizes="(min-width: 1024px) 45vw, 100vw" position="50% 20%" className="h-[440px] rounded-lg md:h-[560px]" />
           <motion.div className="absolute -bottom-8 right-3 w-[230px] rounded-lg bg-ink p-6 text-white md:-right-6"
             initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: 0.3, duration: 0.8 }}>
-            <p className="font-serif text-[22px] italic leading-snug">“[A short line from the founder about her vision.]”</p>
+            <p className="font-serif text-[22px] italic leading-snug">“We blend craft with quality production, and bring it to you.”</p>
             <p className="mt-3.5 text-xs tracking-[.14em] text-gold">DR. SENAIT MARIO · FOUNDER</p>
           </motion.div>
         </Reveal>

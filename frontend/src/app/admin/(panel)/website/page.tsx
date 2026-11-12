@@ -9,7 +9,7 @@ import { ErrorNote, Loading, PageHeader, Pill, Tabs, useAction, useApi } from '@
 import ResourceManager from '@/components/admin/ResourceManager';
 
 const SECTIONS: { id: string; name: string }[] = [
-  { id: 'hero', name: 'Home (hero)' }, { id: 'about', name: 'About DaMarios' },
+  { id: 'hero', name: 'Home (hero)' }, { id: 'about', name: 'About DaMarios' }, { id: 'vision', name: 'Vision (weaving)' },
   { id: 'production', name: 'Production (intro)' }, { id: 'garments', name: 'Garment production' }, { id: 'spices', name: 'Spice production' },
   { id: 'enquiry', name: 'Wholesale & export' },
   { id: 'training', name: 'Training center (intro)' }, { id: 'dept-fashion', name: 'Fashion design' }, { id: 'dept-culinary', name: 'Culinary arts' },

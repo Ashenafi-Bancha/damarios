@@ -14,11 +14,12 @@ const prisma = new PrismaClient();
 /** Website text for each section. Words between *stars* show in gold italics. */
 const CONTENT: Record<string, [string, string]> = {
   hero: ['Quality we *make*. Skills we *share*.', 'DaMarios produces garments and spices for local and international markets, and trains the next generation in fashion design, culinary arts and beautification.'],
-  about: ['Making quality products, and *people* who can make them.', '[DaMarios’ story in the founder’s words: why she started a production house and a training center together in Wolaita Sodo.]'],
+  about: ['Ethiopian weaving, *made modern*.', 'Ethiopia has a rich weaving heritage and a great potential that is still largely untapped. DaMarios was founded to take this beautiful, overlooked handcraft to a higher level by blending it with modern design. Working with the natural talent and skill of local weavers, we make quality products that meet today’s fashion, and our training center passes these skills on to the next generation. Our work keeps our cultural heritage alive, creates better jobs and income for our artisans, and carries Ethiopia’s name onto the international stage.'],
+  vision: ['From the loom *to the world*.', 'Our vision is to transform Ethiopia’s under-valued weaving sector into a modern, high-quality creative industry that is ready for the international market.'],
   production: ['Made in Wolaita Sodo, *for the world*.', 'Two production lines under one roof: garments and Ethiopian spices, for local customers and international buyers.'],
-  garments: ['Garments for local & international markets', '[What the factory produces, e.g. ready-to-wear, workwear, cultural garments.] Quality checked at every step, with capacity for bulk and export orders.'],
+  garments: ['Garments for local & international markets', 'Ethiopian handwoven fabric and Wolaita dinguza, made into modern garments for local, international and diaspora customers. Quality checked at every step, with capacity for bulk and export orders.'],
   spices: ['Ethiopian spices, cleaned, ground & packed', '[Which spices, how they are sourced and processed.] Packed in retail and wholesale sizes for shops, restaurants and export.'],
-  enquiry: ['Buy from *DaMarios*.', 'Shops, restaurants, distributors and international buyers: tell us what you need and we will send a quotation.'],
+  enquiry: ['Buy from *DaMarios*.', 'Shops, restaurants, distributors, international buyers and the Ethiopian diaspora: tell us what you need and we will send a quotation.'],
   training: ['Learn a skill. *Build a future.*', 'Hands-on training by working professionals, in real workshops, with a certificate at the end.'],
   'dept-fashion': ['Fashion design', 'From drawing and pattern making to cutting, sewing and finishing. Students practise in our own garment workshop.'],
   'dept-culinary': ['Culinary arts', 'Ethiopian and international cooking, baking and kitchen hygiene, with practice in a real training kitchen.'],
