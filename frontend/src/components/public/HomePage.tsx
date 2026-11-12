@@ -28,13 +28,8 @@ function Page({ initial }: { initial: SiteData }) {
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30 });
 
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('dm-lang') as Lang | null;
-      if (saved && saved !== 'en') setLangState(saved);
-    } catch { /* storage unavailable */ }
-  }, []);
-
+  // The site is English only for now: a language saved from an earlier visit is ignored.
+  // The language machinery below stays in place so Amharic can be switched back on later.
   useEffect(() => {
     document.documentElement.lang = lang === 'am' ? 'am' : 'en';
     if (lang === 'en') { setSite(initial); return; }
