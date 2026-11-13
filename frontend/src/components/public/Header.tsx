@@ -40,11 +40,9 @@ export default function Header() {
       <header className={clsx('sticky top-0 z-40 border-b transition-all duration-300', scrolled ? 'border-ivory-line bg-ivory/85 backdrop-blur-md' : 'border-ivory-line bg-ivory')}>
         <div className={clsx('wrap flex items-center justify-between gap-5 transition-all duration-300', scrolled ? 'min-h-[68px]' : 'min-h-[86px]')}>
           <a href="#top" aria-label="DaMarios home" className="flex items-center gap-3.5 text-ink">
-            {/* Compact logo on phones, full logo (with the full name) on larger screens. */}
+            {/* The compact logo (mark + DAMARIOS) on every screen size: the full name is shown in the hero just below. */}
             <Image src="/brand/logo-compact.png" alt="DaMarios Garment and Skill Training Center" width={1200} height={301} priority
-              className={clsx('w-auto transition-all duration-300 sm:hidden', scrolled ? 'h-8' : 'h-9')} />
-            <Image src="/brand/logo-horizontal.png" alt="DaMarios Garment and Skill Training Center" width={1400} height={320} priority
-              className={clsx('hidden w-auto transition-all duration-300 sm:block', scrolled ? 'h-10' : 'h-12')} />
+              className={clsx('w-auto transition-all duration-300', scrolled ? 'h-8 sm:h-9' : 'h-9 sm:h-11')} />
           </a>
           <nav aria-label="Main" className="hidden items-center gap-6 xl:flex">
             {links.map((l) => (

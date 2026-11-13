@@ -51,11 +51,10 @@ export default function Hero() {
       <div className="wrap relative pb-20 pt-16 md:pb-24 md:pt-20">
         <div className="mb-12 flex flex-wrap items-end gap-x-16 gap-y-8 md:mb-14">
           <div className="flex min-w-0 flex-[1.3_1_520px] flex-col gap-6">
-            {/* The organization's name as the page heading: the white logo mark, the name, and a light-blue line drawing in. */}
-            <h1 className={'m-0 flex items-center gap-3.5 md:gap-5 ' + fade(0.05).className} style={fade(0.05).style}>
-              <Image src="/brand/logo-mark-white.png" alt="" width={400} height={417} priority className="h-12 w-auto flex-none md:h-[68px]" />
-              <span className="flex min-w-0 flex-col border-l border-white/25 pl-3.5 md:pl-5">
-                <span className="font-display text-[26px] font-bold uppercase leading-none tracking-[.14em] text-white md:text-[38px]">DaMarios</span>
+            {/* The organization's name as the page heading (text only), with a light-blue line drawing in beside it. */}
+            <h1 className={'m-0 flex items-center gap-5 ' + fade(0.05).className} style={fade(0.05).style}>
+              <span className="flex min-w-0 flex-col">
+                <span className="font-display text-[28px] font-bold uppercase leading-none tracking-[.14em] text-white md:text-[42px]">DaMarios</span>
                 <span className="mt-1.5 text-[11px] font-semibold uppercase leading-snug tracking-[.22em] text-gold md:mt-2 md:text-[13px] md:tracking-[.3em]">Garment &amp; Skill Training Center</span>
               </span>
               <span aria-hidden="true" className="hidden h-px min-w-[40px] flex-1 origin-left animate-draw bg-gradient-to-r from-gold to-transparent sm:block" style={{ animationDelay: '.5s' }} />
