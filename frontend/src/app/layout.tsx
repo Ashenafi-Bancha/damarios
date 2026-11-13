@@ -10,7 +10,7 @@ const ethiopic = Noto_Serif_Ethiopic({ subsets: ['ethiopic'], weight: ['500'], v
 export const metadata: Metadata = {
   title: { default: 'DaMarios Garment and Skill Training Center', template: '%s · DaMarios' },
   description: 'DaMarios in Wolaita Sodo, Ethiopia: garment and spice production for local and international markets, and skill training in fashion design, culinary arts and beautification.',
-  openGraph: { title: 'DaMarios Garment and Skill Training Center', description: 'Quality we make. Skills we share.', type: 'website' },
+  openGraph: { title: 'DaMarios Garment and Skill Training Center', description: 'Heritage we weave. Skills we pass on.', type: 'website' },
 };
 
 export const viewport: Viewport = { themeColor: '#0B1F3F', width: 'device-width', initialScale: 1 };

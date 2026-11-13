@@ -7,7 +7,7 @@ export const FALLBACK_SITE: SiteData = {
   offline: true,
   openingDate: '2027-01-15',
   content: {
-    hero: block('hero', 'Quality we *make*. Skills we *share*.', 'DaMarios produces garments and spices for local and international markets, and trains the next generation in fashion design, culinary arts and beautification.'),
+    hero: block('hero', 'Heritage we *weave*. Skills we *pass on*.', 'DaMarios produces garments and spices for local and international markets, and trains the next generation in fashion design, culinary arts and beautification.'),
     about: block('about', 'Ethiopian weaving, *made modern*.', 'Ethiopia has a rich weaving heritage and a great potential that is still largely untapped. DaMarios was founded to take this beautiful, overlooked handcraft to a higher level by blending it with modern design. Working with the natural talent and skill of local weavers, we make quality products that meet today’s fashion, and our training center passes these skills on to the next generation. Our work keeps our cultural heritage alive, creates better jobs and income for our artisans, and carries Ethiopia’s name onto the international stage.'),
     vision: block('vision', 'From the loom *to the world*.', 'Our vision is to transform Ethiopia’s under-valued weaving sector into a modern, high-quality creative industry that is ready for the international market.'),
     production: block('production', 'Made in Wolaita Sodo, *for the world*.', 'Two production lines under one roof: garments and Ethiopian spices, for local customers and international buyers.'),
