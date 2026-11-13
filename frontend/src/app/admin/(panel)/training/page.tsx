@@ -295,7 +295,7 @@ function CertificateModal({ enrollment: e, onClose }: { enrollment: Enrollment; 
         <p className="mx-auto mt-4 max-w-md text-muted">has successfully completed the course <strong className="text-ink">{e.class.course.name}</strong> ({DEPT_NAME[e.class.course.department]}){e.class.course.duration ? `, ${e.class.course.duration}` : ''}{e.result ? `, with the result: ${e.result}` : ''}.</p>
         <div className="mt-10 flex items-end justify-between text-left text-sm">
           <div><div className="font-semibold">{e.certificateNo}</div><div className="text-muted">Issued {e.certificateDate ? gcDate(e.certificateDate, { day: 'numeric', month: 'long', year: 'numeric' }) : ''}</div></div>
-          <div className="text-center"><div className="w-48 border-t border-ink pt-1">Dr. Senait Mario, Founder</div></div>
+          <div className="text-center"><div className="w-48 border-t border-ink pt-1">Authorized signature</div></div>
         </div>
       </div>
       <div className="mt-4 flex justify-end gap-2">

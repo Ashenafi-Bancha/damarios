@@ -1,7 +1,9 @@
 /**
  * Seeds the database.
- * Always: the owner account, role permissions, settings and website text.
- * Sample business data (orders, staff, courses, students…) too, unless SEED_SAMPLE=false.
+ * Always: the owner account, role permissions, settings, website text, and the starter content the public site shows
+ * (products, courses, gallery, news) when those are still empty.
+ * The admin's business records (orders, customers, staff, students, stock, finance…) start empty.
+ * Made-up demo records for those are added only with SEED_SAMPLE=true.
  * Run with: npm run db:seed
  */
 import 'dotenv/config';
@@ -37,7 +39,7 @@ async function base() {
   await prisma.user.upsert({
     where: { email },
     update: {},
-    create: { email, name: 'Dr. Senait Mario', role: 'OWNER', passwordHash: await bcrypt.hash(password, 12) },
+    create: { email, name: 'Admin', role: 'OWNER', passwordHash: await bcrypt.hash(password, 12) },
   });
 
   for (const [role, modules] of Object.entries(DEFAULT_PERMISSIONS)) {
@@ -71,8 +73,10 @@ async function base() {
   console.log(`Owner account: ${email}`);
 }
 
-async function sample() {
-  if ((await prisma.order.count()) > 0) return console.log('Sample data already present, skipped.');
+/** Content the public website shows. Added once, when those tables are still empty; edited later in the admin. */
+async function siteStarter() {
+  if ((await prisma.product.count()) > 0 || (await prisma.course.count()) > 0) return console.log('Website content already present, skipped.');
+  const day = 86400000;
 
   // Products shown on the website (placeholders until the owner confirms the list).
   await prisma.product.createMany({ data: [
@@ -84,16 +88,35 @@ async function sample() {
     { name: '[e.g. Shiro]', division: 'SPICE', description: 'Roasted and milled.', packSizes: '500 g · 1 kg · bulk', markets: 'Retail · Wholesale · Export', sortOrder: 6 },
   ] });
 
-  // Training courses and classes.
+  // Training courses.
   const courses: [string, TrainingDept, string, number][] = [
     ['Basic sewing & tailoring', 'FASHION', '[3 months]', 6000], ['Pattern making & design', 'FASHION', '[6 months]', 9000], ['Advanced fashion design', 'FASHION', '[1 year]', 15000],
     ['Basic cooking & food safety', 'CULINARY', '[3 months]', 6000], ['Pastry & baking', 'CULINARY', '[4 months]', 7000], ['Professional chef course', 'CULINARY', '[1 year]', 15000],
     ['Makeup artistry', 'BEAUTY', '[3 months]', 6500], ['Hairdressing & braiding', 'BEAUTY', '[4 months]', 8000], ['Salon business basics', 'BEAUTY', '[1 month]', 2500],
   ];
-  const created = [];
   for (const [i, [name, department, duration, fee]] of courses.entries()) {
-    created.push(await prisma.course.create({ data: { name, department, duration, fee, sortOrder: i } }));
+    await prisma.course.create({ data: { name, department, duration, fee, sortOrder: i } });
   }
+
+  await prisma.newsPost.createMany({ data: [
+    { title: 'Registration open for all three departments', kind: 'New intake', body: '[Details of the next intake.]', imageUrl: '/images/news-intake.jpg' },
+    { title: 'First graduation ceremony', kind: 'Graduation', body: '[Photos and names of the graduates.]', date: new Date(Date.now() - 20 * day), imageUrl: '/images/news-graduation.jpg' },
+    { title: '[First export shipment / market fair]', kind: 'Production', body: '[Details.]', date: new Date(Date.now() - 45 * day), imageUrl: '/images/news-market.jpg' },
+  ] });
+  await prisma.galleryItem.createMany({ data: [
+    { title: 'Garment production line', category: 'GARMENTS', tall: true, imageUrl: '/images/gallery-tailor.jpg' }, { title: 'Spice cleaning & grinding', category: 'SPICES', imageUrl: '/images/gallery-chili.jpg' },
+    { title: 'Fashion students at work', category: 'TRAINING', imageUrl: '/images/gallery-studio.jpg' }, { title: 'Culinary class', category: 'TRAINING', imageUrl: '/images/gallery-chef.jpg' },
+    { title: 'Packed spices ready for market', category: 'SPICES', tall: true, imageUrl: '/images/gallery-spice-shop.jpg' }, { title: 'Bridal makeup practice', category: 'TRAINING', tall: true, imageUrl: '/images/gallery-makeup.jpg' },
+    { title: 'Finished garments', category: 'GARMENTS', imageUrl: '/images/gallery-fabric.jpg' }, { title: 'Graduation day', category: 'EVENTS', imageUrl: '/images/gallery-graduation.jpg' },
+  ] });
+  console.log('Website content added.');
+}
+
+/** Made-up business records for trying out the admin. Only with SEED_SAMPLE=true. */
+async function sample() {
+  if ((await prisma.order.count()) > 0) return console.log('Sample data already present, skipped.');
+  const created = await prisma.course.findMany({ orderBy: { sortOrder: 'asc' } });
+  if (created.length < 9) return console.log('Sample data needs the starter courses, skipped.');
   const day = 86400000;
   const cls = await Promise.all([
     prisma.trainingClass.create({ data: { courseId: created[0].id, name: 'Morning group', instructor: '[Instructor]', schedule: 'Mon–Fri 8:30–11:30', capacity: 20, startDate: new Date(Date.now() - 40 * day), endDate: new Date(Date.now() + 50 * day) } }),
@@ -115,17 +138,6 @@ async function sample() {
     { department: 'CULINARY', courseId: created[5].id, name: '[Applicant name]', phone: '0900000203', preferredTime: 'Weekend', education: 'TVET / diploma', age: 25 },
   ] });
 
-  await prisma.newsPost.createMany({ data: [
-    { title: 'Registration open for all three departments', kind: 'New intake', body: '[Details of the next intake.]', imageUrl: '/images/news-intake.jpg' },
-    { title: 'First graduation ceremony', kind: 'Graduation', body: '[Photos and names of the graduates.]', date: new Date(Date.now() - 20 * day), imageUrl: '/images/news-graduation.jpg' },
-    { title: '[First export shipment / market fair]', kind: 'Production', body: '[Details.]', date: new Date(Date.now() - 45 * day), imageUrl: '/images/news-market.jpg' },
-  ] });
-  await prisma.galleryItem.createMany({ data: [
-    { title: 'Garment production line', category: 'GARMENTS', tall: true, imageUrl: '/images/gallery-tailor.jpg' }, { title: 'Spice cleaning & grinding', category: 'SPICES', imageUrl: '/images/gallery-chili.jpg' },
-    { title: 'Fashion students at work', category: 'TRAINING', imageUrl: '/images/gallery-studio.jpg' }, { title: 'Culinary class', category: 'TRAINING', imageUrl: '/images/gallery-chef.jpg' },
-    { title: 'Packed spices ready for market', category: 'SPICES', tall: true, imageUrl: '/images/gallery-spice-shop.jpg' }, { title: 'Bridal makeup practice', category: 'TRAINING', tall: true, imageUrl: '/images/gallery-makeup.jpg' },
-    { title: 'Finished garments', category: 'GARMENTS', imageUrl: '/images/gallery-fabric.jpg' }, { title: 'Graduation day', category: 'EVENTS', imageUrl: '/images/gallery-graduation.jpg' },
-  ] });
 
   await prisma.job.create({ data: { title: 'Sewing machine operator', description: 'Industrial machine experience preferred.' } });
   await prisma.job.create({ data: { title: 'Culinary instructor', description: 'Professional chef with teaching experience.' } });
@@ -171,7 +183,8 @@ async function sample() {
 }
 
 base()
-  .then(() => (process.env.SEED_SAMPLE === 'false' ? undefined : sample()))
+  .then(() => siteStarter())
+  .then(() => (process.env.SEED_SAMPLE === 'true' ? sample() : undefined))
   .then(() => console.log('Seed finished.'))
   .catch((e) => { console.error(e); process.exit(1); })
   .finally(() => prisma.$disconnect());

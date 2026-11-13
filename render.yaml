@@ -1,0 +1,20 @@
+# Render blueprint for the DaMarios API (the website goes on Vercel, the database on Neon).
+# In Render: New → Blueprint → pick this GitHub repo. Then fill in the values marked sync: false.
+services:
+  - type: web
+    name: damarios-api
+    runtime: node
+    rootDir: backend
+    plan: free
+    buildCommand: npm ci --include=dev && npm run build && npx prisma migrate deploy
+    startCommand: npm start
+    healthCheckPath: /api/public/site
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL # the Neon connection string (with ?sslmode=require)
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: FRONTEND_URL # your Vercel address, e.g. https://damarios.vercel.app
+        sync: false

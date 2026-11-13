@@ -30,7 +30,7 @@ export default function Dashboard() {
 
   return (
     <>
-      <PageHeader title={`Good ${hour < 12 ? 'morning' : hour < 18 ? 'afternoon' : 'evening'}, ${me?.name ?? ''}`} sub={`Here is what is happening at Da Marios · ${periodLabel(data.period)}`}>
+      <PageHeader title={`Welcome, ${me?.name ?? 'Admin'}`} sub={`Good ${hour < 12 ? 'morning' : hour < 18 ? 'afternoon' : 'evening'}. Here is what is happening at DaMarios · ${periodLabel(data.period)}`}>
         <Link href="/admin/orders?new=1" className="a-btn a-btn-gold">+ New order</Link>
         <Link href="/admin/employees?tab=attendance" className="a-btn a-btn-line">Take attendance</Link>
       </PageHeader>

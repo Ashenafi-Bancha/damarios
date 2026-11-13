@@ -123,7 +123,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
               </div>
               <Link href="/admin/orders?tab=requests" aria-label="Website requests" className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-[#C9D5E8] hover:bg-paper"><Bell className="h-5 w-5" /></Link>
               <div className="flex items-center gap-2.5">
-                <span className="flex h-[38px] w-[38px] items-center justify-center rounded-full bg-gold-admin font-semibold">{me.name.replace(/^Dr\.?\s*/, '').charAt(0)}</span>
+                <span className="flex h-[38px] w-[38px] items-center justify-center rounded-full bg-gold-admin font-semibold">{me.name.charAt(0).toUpperCase()}</span>
                 <span className="hidden flex-col text-[13px] leading-tight md:flex"><span className="font-semibold">{me.name}</span><span className="capitalize text-muted">{me.role.toLowerCase()}</span></span>
               </div>
               <button type="button" onClick={logout} aria-label="Log out" title="Log out" className="flex h-10 w-10 items-center justify-center rounded-[10px] hover:bg-paper"><LogOut className="h-5 w-5" /></button>
