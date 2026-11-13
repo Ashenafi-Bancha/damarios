@@ -52,11 +52,18 @@ export function Contact() {
           </div>
           <a href={c.mapUrl || 'https://maps.google.com/?q=Wolaita+Sodo'} target="_blank" rel="noopener noreferrer" className="btn btn-line self-start">Get directions</a>
         </Reveal>
-        <Reveal delay={0.1} className="min-h-[360px] min-w-0 flex-[1.2_1_460px] overflow-hidden rounded-lg md:min-h-[440px]">
-          {c.mapUrl?.startsWith('https://www.google.com/maps/embed') ? (
-            <iframe title="Map to DaMarios" src={c.mapUrl} className="h-full min-h-[360px] w-full border-0" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
-          ) : (
-            <Photo label="Google Map · add the embed link in Settings" className="h-full min-h-[360px] items-center justify-center" />
+        <Reveal delay={0.1} className="flex min-w-0 flex-[1.2_1_460px] flex-col gap-4">
+          {/* The DaMarios building, so visitors recognise it when they arrive. The map shows below it once its embed link is set in Settings. */}
+          <figure className="relative m-0 overflow-hidden rounded-lg">
+            <Photo src="/images/damarios-building.jpg" label="The DaMarios building in Wolaita Sodo, with flower beds along the front"
+              sizes="(min-width: 1024px) 55vw, 100vw" position="50% 45%" className="h-[420px] md:h-[540px]" />
+            <figcaption className="absolute bottom-4 left-4 right-4 rounded-lg bg-ink/85 p-4 text-white backdrop-blur-sm md:bottom-6 md:left-6 md:right-auto md:max-w-[340px] md:p-5">
+              <span className="block text-[11px] font-semibold tracking-[.2em] text-gold">OUR CENTER · WOLAITA SODO</span>
+              <span className="mt-1.5 block font-serif text-xl leading-snug md:text-2xl">Production and training, under one roof.</span>
+            </figcaption>
+          </figure>
+          {c.mapUrl?.startsWith('https://www.google.com/maps/embed') && (
+            <iframe title="Map to DaMarios" src={c.mapUrl} className="h-[260px] w-full rounded-lg border-0" loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
           )}
         </Reveal>
       </div>
