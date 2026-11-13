@@ -24,12 +24,14 @@ const config: Config = {
       keyframes: {
         marquee: { from: { transform: 'translateX(0)' }, to: { transform: 'translateX(-50%)' } },
         rise: { from: { transform: 'translateY(110%)' }, to: { transform: 'translateY(0)' } },
+        draw: { from: { transform: 'scaleX(0)' }, to: { transform: 'scaleX(1)' } },
         fadeup: { from: { opacity: '0', transform: 'translateY(16px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
       },
       animation: {
         marquee: 'marquee 38s linear infinite',
         // CSS-only entrance animations, so the hero shows before JavaScript loads.
         rise: 'rise .9s cubic-bezier(.22,1,.36,1) both',
+        draw: 'draw 1.4s cubic-bezier(.22,1,.36,1) both',
         fadeup: 'fadeup .8s cubic-bezier(.22,1,.36,1) both',
       },
     },
