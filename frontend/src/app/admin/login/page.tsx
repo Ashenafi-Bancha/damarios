@@ -41,23 +41,27 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="flex min-h-screen bg-ink">
-      <div className="relative hidden flex-1 overflow-hidden lg:block">
-        <Image src="/images/login.jpg" alt="" fill sizes="50vw" className="object-cover" priority />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/70 to-ink/40" />
-        <Image src="/brand/logo-full-white.png" alt="" width={900} height={859} className="absolute left-14 top-14 h-40 w-auto opacity-90" />
-        <div className="absolute inset-0 flex flex-col justify-end p-14 text-white">
-          <p className="font-serif text-6xl leading-none">Heritage we <em className="text-gold">weave</em>.<br />Skills we <em className="text-gold">pass on</em>.</p>
-          <p className="mt-4 text-muted-mist">DaMarios admin · production and training in one place.</p>
+    <div className="flex min-h-screen bg-paper">
+      {/* Brand panel: the logo and tagline on the brand blue, no photo. */}
+      <div className="relative hidden flex-1 flex-col items-center justify-center overflow-hidden bg-ink p-14 text-center text-white lg:flex">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_30%_20%,rgba(96,165,250,.22),transparent_60%),radial-gradient(ellipse_at_80%_90%,rgba(0,81,161,.45),transparent_55%)]" />
+        <div className="relative flex flex-col items-center">
+          <Image src="/brand/logo-full-white.png" alt="DaMarios Garment and Skill Training Center" width={900} height={859} priority className="h-48 w-auto xl:h-56" />
+          <span aria-hidden="true" className="my-9 h-px w-16 bg-gold/70" />
+          <p className="font-serif text-4xl leading-tight xl:text-5xl">Heritage we <em className="text-gold">weave</em>.<br />Skills we <em className="text-gold">pass on</em>.</p>
         </div>
+        <p className="absolute bottom-8 text-xs tracking-[.2em] text-muted-dark">STAFF PORTAL · DAMARIOS</p>
       </div>
-      <div className="flex flex-1 items-center justify-center bg-paper p-6">
-        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="w-full max-w-sm">
-          <div className="mb-8 flex items-center gap-3">
-            <Image src="/brand/logo-mark.png" alt="DaMarios" width={400} height={417} className="h-12 w-auto" priority />
-            <div><h1 className="font-display text-2xl font-bold">Staff login</h1><p className="text-sm text-muted">DaMarios admin panel</p></div>
+
+      {/* Sign-in */}
+      <div className="flex flex-1 flex-col items-center justify-center p-5 sm:p-8">
+        <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }} className="w-full max-w-[400px]">
+          <Image src="/brand/logo-compact.png" alt="DaMarios" width={1200} height={301} priority className="mx-auto mb-8 h-10 w-auto lg:hidden" />
+          <div className="rounded-2xl border border-[#DCE4F0] bg-white p-7 shadow-[0_12px_40px_rgba(6,43,87,.08)] sm:p-9">
+            <h1 className="font-display text-2xl font-bold">Sign in</h1>
+            <p className="mb-7 mt-1.5 text-sm text-muted">Welcome back. Sign in to the DaMarios admin panel.</p>
+            <Suspense fallback={null}><LoginForm /></Suspense>
           </div>
-          <Suspense fallback={null}><LoginForm /></Suspense>
           <Link href="/" className="mt-6 block text-center text-sm text-muted hover:text-ink">← Back to the website</Link>
         </motion.div>
       </div>

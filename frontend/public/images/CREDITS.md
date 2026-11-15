@@ -22,4 +22,3 @@ Replace them with real DaMarios photos from the admin panel when available.
 - news-graduation.jpg: https://unsplash.com/photos/a-group-of-people-in-graduation-gowns-posing-for-a-picture-FQqRVH1EVjg
 - news-intake.jpg: https://unsplash.com/photos/fashion-illustration-sketches-on-paper-r5xHI_H44aM
 - news-market.jpg: https://unsplash.com/photos/assorted-seed-and-powder-sack-lot-vNrpgkrRtlk
-- login.jpg: https://unsplash.com/photos/woman-working-at-a-sewing-table-with-mannequins-T0us7gjVQdU
