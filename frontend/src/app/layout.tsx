@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Cormorant_Garamond, Inter, Noto_Serif_Ethiopic, Space_Grotesk } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
 const serif = Cormorant_Garamond({ subsets: ['latin'], weight: ['500', '600'], style: ['normal', 'italic'], variable: '--font-serif', display: 'swap' });
@@ -18,7 +20,12 @@ export const viewport: Viewport = { themeColor: '#0B1F3F', width: 'device-width'
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${serif.variable} ${sans.variable} ${display.variable} ${ethiopic.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        {/* Vercel visitor counts and real-visitor speed. They only send data on Vercel, not on localhost. */}
+        <Analytics />
+        <SpeedInsights />
+      </body>
     </html>
   );
 }
