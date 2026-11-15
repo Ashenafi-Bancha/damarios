@@ -1,4 +1,5 @@
 import { FALLBACK_SITE } from './fallback';
+import { DEMO, demoSite } from './demo';
 import type { SiteData } from './types';
 
 /** Fills any missing list or section with an empty value, so partial or older API responses can't break the page. */
@@ -16,6 +17,8 @@ export function normalizeSite(data: Partial<SiteData>): SiteData {
 
 /** Loads the public website content on the server. Falls back to sample content if the API is down. */
 export async function getSite(lang = 'en'): Promise<SiteData> {
+  // Demo mode: the content recorded from the API, with no server to call.
+  if (DEMO) return normalizeSite(demoSite() as Partial<SiteData>);
   const base = process.env.BACKEND_URL || 'http://localhost:4000';
   try {
     const res = await fetch(`${base}/api/public/site?lang=${lang}`, { next: { revalidate: 60, tags: ['site'] } });

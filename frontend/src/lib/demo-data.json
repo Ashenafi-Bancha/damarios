@@ -1,0 +1,1146 @@
+{
+ "/auth/me": {
+  "id": "demo-admin",
+  "name": "Admin",
+  "email": "admin@damarios.demo",
+  "role": "OWNER",
+  "modules": [
+   "dashboard",
+   "orders",
+   "customers",
+   "production",
+   "inventory",
+   "training",
+   "fashion",
+   "employees",
+   "payroll",
+   "recruitment",
+   "finance",
+   "website",
+   "users",
+   "settings"
+  ]
+ },
+ "/admin/dashboard": {
+  "period": "2019-03",
+  "kpis": {
+   "newOrders": 0,
+   "newToday": 0,
+   "inProduction": 0,
+   "dueThisWeek": 0,
+   "present": 0,
+   "late": 0,
+   "staff": 0,
+   "lowStock": 0,
+   "income30": 0,
+   "expense30": 0,
+   "students": 0,
+   "newApplications": 0
+  },
+  "stages": [
+   {
+    "stage": "NEW",
+    "count": 0
+   },
+   {
+    "stage": "QUOTED",
+    "count": 0
+   },
+   {
+    "stage": "SAMPLE",
+    "count": 0
+   },
+   {
+    "stage": "IN_PRODUCTION",
+    "count": 0
+   },
+   {
+    "stage": "QUALITY_CHECK",
+    "count": 0
+   },
+   {
+    "stage": "READY",
+    "count": 0
+   }
+  ],
+  "requests": [],
+  "production": [],
+  "lowStock": [],
+  "attendance": {
+   "present": 0,
+   "late": 0,
+   "absent": 0,
+   "total": 0
+  },
+  "upcoming": []
+ },
+ "/admin/customers": [],
+ "/admin/content?lang=en": [
+  {
+   "id": "cmw9n3qnl000qtpdkz5oii73c",
+   "section": "about",
+   "lang": "en",
+   "headline": "Ethiopian weaving, *made modern*.",
+   "body": "Ethiopia has a rich weaving heritage and a great potential that is still largely untapped. DaMarios was founded to take this beautiful, overlooked handcraft to a higher level by blending it with modern design. Working with the natural talent and skill of local weavers, we make quality products that meet today’s fashion, and our training center passes these skills on to the next generation. Our work keeps our cultural heritage alive, creates better jobs and income for our artisans, and carries Ethiopia’s name onto the international stage.",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmw9n3qod000ztpdkjy8nsyq6",
+   "section": "admissions",
+   "lang": "en",
+   "headline": "Apply in *four steps*.",
+   "body": "Next intake: [Date]. Registration fee: ETB [·], payable by Telebirr, CBE Birr or cash.",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmw9n3qom0012tpdk7t1cd1xs",
+   "section": "contact",
+   "lang": "en",
+   "headline": "Visit *DaMarios*.",
+   "body": "",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmw9n3qoa000ytpdkhacr4857",
+   "section": "dept-beauty",
+   "lang": "en",
+   "headline": "Beautification",
+   "body": "Professional makeup, bridal looks, hair cutting, braiding and styling, plus how to run your own salon.",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmw9n3qo7000xtpdkoiug5fq8",
+   "section": "dept-culinary",
+   "lang": "en",
+   "headline": "Culinary arts",
+   "body": "Ethiopian and international cooking, baking and kitchen hygiene, with practice in a real training kitchen.",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmw9n3qo4000wtpdk0qt561ny",
+   "section": "dept-fashion",
+   "lang": "en",
+   "headline": "Fashion design",
+   "body": "From drawing and pattern making to cutting, sewing and finishing. Students practise in our own garment workshop.",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmw9n3qnx000utpdk5jiu8wqt",
+   "section": "enquiry",
+   "lang": "en",
+   "headline": "Buy from *DaMarios*.",
+   "body": "Shops, restaurants, distributors, international buyers and the Ethiopian diaspora: tell us what you need and we will send a quotation.",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmw9n3qof0010tpdkq0733mt7",
+   "section": "gallery",
+   "lang": "en",
+   "headline": "Inside *DaMarios*.",
+   "body": "",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmw9n3qns000stpdkefzhx7v9",
+   "section": "garments",
+   "lang": "en",
+   "headline": "Garments for local & international markets",
+   "body": "Ethiopian handwoven fabric and Wolaita dinguza, made into modern garments for local, international and diaspora customers. Quality checked at every step, with capacity for bulk and export orders.",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmw9n3qng000ptpdkxkixu6fs",
+   "section": "hero",
+   "lang": "en",
+   "headline": "Heritage we *weave*. Skills we *pass on*.",
+   "body": "DaMarios produces garments and spices for local and international markets, and trains the next generation in fashion design, culinary arts and beautification.",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmw9n3qoj0011tpdkc4xa0gpp",
+   "section": "news",
+   "lang": "en",
+   "headline": "Stories from *the center*.",
+   "body": "",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmw9n3qnp000rtpdkjo1cv3au",
+   "section": "production",
+   "lang": "en",
+   "headline": "Made in Wolaita Sodo, *for the world*.",
+   "body": "Two production lines under one roof: garments and Ethiopian spices, for local customers and international buyers.",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmw9n3qnv000ttpdkb5fzarup",
+   "section": "spices",
+   "lang": "en",
+   "headline": "Ethiopian spices, cleaned, ground & packed",
+   "body": "[Which spices, how they are sourced and processed.] Packed in retail and wholesale sizes for shops, restaurants and export.",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmw9n3qo0000vtpdkfwne93jj",
+   "section": "training",
+   "lang": "en",
+   "headline": "Learn a skill. *Build a future.*",
+   "body": "Hands-on training by working professionals, in real workshops, with a certificate at the end.",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "sc_vision_en",
+   "section": "vision",
+   "lang": "en",
+   "headline": "From the loom *to the world*.",
+   "body": "Our vision is to transform Ethiopia’s under-valued weaving sector into a modern, high-quality creative industry that is ready for the international market.",
+   "visible": true,
+   "data": null
+  }
+ ],
+ "/admin/content?lang=am": [
+  {
+   "id": "sc_about_am",
+   "section": "about",
+   "lang": "am",
+   "headline": "ስለ ዳማሪዮስ",
+   "body": "ኢትዮጵያ በሽመና ጥበብ እጅግ የበለፀገ ታሪክ እና በብዙዎች ዘንድ ያልተነካ ትልቅ እምቅ ሀብት አላት። የእኛ አላማ ይህንን ብዙ ትኩረት ያልተሰጠውን፣ ነገር ግን እጅግ ውብ የሆነውን የእጅ ጥበብ ስራ ከዘመናዊ የዲዛይን ጥበብ ጋር በማዋሃድ ወደ ላቀ ደረጃ ማሳደግ ነው። የአገር ውስጥ ሸማኞችን የተፈጥሮ ታለንት እና ክህሎት በመጠቀም፣ ጥራቱን የጠበቀና የወቅቱን የፋሽን ፍላጎት የሚያሟላ ምርት ለገበያ እናቀርባለን። ይህ ስራ የባህል እሴታችንን ጠብቆ ማቆየት ብቻ ሳይሆን፣ ለባለሙያዎቻችን የተሻለ የስራ እድል እና ገቢ የሚፈጥር፣ እንዲሁም የሀገራችንን ስም በአለም አቀፍ መድረክ የሚያስጠራ የፈጠራ ስራ ነው።",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "sc_vision_am",
+   "section": "vision",
+   "lang": "am",
+   "headline": "ራዕያችን",
+   "body": "ራዕያችን በኢትዮጵያ በዝቅተኛ ደረጃ የሚታየውን የሽመና ዘርፍ ወደ ዘመናዊ፣ ከፍተኛ ጥራት ያለው እና ለአለም አቀፍ ገበያ የሚመጥን የፈጠራ ኢንዱስትሪ መለወጥ ነው።",
+   "visible": true,
+   "data": null
+  }
+ ],
+ "/admin/content?lang=wal": [],
+ "/admin/news": [
+  {
+   "id": "cmw9n41vw002as5eqaxrssium",
+   "title": "Registration open for all three departments",
+   "kind": "New intake",
+   "body": "[Details of the next intake.]",
+   "date": "2026-11-09T19:14:20.684Z",
+   "imageUrl": "/images/news-intake.jpg",
+   "published": true
+  },
+  {
+   "id": "cmw9n41vw002bs5eqz83zwroo",
+   "title": "First graduation ceremony",
+   "kind": "Graduation",
+   "body": "[Photos and names of the graduates.]",
+   "date": "2026-10-20T19:14:20.683Z",
+   "imageUrl": "/images/news-graduation.jpg",
+   "published": true
+  },
+  {
+   "id": "cmw9n41vw002cs5eqrrypecil",
+   "title": "[First export shipment / market fair]",
+   "kind": "Production",
+   "body": "[Details.]",
+   "date": "2026-09-25T19:14:20.683Z",
+   "imageUrl": "/images/news-market.jpg",
+   "published": true
+  }
+ ],
+ "/admin/subscribers": [],
+ "/admin/users": [
+  {
+   "id": "demo-admin",
+   "name": "Admin",
+   "email": "admin@damarios.demo",
+   "phone": null,
+   "role": "OWNER",
+   "active": true,
+   "lastActiveAt": "2026-11-15T18:08:04.984Z",
+   "createdAt": "2026-11-15T18:08:04.984Z"
+  }
+ ],
+ "/admin/permissions": {
+  "modules": [
+   "dashboard",
+   "orders",
+   "customers",
+   "production",
+   "inventory",
+   "training",
+   "fashion",
+   "employees",
+   "payroll",
+   "recruitment",
+   "finance",
+   "website",
+   "users",
+   "settings"
+  ],
+  "roles": [
+   "MANAGER",
+   "DESIGNER",
+   "ACCOUNTANT",
+   "STOREKEEPER",
+   "SALES"
+  ],
+  "granted": [
+   "MANAGER|dashboard",
+   "MANAGER|orders",
+   "MANAGER|customers",
+   "MANAGER|production",
+   "MANAGER|inventory",
+   "MANAGER|training",
+   "MANAGER|fashion",
+   "MANAGER|employees",
+   "MANAGER|recruitment",
+   "MANAGER|website",
+   "DESIGNER|orders",
+   "DESIGNER|production",
+   "DESIGNER|fashion",
+   "DESIGNER|training",
+   "ACCOUNTANT|dashboard",
+   "ACCOUNTANT|employees",
+   "ACCOUNTANT|payroll",
+   "ACCOUNTANT|finance",
+   "ACCOUNTANT|training",
+   "STOREKEEPER|inventory",
+   "STOREKEEPER|production",
+   "SALES|orders",
+   "SALES|customers",
+   "SALES|fashion"
+  ]
+ },
+ "/admin/activity": [],
+ "/admin/settings": {
+  "openingDate": "2027-01-15",
+  "contact": {
+   "email": "info@[domain]",
+   "hours": "Mon–Sat · 8:00–18:00",
+   "phone": "+251 [sales phone]",
+   "mapUrl": "",
+   "tiktok": "",
+   "address": "[Kebele / landmark], Wolaita Sodo, Ethiopia",
+   "youtube": "",
+   "facebook": "",
+   "telegram": "@[damarios]",
+   "instagram": "",
+   "trainingPhone": "+251 [training phone]"
+  },
+  "payroll": {
+   "brackets": [],
+   "pensionEmployee": 7,
+   "pensionEmployer": 11,
+   "overtimeMultiplier": 1.5
+  },
+  "calendar": {
+   "main": "ethiopian",
+   "adminLanguage": "en",
+   "showGregorian": true
+  },
+  "payments": {
+   "bank": "",
+   "cbeBirr": "",
+   "telebirr": "",
+   "depositPercent": 50
+  },
+  "notifications": {
+   "overdue": true,
+   "payment": true,
+   "lowStock": true,
+   "newRequest": true,
+   "dailySummary": false,
+   "newApplication": true
+  },
+  "business": {
+   "tin": "",
+   "name": "DaMarios Garment and Skill Training Center",
+   "nameAm": "ዳማሪዮስ ጋርመንት እና የሙያ ስልጠና ማዕከል",
+   "licence": "",
+   "startTime": "08:00",
+   "workingDays": "Monday – Saturday"
+  }
+ },
+ "/admin/orders": [],
+ "/admin/requests": [],
+ "/admin/production/lines": [],
+ "/admin/production/output": [],
+ "/admin/production/products": [
+  {
+   "id": "cmw9n41te0013s5eq0gch47fp",
+   "name": "[Garment product]",
+   "division": "GARMENT",
+   "description": "Ready-to-wear for the local market.",
+   "packSizes": "",
+   "markets": "Local",
+   "imageUrl": null,
+   "sortOrder": 1,
+   "published": true
+  },
+  {
+   "id": "cmw9n41te0014s5eqk6gj1olg",
+   "name": "[Garment product]",
+   "division": "GARMENT",
+   "description": "Bulk and private-label production.",
+   "packSizes": "",
+   "markets": "Local · Export",
+   "imageUrl": null,
+   "sortOrder": 2,
+   "published": true
+  },
+  {
+   "id": "cmw9n41te0015s5eqghuaq36y",
+   "name": "[Garment product]",
+   "division": "GARMENT",
+   "description": "Cultural garments.",
+   "packSizes": "",
+   "markets": "Local · Export",
+   "imageUrl": null,
+   "sortOrder": 3,
+   "published": true
+  },
+  {
+   "id": "cmw9n41te0016s5eq7a3ez7xt",
+   "name": "[e.g. Berbere]",
+   "division": "SPICE",
+   "description": "Cleaned, ground and packed.",
+   "packSizes": "250 g · 500 g · 1 kg · bulk",
+   "markets": "Retail · Wholesale · Export",
+   "imageUrl": null,
+   "sortOrder": 4,
+   "published": true
+  },
+  {
+   "id": "cmw9n41te0017s5eq3y0eeaml",
+   "name": "[e.g. Mitmita]",
+   "division": "SPICE",
+   "description": "Cleaned, ground and packed.",
+   "packSizes": "100 g · 250 g · bulk",
+   "markets": "Retail · Wholesale",
+   "imageUrl": null,
+   "sortOrder": 5,
+   "published": true
+  },
+  {
+   "id": "cmw9n41te0018s5eqilglgbt1",
+   "name": "[e.g. Shiro]",
+   "division": "SPICE",
+   "description": "Roasted and milled.",
+   "packSizes": "500 g · 1 kg · bulk",
+   "markets": "Retail · Wholesale · Export",
+   "imageUrl": null,
+   "sortOrder": 6,
+   "published": true
+  }
+ ],
+ "/admin/people/employees": [],
+ "/admin/people/attendance": [],
+ "/admin/people/leave": [],
+ "/admin/people/payroll": {
+  "current": "2019-03",
+  "runs": []
+ },
+ "/admin/inventory/items": [],
+ "/admin/inventory/suppliers": [],
+ "/admin/inventory/movements": [],
+ "/admin/fashion/designs": [],
+ "/admin/fashion/models": [],
+ "/admin/fashion/events": [],
+ "/admin/fashion/bookings": [],
+ "/admin/fashion/collections": [],
+ "/admin/fashion/looks": [],
+ "/admin/fashion/gallery": [
+  {
+   "id": "cmw9n41vz002ds5eqdluyd497",
+   "title": "Garment production line",
+   "category": "GARMENTS",
+   "imageUrl": "/images/gallery-tailor.jpg",
+   "tall": true,
+   "published": true,
+   "createdAt": "2026-11-09T19:14:20.688Z"
+  },
+  {
+   "id": "cmw9n41vz002es5eq5lu9cllo",
+   "title": "Spice cleaning & grinding",
+   "category": "SPICES",
+   "imageUrl": "/images/gallery-chili.jpg",
+   "tall": false,
+   "published": true,
+   "createdAt": "2026-11-09T19:14:20.688Z"
+  },
+  {
+   "id": "cmw9n41vz002fs5eqswc73r06",
+   "title": "Fashion students at work",
+   "category": "TRAINING",
+   "imageUrl": "/images/gallery-studio.jpg",
+   "tall": false,
+   "published": true,
+   "createdAt": "2026-11-09T19:14:20.688Z"
+  },
+  {
+   "id": "cmw9n41vz002gs5eqwyepqicr",
+   "title": "Culinary class",
+   "category": "TRAINING",
+   "imageUrl": "/images/gallery-chef.jpg",
+   "tall": false,
+   "published": true,
+   "createdAt": "2026-11-09T19:14:20.688Z"
+  },
+  {
+   "id": "cmw9n41vz002hs5eqg92pfo6n",
+   "title": "Packed spices ready for market",
+   "category": "SPICES",
+   "imageUrl": "/images/gallery-spice-shop.jpg",
+   "tall": true,
+   "published": true,
+   "createdAt": "2026-11-09T19:14:20.688Z"
+  },
+  {
+   "id": "cmw9n41vz002is5eqff5ktj8z",
+   "title": "Bridal makeup practice",
+   "category": "TRAINING",
+   "imageUrl": "/images/gallery-makeup.jpg",
+   "tall": true,
+   "published": true,
+   "createdAt": "2026-11-09T19:14:20.688Z"
+  },
+  {
+   "id": "cmw9n41vz002js5eq26jbtaqh",
+   "title": "Finished garments",
+   "category": "GARMENTS",
+   "imageUrl": "/images/gallery-fabric.jpg",
+   "tall": false,
+   "published": true,
+   "createdAt": "2026-11-09T19:14:20.688Z"
+  },
+  {
+   "id": "cmw9n41vz002ks5eqgas8kjrb",
+   "title": "Graduation day",
+   "category": "EVENTS",
+   "imageUrl": "/images/gallery-graduation.jpg",
+   "tall": false,
+   "published": true,
+   "createdAt": "2026-11-09T19:14:20.688Z"
+  }
+ ],
+ "/admin/finance/summary": {
+  "series": [
+   {
+    "period": "2018-10",
+    "label": "Sene 2018",
+    "income": 0,
+    "expense": 0
+   },
+   {
+    "period": "2018-11",
+    "label": "Hamle 2018",
+    "income": 0,
+    "expense": 0
+   },
+   {
+    "period": "2018-12",
+    "label": "Nehase 2018",
+    "income": 0,
+    "expense": 0
+   },
+   {
+    "period": "2019-01",
+    "label": "Meskerem 2019",
+    "income": 0,
+    "expense": 0
+   },
+   {
+    "period": "2019-02",
+    "label": "Tikimt 2019",
+    "income": 0,
+    "expense": 0
+   },
+   {
+    "period": "2019-03",
+    "label": "Hidar 2019",
+    "income": 0,
+    "expense": 0
+   }
+  ],
+  "current": {
+   "period": "2019-03",
+   "label": "Hidar 2019",
+   "income": 0,
+   "expense": 0
+  },
+  "expensesByCategory": [],
+  "incomeByMethod": [],
+  "owed": 0
+ },
+ "/admin/finance/transactions": [],
+ "/admin/recruitment/jobs": [],
+ "/admin/recruitment/applicants": [],
+ "/admin/training/summary": {
+  "enrolled": 0,
+  "byDept": {
+   "FASHION": 0,
+   "CULINARY": 0,
+   "BEAUTY": 0
+  },
+  "newApplications": 0,
+  "feesThisMonth": 0,
+  "owed": 0,
+  "studentsOwing": 0,
+  "certificatesReady": 0
+ },
+ "/admin/training/applications": [],
+ "/admin/training/classes": [],
+ "/admin/training/courses": [
+  {
+   "id": "cmw9n41tp0019s5eqzbl6xojo",
+   "name": "Basic sewing & tailoring",
+   "department": "FASHION",
+   "duration": "[3 months]",
+   "fee": "6000",
+   "description": "",
+   "published": true,
+   "sortOrder": 0,
+   "_count": {
+    "classes": 0
+   }
+  },
+  {
+   "id": "cmw9n41tt001as5eqrnqe4bu4",
+   "name": "Pattern making & design",
+   "department": "FASHION",
+   "duration": "[6 months]",
+   "fee": "9000",
+   "description": "",
+   "published": true,
+   "sortOrder": 1,
+   "_count": {
+    "classes": 0
+   }
+  },
+  {
+   "id": "cmw9n41tv001bs5eq6apb6uks",
+   "name": "Advanced fashion design",
+   "department": "FASHION",
+   "duration": "[1 year]",
+   "fee": "15000",
+   "description": "",
+   "published": true,
+   "sortOrder": 2,
+   "_count": {
+    "classes": 0
+   }
+  },
+  {
+   "id": "cmw9n41tw001cs5eq5cvkcvuk",
+   "name": "Basic cooking & food safety",
+   "department": "CULINARY",
+   "duration": "[3 months]",
+   "fee": "6000",
+   "description": "",
+   "published": true,
+   "sortOrder": 3,
+   "_count": {
+    "classes": 0
+   }
+  },
+  {
+   "id": "cmw9n41ty001ds5eqtixkc0h9",
+   "name": "Pastry & baking",
+   "department": "CULINARY",
+   "duration": "[4 months]",
+   "fee": "7000",
+   "description": "",
+   "published": true,
+   "sortOrder": 4,
+   "_count": {
+    "classes": 0
+   }
+  },
+  {
+   "id": "cmw9n41tz001es5eqxhy5jdv8",
+   "name": "Professional chef course",
+   "department": "CULINARY",
+   "duration": "[1 year]",
+   "fee": "15000",
+   "description": "",
+   "published": true,
+   "sortOrder": 5,
+   "_count": {
+    "classes": 0
+   }
+  },
+  {
+   "id": "cmw9n41u1001fs5eqtn7ehqpn",
+   "name": "Makeup artistry",
+   "department": "BEAUTY",
+   "duration": "[3 months]",
+   "fee": "6500",
+   "description": "",
+   "published": true,
+   "sortOrder": 6,
+   "_count": {
+    "classes": 0
+   }
+  },
+  {
+   "id": "cmw9n41u2001gs5eqh4mvcnr1",
+   "name": "Hairdressing & braiding",
+   "department": "BEAUTY",
+   "duration": "[4 months]",
+   "fee": "8000",
+   "description": "",
+   "published": true,
+   "sortOrder": 7,
+   "_count": {
+    "classes": 0
+   }
+  },
+  {
+   "id": "cmw9n41u4001hs5eqmaym9cb7",
+   "name": "Salon business basics",
+   "department": "BEAUTY",
+   "duration": "[1 month]",
+   "fee": "2500",
+   "description": "",
+   "published": true,
+   "sortOrder": 8,
+   "_count": {
+    "classes": 0
+   }
+  }
+ ],
+ "/admin/training/enrollments": [],
+ "/admin/training/students": [],
+ "/public/site?lang=en": {
+  "content": {
+   "garments": {
+    "id": "cmw9n3qns000stpdkefzhx7v9",
+    "section": "garments",
+    "lang": "en",
+    "headline": "Garments for local & international markets",
+    "body": "Ethiopian handwoven fabric and Wolaita dinguza, made into modern garments for local, international and diaspora customers. Quality checked at every step, with capacity for bulk and export orders.",
+    "visible": true,
+    "data": null
+   },
+   "production": {
+    "id": "cmw9n3qnp000rtpdkjo1cv3au",
+    "section": "production",
+    "lang": "en",
+    "headline": "Made in Wolaita Sodo, *for the world*.",
+    "body": "Two production lines under one roof: garments and Ethiopian spices, for local customers and international buyers.",
+    "visible": true,
+    "data": null
+   },
+   "spices": {
+    "id": "cmw9n3qnv000ttpdkb5fzarup",
+    "section": "spices",
+    "lang": "en",
+    "headline": "Ethiopian spices, cleaned, ground & packed",
+    "body": "[Which spices, how they are sourced and processed.] Packed in retail and wholesale sizes for shops, restaurants and export.",
+    "visible": true,
+    "data": null
+   },
+   "training": {
+    "id": "cmw9n3qo0000vtpdkfwne93jj",
+    "section": "training",
+    "lang": "en",
+    "headline": "Learn a skill. *Build a future.*",
+    "body": "Hands-on training by working professionals, in real workshops, with a certificate at the end.",
+    "visible": true,
+    "data": null
+   },
+   "dept-fashion": {
+    "id": "cmw9n3qo4000wtpdk0qt561ny",
+    "section": "dept-fashion",
+    "lang": "en",
+    "headline": "Fashion design",
+    "body": "From drawing and pattern making to cutting, sewing and finishing. Students practise in our own garment workshop.",
+    "visible": true,
+    "data": null
+   },
+   "dept-culinary": {
+    "id": "cmw9n3qo7000xtpdkoiug5fq8",
+    "section": "dept-culinary",
+    "lang": "en",
+    "headline": "Culinary arts",
+    "body": "Ethiopian and international cooking, baking and kitchen hygiene, with practice in a real training kitchen.",
+    "visible": true,
+    "data": null
+   },
+   "dept-beauty": {
+    "id": "cmw9n3qoa000ytpdkhacr4857",
+    "section": "dept-beauty",
+    "lang": "en",
+    "headline": "Beautification",
+    "body": "Professional makeup, bridal looks, hair cutting, braiding and styling, plus how to run your own salon.",
+    "visible": true,
+    "data": null
+   },
+   "admissions": {
+    "id": "cmw9n3qod000ztpdkjy8nsyq6",
+    "section": "admissions",
+    "lang": "en",
+    "headline": "Apply in *four steps*.",
+    "body": "Next intake: [Date]. Registration fee: ETB [·], payable by Telebirr, CBE Birr or cash.",
+    "visible": true,
+    "data": null
+   },
+   "gallery": {
+    "id": "cmw9n3qof0010tpdkq0733mt7",
+    "section": "gallery",
+    "lang": "en",
+    "headline": "Inside *DaMarios*.",
+    "body": "",
+    "visible": true,
+    "data": null
+   },
+   "news": {
+    "id": "cmw9n3qoj0011tpdkc4xa0gpp",
+    "section": "news",
+    "lang": "en",
+    "headline": "Stories from *the center*.",
+    "body": "",
+    "visible": true,
+    "data": null
+   },
+   "contact": {
+    "id": "cmw9n3qom0012tpdk7t1cd1xs",
+    "section": "contact",
+    "lang": "en",
+    "headline": "Visit *DaMarios*.",
+    "body": "",
+    "visible": true,
+    "data": null
+   },
+   "about": {
+    "id": "cmw9n3qnl000qtpdkz5oii73c",
+    "section": "about",
+    "lang": "en",
+    "headline": "Ethiopian weaving, *made modern*.",
+    "body": "Ethiopia has a rich weaving heritage and a great potential that is still largely untapped. DaMarios was founded to take this beautiful, overlooked handcraft to a higher level by blending it with modern design. Working with the natural talent and skill of local weavers, we make quality products that meet today’s fashion, and our training center passes these skills on to the next generation. Our work keeps our cultural heritage alive, creates better jobs and income for our artisans, and carries Ethiopia’s name onto the international stage.",
+    "visible": true,
+    "data": null
+   },
+   "vision": {
+    "id": "sc_vision_en",
+    "section": "vision",
+    "lang": "en",
+    "headline": "From the loom *to the world*.",
+    "body": "Our vision is to transform Ethiopia’s under-valued weaving sector into a modern, high-quality creative industry that is ready for the international market.",
+    "visible": true,
+    "data": null
+   },
+   "enquiry": {
+    "id": "cmw9n3qnx000utpdk5jiu8wqt",
+    "section": "enquiry",
+    "lang": "en",
+    "headline": "Buy from *DaMarios*.",
+    "body": "Shops, restaurants, distributors, international buyers and the Ethiopian diaspora: tell us what you need and we will send a quotation.",
+    "visible": true,
+    "data": null
+   },
+   "hero": {
+    "id": "cmw9n3qng000ptpdkxkixu6fs",
+    "section": "hero",
+    "lang": "en",
+    "headline": "Heritage we *weave*. Skills we *pass on*.",
+    "body": "DaMarios produces garments and spices for local and international markets, and trains the next generation in fashion design, culinary arts and beautification.",
+    "visible": true,
+    "data": null
+   }
+  },
+  "products": [
+   {
+    "id": "cmw9n41te0013s5eq0gch47fp",
+    "name": "[Garment product]",
+    "division": "GARMENT",
+    "description": "Ready-to-wear for the local market.",
+    "packSizes": "",
+    "markets": "Local",
+    "imageUrl": null,
+    "sortOrder": 1,
+    "published": true
+   },
+   {
+    "id": "cmw9n41te0014s5eqk6gj1olg",
+    "name": "[Garment product]",
+    "division": "GARMENT",
+    "description": "Bulk and private-label production.",
+    "packSizes": "",
+    "markets": "Local · Export",
+    "imageUrl": null,
+    "sortOrder": 2,
+    "published": true
+   },
+   {
+    "id": "cmw9n41te0015s5eqghuaq36y",
+    "name": "[Garment product]",
+    "division": "GARMENT",
+    "description": "Cultural garments.",
+    "packSizes": "",
+    "markets": "Local · Export",
+    "imageUrl": null,
+    "sortOrder": 3,
+    "published": true
+   },
+   {
+    "id": "cmw9n41te0016s5eq7a3ez7xt",
+    "name": "[e.g. Berbere]",
+    "division": "SPICE",
+    "description": "Cleaned, ground and packed.",
+    "packSizes": "250 g · 500 g · 1 kg · bulk",
+    "markets": "Retail · Wholesale · Export",
+    "imageUrl": null,
+    "sortOrder": 4,
+    "published": true
+   },
+   {
+    "id": "cmw9n41te0017s5eq3y0eeaml",
+    "name": "[e.g. Mitmita]",
+    "division": "SPICE",
+    "description": "Cleaned, ground and packed.",
+    "packSizes": "100 g · 250 g · bulk",
+    "markets": "Retail · Wholesale",
+    "imageUrl": null,
+    "sortOrder": 5,
+    "published": true
+   },
+   {
+    "id": "cmw9n41te0018s5eqilglgbt1",
+    "name": "[e.g. Shiro]",
+    "division": "SPICE",
+    "description": "Roasted and milled.",
+    "packSizes": "500 g · 1 kg · bulk",
+    "markets": "Retail · Wholesale · Export",
+    "imageUrl": null,
+    "sortOrder": 6,
+    "published": true
+   }
+  ],
+  "courses": [
+   {
+    "id": "cmw9n41tp0019s5eqzbl6xojo",
+    "name": "Basic sewing & tailoring",
+    "department": "FASHION",
+    "duration": "[3 months]",
+    "fee": "6000",
+    "description": "",
+    "published": true,
+    "sortOrder": 0
+   },
+   {
+    "id": "cmw9n41tt001as5eqrnqe4bu4",
+    "name": "Pattern making & design",
+    "department": "FASHION",
+    "duration": "[6 months]",
+    "fee": "9000",
+    "description": "",
+    "published": true,
+    "sortOrder": 1
+   },
+   {
+    "id": "cmw9n41tv001bs5eq6apb6uks",
+    "name": "Advanced fashion design",
+    "department": "FASHION",
+    "duration": "[1 year]",
+    "fee": "15000",
+    "description": "",
+    "published": true,
+    "sortOrder": 2
+   },
+   {
+    "id": "cmw9n41tw001cs5eq5cvkcvuk",
+    "name": "Basic cooking & food safety",
+    "department": "CULINARY",
+    "duration": "[3 months]",
+    "fee": "6000",
+    "description": "",
+    "published": true,
+    "sortOrder": 3
+   },
+   {
+    "id": "cmw9n41ty001ds5eqtixkc0h9",
+    "name": "Pastry & baking",
+    "department": "CULINARY",
+    "duration": "[4 months]",
+    "fee": "7000",
+    "description": "",
+    "published": true,
+    "sortOrder": 4
+   },
+   {
+    "id": "cmw9n41tz001es5eqxhy5jdv8",
+    "name": "Professional chef course",
+    "department": "CULINARY",
+    "duration": "[1 year]",
+    "fee": "15000",
+    "description": "",
+    "published": true,
+    "sortOrder": 5
+   },
+   {
+    "id": "cmw9n41u1001fs5eqtn7ehqpn",
+    "name": "Makeup artistry",
+    "department": "BEAUTY",
+    "duration": "[3 months]",
+    "fee": "6500",
+    "description": "",
+    "published": true,
+    "sortOrder": 6
+   },
+   {
+    "id": "cmw9n41u2001gs5eqh4mvcnr1",
+    "name": "Hairdressing & braiding",
+    "department": "BEAUTY",
+    "duration": "[4 months]",
+    "fee": "8000",
+    "description": "",
+    "published": true,
+    "sortOrder": 7
+   },
+   {
+    "id": "cmw9n41u4001hs5eqmaym9cb7",
+    "name": "Salon business basics",
+    "department": "BEAUTY",
+    "duration": "[1 month]",
+    "fee": "2500",
+    "description": "",
+    "published": true,
+    "sortOrder": 8
+   }
+  ],
+  "news": [
+   {
+    "id": "cmw9n41vw002as5eqaxrssium",
+    "title": "Registration open for all three departments",
+    "kind": "New intake",
+    "body": "[Details of the next intake.]",
+    "date": "2026-11-09T19:14:20.684Z",
+    "imageUrl": "/images/news-intake.jpg",
+    "published": true
+   },
+   {
+    "id": "cmw9n41vw002bs5eqz83zwroo",
+    "title": "First graduation ceremony",
+    "kind": "Graduation",
+    "body": "[Photos and names of the graduates.]",
+    "date": "2026-10-20T19:14:20.683Z",
+    "imageUrl": "/images/news-graduation.jpg",
+    "published": true
+   },
+   {
+    "id": "cmw9n41vw002cs5eqrrypecil",
+    "title": "[First export shipment / market fair]",
+    "kind": "Production",
+    "body": "[Details.]",
+    "date": "2026-09-25T19:14:20.683Z",
+    "imageUrl": "/images/news-market.jpg",
+    "published": true
+   }
+  ],
+  "gallery": [
+   {
+    "id": "cmw9n41vz002ds5eqdluyd497",
+    "title": "Garment production line",
+    "category": "GARMENTS",
+    "imageUrl": "/images/gallery-tailor.jpg",
+    "tall": true,
+    "published": true,
+    "createdAt": "2026-11-09T19:14:20.688Z"
+   },
+   {
+    "id": "cmw9n41vz002es5eq5lu9cllo",
+    "title": "Spice cleaning & grinding",
+    "category": "SPICES",
+    "imageUrl": "/images/gallery-chili.jpg",
+    "tall": false,
+    "published": true,
+    "createdAt": "2026-11-09T19:14:20.688Z"
+   },
+   {
+    "id": "cmw9n41vz002fs5eqswc73r06",
+    "title": "Fashion students at work",
+    "category": "TRAINING",
+    "imageUrl": "/images/gallery-studio.jpg",
+    "tall": false,
+    "published": true,
+    "createdAt": "2026-11-09T19:14:20.688Z"
+   },
+   {
+    "id": "cmw9n41vz002gs5eqwyepqicr",
+    "title": "Culinary class",
+    "category": "TRAINING",
+    "imageUrl": "/images/gallery-chef.jpg",
+    "tall": false,
+    "published": true,
+    "createdAt": "2026-11-09T19:14:20.688Z"
+   },
+   {
+    "id": "cmw9n41vz002hs5eqg92pfo6n",
+    "title": "Packed spices ready for market",
+    "category": "SPICES",
+    "imageUrl": "/images/gallery-spice-shop.jpg",
+    "tall": true,
+    "published": true,
+    "createdAt": "2026-11-09T19:14:20.688Z"
+   },
+   {
+    "id": "cmw9n41vz002is5eqff5ktj8z",
+    "title": "Bridal makeup practice",
+    "category": "TRAINING",
+    "imageUrl": "/images/gallery-makeup.jpg",
+    "tall": true,
+    "published": true,
+    "createdAt": "2026-11-09T19:14:20.688Z"
+   },
+   {
+    "id": "cmw9n41vz002js5eq26jbtaqh",
+    "title": "Finished garments",
+    "category": "GARMENTS",
+    "imageUrl": "/images/gallery-fabric.jpg",
+    "tall": false,
+    "published": true,
+    "createdAt": "2026-11-09T19:14:20.688Z"
+   },
+   {
+    "id": "cmw9n41vz002ks5eqgas8kjrb",
+    "title": "Graduation day",
+    "category": "EVENTS",
+    "imageUrl": "/images/gallery-graduation.jpg",
+    "tall": false,
+    "published": true,
+    "createdAt": "2026-11-09T19:14:20.688Z"
+   }
+  ],
+  "contact": {
+   "email": "info@[domain]",
+   "hours": "Mon–Sat · 8:00–18:00",
+   "phone": "+251 [sales phone]",
+   "mapUrl": "",
+   "tiktok": "",
+   "address": "[Kebele / landmark], Wolaita Sodo, Ethiopia",
+   "youtube": "",
+   "facebook": "",
+   "telegram": "@[damarios]",
+   "instagram": "",
+   "trainingPhone": "+251 [training phone]"
+  },
+  "openingDate": "2027-01-15"
+ },
+ "/admin/people/payroll/:period": null
+}

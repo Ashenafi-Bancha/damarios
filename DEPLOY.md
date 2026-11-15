@@ -1,4 +1,58 @@
-# Putting DaMarios online (prototype)
+# Putting DaMarios online
+
+There are two ways:
+
+- **A. Prototype on Vercel only (demo mode):** no API, no database. Quickest way to show the owner the website
+  and the staff panel. Nothing is saved.
+- **B. Full system:** Vercel + Render + Neon. Everything works and is saved. Use this when the business starts using it.
+
+---
+
+# A. Prototype on Vercel only (demo mode)
+
+The website and the staff panel run on Vercel by themselves. The content comes from
+`frontend/src/lib/demo-data.json`, a recording of the real API: the website text, products, courses, gallery and
+news, and an empty staff panel.
+
+1. Go to https://vercel.com → **Sign up / Log in with GitHub** (Ashenafi-Bancha).
+2. **Add New → Project** → import the `damarios` repository.
+3. **Root Directory**: click **Edit** → choose `frontend`. Framework: Next.js (detected).
+4. Open **Environment Variables** and add:
+
+   | Name | Value |
+   |---|---|
+   | `NEXT_PUBLIC_DEMO` | `true` |
+   | `NEXT_PUBLIC_DEMO_EMAIL` | the login email to give her, e.g. `admin@damarios.com` |
+   | `NEXT_PUBLIC_DEMO_PASSWORD` | a password you make up **only for this demo** |
+
+5. Click **Deploy**. After about two minutes you get an address like `https://damarios.vercel.app`.
+6. Check it:
+   - `https://<address>/`: the website
+   - `https://<address>/admin/login`: sign in with the email and password from step 4
+
+**What to send the owner** (privately: in person, phone or a direct message):
+- the website: `https://<address>`
+- the staff panel: `https://<address>/admin/login`
+- the email and password from step 4
+
+**How the demo behaves**
+- Every staff screen opens and can be explored: dashboard, orders, production, training, employees, finance,
+  website, users, settings. A yellow **"Preview · changes are not saved"** label shows at the top.
+- Saving or uploading shows: *"This is a preview: changes are not saved yet…"*
+- The website's order, training and newsletter forms show a note asking visitors to call or message on Telegram.
+- The demo password is part of the site's browser code, so it is not a real secret: use one you use nowhere else.
+  There is no real data behind it.
+- To change the demo email or password: Vercel → Project → Settings → Environment Variables → edit → **Redeploy**.
+- After changing website content on your computer, refresh the recording, then push:
+  `cd backend` → `npm run demo:record` (needs the local database and API running) → commit and push.
+  Vercel redeploys on every push.
+
+When you switch to the full system later, remove `NEXT_PUBLIC_DEMO` (and the two demo login values) in Vercel,
+add `BACKEND_URL`, and follow part B.
+
+---
+
+# B. Full system: Vercel + Render + Neon
 
 The project has three parts. Each goes to a free service that deploys straight from GitHub:
 

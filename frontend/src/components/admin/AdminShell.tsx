@@ -9,6 +9,7 @@ import {
   Bell, Boxes, BriefcaseBusiness, ExternalLink, Factory, Gauge, Globe, GraduationCap, LogOut, Menu, Settings, ShieldCheck, Shirt,
   ShoppingBag, Sparkles, UserRound, Users, Wallet, X,
 } from 'lucide-react';
+import { DEMO, DEMO_SAVE_MESSAGE } from '@/lib/demo';
 import { api } from '@/lib/api';
 import { etDateAm, gcDate } from '@/lib/format';
 
@@ -116,6 +117,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           <header className="sticky top-0 z-20 flex flex-wrap items-center justify-between gap-3 border-b border-[#DCE4F0] bg-white/90 px-4 py-3 backdrop-blur md:px-7">
             <button type="button" onClick={() => setNavOpen(true)} aria-label="Open menu" className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#C9D5E8] lg:hidden"><Menu className="h-5 w-5" /></button>
             <div className="hidden text-sm text-muted md:block">{current?.label ?? 'Admin'}</div>
+            {DEMO && <span title={DEMO_SAVE_MESSAGE} className="rounded-full bg-[#FFF4DC] px-3 py-1 text-xs font-semibold text-[#6B4A00]">Preview · changes are not saved</span>}
             <div className="ml-auto flex items-center gap-4">
               <div className="hidden flex-col items-end text-[13px] leading-tight sm:flex">
                 <span className="font-ethiopic font-medium">{etDateAm(new Date())}</span>
