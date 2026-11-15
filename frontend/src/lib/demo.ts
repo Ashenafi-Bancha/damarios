@@ -2,9 +2,9 @@
  * Demo mode: the whole site (public pages and staff panel) runs without the API or a database,
  * for showing the prototype from a static host such as Vercel.
  *
- * Turn it on with NEXT_PUBLIC_DEMO=true, and set the staff login with
- * NEXT_PUBLIC_DEMO_EMAIL and NEXT_PUBLIC_DEMO_PASSWORD. These end up in the browser code, so use a
- * demo-only password: there is no real data behind it.
+ * Turn it on with NEXT_PUBLIC_DEMO=true. The sample staff login is admin@damarios.com / admin@2026!
+ * (NEXT_PUBLIC_DEMO_EMAIL and NEXT_PUBLIC_DEMO_PASSWORD override it). It is part of the browser code, so it is
+ * not a secret: use it only for this demo, where there is no real data behind it.
  *
  * Every screen reads the answers recorded from the real API (demo-data.json: website content, starter
  * products/courses/gallery/news, and an empty admin). Saving is switched off, with a clear message.
@@ -15,7 +15,7 @@ export const DEMO = process.env.NEXT_PUBLIC_DEMO === 'true';
 
 const DATA = recorded as unknown as Record<string, unknown>;
 const EMAIL = (process.env.NEXT_PUBLIC_DEMO_EMAIL || 'admin@damarios.com').trim().toLowerCase();
-const PASSWORD = process.env.NEXT_PUBLIC_DEMO_PASSWORD || '';
+const PASSWORD = process.env.NEXT_PUBLIC_DEMO_PASSWORD || 'admin@2026!';
 const SESSION_KEY = 'dm-demo-session';
 
 export const DEMO_SAVE_MESSAGE = 'This is a preview: changes are not saved yet. Everything you add will work once the system goes live.';

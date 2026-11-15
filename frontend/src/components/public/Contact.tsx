@@ -59,7 +59,7 @@ export function Contact() {
               sizes="(min-width: 1024px) 55vw, 100vw" position="50% 45%" className="h-[420px] md:h-[540px]" />
             <figcaption className="absolute bottom-4 left-4 right-4 rounded-lg bg-ink/85 p-4 text-white backdrop-blur-sm md:bottom-6 md:left-6 md:right-auto md:max-w-[340px] md:p-5">
               <span className="block text-[11px] font-semibold tracking-[.2em] text-gold">OUR CENTER · WOLAITA SODO</span>
-              <span className="mt-1.5 block font-serif text-xl leading-snug md:text-2xl">Production and training, under one roof.</span>
+              <span className="mt-1.5 block font-serif text-xl leading-snug md:text-2xl">Production and Training Center</span>
             </figcaption>
           </figure>
           {c.mapUrl?.startsWith('https://www.google.com/maps/embed') && (

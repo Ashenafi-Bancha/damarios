@@ -17,23 +17,17 @@ news, and an empty staff panel.
 1. Go to https://vercel.com → **Sign up / Log in with GitHub** (Ashenafi-Bancha).
 2. **Add New → Project** → import the `damarios` repository.
 3. **Root Directory**: click **Edit** → choose `frontend`. Framework: Next.js (detected).
-4. Open **Environment Variables** and add:
-
-   | Name | Value |
-   |---|---|
-   | `NEXT_PUBLIC_DEMO` | `true` |
-   | `NEXT_PUBLIC_DEMO_EMAIL` | the login email to give her, e.g. `admin@damarios.com` |
-   | `NEXT_PUBLIC_DEMO_PASSWORD` | a password you make up **only for this demo** |
-
+4. **Environment Variables**: nothing needed. Built on Vercel without a `BACKEND_URL`, the site runs in demo mode
+   by itself. (`NEXT_PUBLIC_DEMO=true` / `false` forces it on or off.)
 5. Click **Deploy**. After about two minutes you get an address like `https://damarios.vercel.app`.
 6. Check it:
    - `https://<address>/`: the website
-   - `https://<address>/admin/login`: sign in with the email and password from step 4
+   - `https://<address>/admin/login`: sign in with **admin@damarios.com** / **admin@2026!**
 
 **What to send the owner** (privately: in person, phone or a direct message):
 - the website: `https://<address>`
 - the staff panel: `https://<address>/admin/login`
-- the email and password from step 4
+- the login: **admin@damarios.com** / **admin@2026!**
 
 **How the demo behaves**
 - Every staff screen opens and can be explored: dashboard, orders, production, training, employees, finance,
@@ -42,13 +36,15 @@ news, and an empty staff panel.
 - The website's order, training and newsletter forms show a note asking visitors to call or message on Telegram.
 - The demo password is part of the site's browser code, so it is not a real secret: use one you use nowhere else.
   There is no real data behind it.
-- To change the demo email or password: Vercel → Project → Settings → Environment Variables → edit → **Redeploy**.
+- The sample staff login is **admin@damarios.com** / **admin@2026!** (set in `frontend/src/lib/demo.ts`).
+  To use a different one without changing the code, add `NEXT_PUBLIC_DEMO_EMAIL` and `NEXT_PUBLIC_DEMO_PASSWORD`
+  in Vercel → Project → Settings → Environment Variables, then **Redeploy**.
 - After changing website content on your computer, refresh the recording, then push:
   `cd backend` → `npm run demo:record` (needs the local database and API running) → commit and push.
   Vercel redeploys on every push.
 
-When you switch to the full system later, remove `NEXT_PUBLIC_DEMO` (and the two demo login values) in Vercel,
-add `BACKEND_URL`, and follow part B.
+When you switch to the full system later, add `BACKEND_URL` in Vercel (demo mode then turns off by itself)
+and follow part B.
 
 ---
 
