@@ -1,9 +1,8 @@
 import type { Lang } from './types';
 
 /**
- * Interface labels for the public site. Section text itself comes from the admin's Website content screen.
- * For now the site is English only (no language switcher). The Amharic labels are kept for later and
- * should be reviewed by a native speaker before the switcher is brought back.
+ * Interface labels for the public site, in English and Amharic. Section text itself comes from the admin's
+ * Website content screen. Shorter one-off texts are translated where they are used, with tx(english, amharic).
  */
 const EN = {
   home: 'Home', about: 'About', production: 'Production', training: 'Training center', gallery: 'Gallery', news: 'News', contact: 'Contact',
@@ -13,9 +12,9 @@ const EN = {
 };
 
 const AM: Partial<typeof EN> = {
-  home: 'መነሻ', about: 'ስለ እኛ', production: 'ምርት', training: 'የስልጠና ማዕከል', gallery: 'ጋለሪ', news: 'ዜና', contact: 'ያግኙን',
-  enquire: 'ይዘዙ / ይጠይቁ', apply: 'ለስልጠና ያመልክቱ', applyShort: 'ያመልክቱ', order: 'ይዘዙ', call: 'ይደውሉ',
-  ourProduction: 'ምርቶቻችን', seeCourses: 'ኮርሶችን ይመልከቱ', nowEnrolling: 'ምዝገባ ተጀምሯል', menu: 'ማውጫ',
+  home: 'መነሻ', about: 'ስለ እኛ', production: 'ምርት', training: 'ማሠልጠኛ ማዕከል', gallery: 'ጋለሪ', news: 'ዜና', contact: 'ያግኙን',
+  enquire: 'ይዘዙ', apply: 'ለስልጠና ያመልክቱ', applyShort: 'ያመልክቱ', order: 'ይዘዙ', call: 'ይደውሉ',
+  ourProduction: 'ምርቶቻችን', seeCourses: 'ኮርሶችን ይመልከቱ እና ያመልክቱ', nowEnrolling: 'ምዝገባ ተጀምሯል', menu: 'ማውጫ',
   sendApplication: 'ማመልከቻዬን ላክ', requestQuote: 'ዋጋ ይጠይቁ',
 };
 

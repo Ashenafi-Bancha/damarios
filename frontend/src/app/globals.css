@@ -7,6 +7,11 @@
   body { @apply bg-ivory text-ink font-sans antialiased; }
   :focus-visible { outline: 2px solid #0051A1; outline-offset: 3px; }
   ::selection { background: #8CC4FF; color: #0B1F3F; }
+  /* Amharic: no wide letter-spacing or tight lines, which suit Latin capitals but crowd Ethiopic letters. */
+  html[lang='am'] .eyebrow, html[lang='am'] [class*='tracking-'] { letter-spacing: .02em; }
+  html[lang='am'] .h2 { line-height: 1.2; }
+  /* Ethiopic fonts have no italic: emphasised words stay upright (they keep their colour). */
+  html[lang='am'] em, html[lang='am'] .italic { font-style: normal; }
 }
 
 @layer components {

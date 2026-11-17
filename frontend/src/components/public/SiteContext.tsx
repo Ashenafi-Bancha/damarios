@@ -9,6 +9,8 @@ export interface SiteCtx {
   lang: Lang;
   setLang: (l: Lang) => void;
   t: Labels;
+  /** Picks the English or the Amharic text, following the visitor's language. */
+  tx: (en: string, am: string) => string;
   /** Department chosen in the Training section; the application form follows it. */
   dept: TrainingDept;
   setDept: (d: TrainingDept) => void;

@@ -32,6 +32,25 @@ const CONTENT: Record<string, [string, string]> = {
   contact: ['Visit *DaMarios*.', ''],
 };
 
+/** The same sections in Amharic. Sections left out here show in English. */
+const CONTENT_AM: Record<string, [string, string]> = {
+  hero: ['ቅርሳችንን *እንሸምናለን*። ክህሎትን *እናስተላልፋለን*።', 'ዳማሪዮስ ለአገር ውስጥ እና ለዓለም አቀፍ ገበያ አልባሳትና ቅመማ ቅመም ያመርታል፤ እንዲሁም ቀጣዩን ትውልድ በፋሽን ዲዛይን፣ በምግብ ዝግጅት እና በውበት ሙያ ያሠለጥናል።'],
+  about: ['ስለ ዳማሪዮስ', 'ኢትዮጵያ በሽመና ጥበብ እጅግ የበለፀገ ታሪክ እና በብዙዎች ዘንድ ያልተነካ ትልቅ እምቅ ሀብት አላት። የእኛ አላማ ይህንን ብዙ ትኩረት ያልተሰጠውን፣ ነገር ግን እጅግ ውብ የሆነውን የእጅ ጥበብ ስራ ከዘመናዊ የዲዛይን ጥበብ ጋር በማዋሃድ ወደ ላቀ ደረጃ ማሳደግ ነው። የአገር ውስጥ ሸማኞችን የተፈጥሮ ታለንት እና ክህሎት በመጠቀም፣ ጥራቱን የጠበቀና የወቅቱን የፋሽን ፍላጎት የሚያሟላ ምርት ለገበያ እናቀርባለን። ይህ ስራ የባህል እሴታችንን ጠብቆ ማቆየት ብቻ ሳይሆን፣ ለባለሙያዎቻችን የተሻለ የስራ እድል እና ገቢ የሚፈጥር፣ እንዲሁም የሀገራችንን ስም በአለም አቀፍ መድረክ የሚያስጠራ የፈጠራ ስራ ነው።'],
+  vision: ['ራዕያችን', 'ራዕያችን በኢትዮጵያ በዝቅተኛ ደረጃ የሚታየውን የሽመና ዘርፍ ወደ ዘመናዊ፣ ከፍተኛ ጥራት ያለው እና ለአለም አቀፍ ገበያ የሚመጥን የፈጠራ ኢንዱስትሪ መለወጥ ነው።'],
+  production: ['በወላይታ ሶዶ የተመረተ፣ *ለዓለም*።', 'በአንድ ጣሪያ ሥር ሁለት የምርት ዘርፎች፦ አልባሳት እና የኢትዮጵያ ቅመማ ቅመም፤ ለአገር ውስጥ ደንበኞች እና ለዓለም አቀፍ ገዢዎች።'],
+  garments: ['ለአገር ውስጥ እና ለዓለም አቀፍ ገበያ የሚሆኑ አልባሳት', 'የኢትዮጵያ የእጅ ሽመና ጨርቅ እና የወላይታ ዲንጉዛ ወደ ዘመናዊ አልባሳት ተቀይረው ለአገር ውስጥ፣ ለዓለም አቀፍ እና በውጭ ለሚኖሩ ኢትዮጵያውያን ደንበኞች ይቀርባሉ። በእያንዳንዱ ደረጃ ጥራቱ ይፈተሻል፤ ለጅምላ እና ለኤክስፖርት ትዕዛዞች በቂ የማምረት አቅም አለን።'],
+  spices: ['የኢትዮጵያ ቅመማ ቅመም፣ የተጣራ፣ የተፈጨ እና የታሸገ', '[የትኞቹ ቅመሞች፣ እንዴት እንደሚገኙ እና እንደሚዘጋጁ።] ለሱቆች፣ ለምግብ ቤቶች እና ለኤክስፖርት በችርቻሮ እና በጅምላ መጠን ይታሸጋል።'],
+  enquiry: ['ከ*ዳማሪዮስ* ይግዙ።', 'ሱቆች፣ ምግብ ቤቶች፣ አከፋፋዮች፣ ዓለም አቀፍ ገዢዎች እና በውጭ የሚኖሩ ኢትዮጵያውያን፦ የሚፈልጉትን ይንገሩን፤ የዋጋ ማቅረቢያ እንልክልዎታለን።'],
+  training: ['ክህሎት ይማሩ። *ነገዎን ይገንቡ።*', 'በሥራ ላይ ባሉ ባለሙያዎች፣ በእውነተኛ የሥራ ቦታዎች የሚሰጥ የተግባር ስልጠና፤ ሲጨርሱ የምስክር ወረቀት ያገኛሉ።'],
+  'dept-fashion': ['ፋሽን ዲዛይን', 'ከሥዕል እና ከፓተርን አሠራር ጀምሮ እስከ መቁረጥ፣ መስፋት እና ማጠናቀቅ። ሠልጣኞች በራሳችን የልብስ ስፌት ክፍል ውስጥ ይለማመዳሉ።'],
+  'dept-culinary': ['የምግብ ዝግጅት', 'የኢትዮጵያ እና የዓለም አቀፍ ምግብ ዝግጅት፣ ዳቦና ኬክ ጋገራ እና የኩሽና ንጽሕና፤ በእውነተኛ የስልጠና ኩሽና ውስጥ በተግባር።'],
+  'dept-beauty': ['የውበት ሙያ', 'ፕሮፌሽናል ሜካፕ፣ የሙሽራ ውበት፣ የፀጉር ቁርጥ፣ ሹሩባ እና አሠራር፤ እንዲሁም የራስዎን የውበት ሳሎን እንዴት እንደሚያስተዳድሩ።'],
+  admissions: ['በ*አራት ደረጃዎች* ያመልክቱ።', 'ቀጣይ ምዝገባ፦ [ቀን]። የምዝገባ ክፍያ፦ ብር [·]፤ በቴሌብር፣ በሲቢኢ ብር ወይም በጥሬ ገንዘብ መክፈል ይቻላል።'],
+  gallery: ['ዳማሪዮስ *ከውስጥ*።', ''],
+  news: ['ከ*ማዕከላችን* የተገኙ ታሪኮች።', ''],
+  contact: ['*ዳማሪዮስን* ይጎብኙ።', ''],
+};
+
 async function base() {
   const email = (process.env.SEED_OWNER_EMAIL || 'owner@damarios.local').toLowerCase();
   const password = process.env.SEED_OWNER_PASSWORD;
@@ -55,7 +74,7 @@ async function base() {
       address: '[Kebele / landmark], Wolaita Sodo, Ethiopia', hours: 'Mon–Sat · 8:00–18:00',
       instagram: '', tiktok: '', facebook: '', youtube: '', mapUrl: '',
     },
-    business: { name: 'DaMarios Garment and Skill Training Center', nameAm: 'ዳማሪዮስ ጋርመንት እና የሙያ ስልጠና ማዕከል', tin: '', licence: '', startTime: '08:00', workingDays: 'Monday – Saturday' },
+    business: { name: 'DaMarios Garment and Skill Training Center', nameAm: 'ዳማሪዮስ ጋርመንት እና የክህሎት ማሠልጠኛ ማዕከል', tin: '', licence: '', startTime: '08:00', workingDays: 'Monday – Saturday' },
     // Confirm these with the company's accountant. Tax brackets are left empty on purpose.
     payroll: { pensionEmployee: 7, pensionEmployer: 11, overtimeMultiplier: 1.5, brackets: [] },
     calendar: { main: 'ethiopian', showGregorian: true, adminLanguage: 'en' },
@@ -69,6 +88,10 @@ async function base() {
 
   for (const [section, [headline, body]] of Object.entries(CONTENT)) {
     await prisma.siteContent.upsert({ where: { section_lang: { section, lang: 'en' } }, update: {}, create: { section, lang: 'en', headline, body } });
+  }
+  // Amharic: added only where a section has no Amharic text yet, so edits made in the admin are kept.
+  for (const [section, [headline, body]] of Object.entries(CONTENT_AM)) {
+    await prisma.siteContent.upsert({ where: { section_lang: { section, lang: 'am' } }, update: {}, create: { section, lang: 'am', headline, body } });
   }
   console.log(`Owner account: ${email}`);
 }

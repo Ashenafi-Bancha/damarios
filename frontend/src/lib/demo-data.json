@@ -223,6 +223,123 @@
    "data": null
   },
   {
+   "id": "cmwkggayx001f4942zl8dhxuo",
+   "section": "admissions",
+   "lang": "am",
+   "headline": "በ*አራት ደረጃዎች* ያመልክቱ።",
+   "body": "ቀጣይ ምዝገባ፦ [ቀን]። የምዝገባ ክፍያ፦ ብር [·]፤ በቴሌብር፣ በሲቢኢ ብር ወይም በጥሬ ገንዘብ መክፈል ይቻላል።",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmwkggaz8001i4942gdlpurh4",
+   "section": "contact",
+   "lang": "am",
+   "headline": "*ዳማሪዮስን* ይጎብኙ።",
+   "body": "",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmwkggayt001e4942ohah0tsr",
+   "section": "dept-beauty",
+   "lang": "am",
+   "headline": "የውበት ሙያ",
+   "body": "ፕሮፌሽናል ሜካፕ፣ የሙሽራ ውበት፣ የፀጉር ቁርጥ፣ ሹሩባ እና አሠራር፤ እንዲሁም የራስዎን የውበት ሳሎን እንዴት እንደሚያስተዳድሩ።",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmwkggayp001d4942e3vbuxe4",
+   "section": "dept-culinary",
+   "lang": "am",
+   "headline": "የምግብ ዝግጅት",
+   "body": "የኢትዮጵያ እና የዓለም አቀፍ ምግብ ዝግጅት፣ ዳቦና ኬክ ጋገራ እና የኩሽና ንጽሕና፤ በእውነተኛ የስልጠና ኩሽና ውስጥ በተግባር።",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmwkggayj001c4942kqnr84aa",
+   "section": "dept-fashion",
+   "lang": "am",
+   "headline": "ፋሽን ዲዛይን",
+   "body": "ከሥዕል እና ከፓተርን አሠራር ጀምሮ እስከ መቁረጥ፣ መስፋት እና ማጠናቀቅ። ሠልጣኞች በራሳችን የልብስ ስፌት ክፍል ውስጥ ይለማመዳሉ።",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmwkggaya001a49428sk0h6s7",
+   "section": "enquiry",
+   "lang": "am",
+   "headline": "ከ*ዳማሪዮስ* ይግዙ።",
+   "body": "ሱቆች፣ ምግብ ቤቶች፣ አከፋፋዮች፣ ዓለም አቀፍ ገዢዎች እና በውጭ የሚኖሩ ኢትዮጵያውያን፦ የሚፈልጉትን ይንገሩን፤ የዋጋ ማቅረቢያ እንልክልዎታለን።",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmwkggaz0001g4942lfup3amd",
+   "section": "gallery",
+   "lang": "am",
+   "headline": "ዳማሪዮስ *ከውስጥ*።",
+   "body": "",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmwkggay100184942qt3f27w4",
+   "section": "garments",
+   "lang": "am",
+   "headline": "ለአገር ውስጥ እና ለዓለም አቀፍ ገበያ የሚሆኑ አልባሳት",
+   "body": "የኢትዮጵያ የእጅ ሽመና ጨርቅ እና የወላይታ ዲንጉዛ ወደ ዘመናዊ አልባሳት ተቀይረው ለአገር ውስጥ፣ ለዓለም አቀፍ እና በውጭ ለሚኖሩ ኢትዮጵያውያን ደንበኞች ይቀርባሉ። በእያንዳንዱ ደረጃ ጥራቱ ይፈተሻል፤ ለጅምላ እና ለኤክስፖርት ትዕዛዞች በቂ የማምረት አቅም አለን።",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmwkggaxj001449421vgf2lyz",
+   "section": "hero",
+   "lang": "am",
+   "headline": "ቅርሳችንን *እንሸምናለን*። ክህሎትን *እናስተላልፋለን*።",
+   "body": "ዳማሪዮስ ለአገር ውስጥ እና ለዓለም አቀፍ ገበያ አልባሳትና ቅመማ ቅመም ያመርታል፤ እንዲሁም ቀጣዩን ትውልድ በፋሽን ዲዛይን፣ በምግብ ዝግጅት እና በውበት ሙያ ያሠለጥናል።",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmwkggaz5001h49426zywec3v",
+   "section": "news",
+   "lang": "am",
+   "headline": "ከ*ማዕከላችን* የተገኙ ታሪኮች።",
+   "body": "",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmwkggaxy00174942yk7350zo",
+   "section": "production",
+   "lang": "am",
+   "headline": "በወላይታ ሶዶ የተመረተ፣ *ለዓለም*።",
+   "body": "በአንድ ጣሪያ ሥር ሁለት የምርት ዘርፎች፦ አልባሳት እና የኢትዮጵያ ቅመማ ቅመም፤ ለአገር ውስጥ ደንበኞች እና ለዓለም አቀፍ ገዢዎች።",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmwkggay600194942euc7vnta",
+   "section": "spices",
+   "lang": "am",
+   "headline": "የኢትዮጵያ ቅመማ ቅመም፣ የተጣራ፣ የተፈጨ እና የታሸገ",
+   "body": "[የትኞቹ ቅመሞች፣ እንዴት እንደሚገኙ እና እንደሚዘጋጁ።] ለሱቆች፣ ለምግብ ቤቶች እና ለኤክስፖርት በችርቻሮ እና በጅምላ መጠን ይታሸጋል።",
+   "visible": true,
+   "data": null
+  },
+  {
+   "id": "cmwkggaye001b4942emjwe0pa",
+   "section": "training",
+   "lang": "am",
+   "headline": "ክህሎት ይማሩ። *ነገዎን ይገንቡ።*",
+   "body": "በሥራ ላይ ባሉ ባለሙያዎች፣ በእውነተኛ የሥራ ቦታዎች የሚሰጥ የተግባር ስልጠና፤ ሲጨርሱ የምስክር ወረቀት ያገኛሉ።",
+   "visible": true,
+   "data": null
+  },
+  {
    "id": "sc_vision_am",
    "section": "vision",
    "lang": "am",
@@ -271,8 +388,8 @@
    "phone": null,
    "role": "OWNER",
    "active": true,
-   "lastActiveAt": "2026-11-15T18:08:04.984Z",
-   "createdAt": "2026-11-15T18:08:04.984Z"
+   "lastActiveAt": "2026-11-17T08:54:01.230Z",
+   "createdAt": "2026-11-17T08:54:01.230Z"
   }
  ],
  "/admin/permissions": {
@@ -370,7 +487,7 @@
   "business": {
    "tin": "",
    "name": "DaMarios Garment and Skill Training Center",
-   "nameAm": "ዳማሪዮስ ጋርመንት እና የሙያ ስልጠና ማዕከል",
+   "nameAm": "ዳማሪዮስ ጋርመንት እና የክህሎት ማሠልጠኛ ማዕከል",
    "licence": "",
    "startTime": "08:00",
    "workingDays": "Monday – Saturday"
@@ -860,6 +977,422 @@
     "lang": "en",
     "headline": "Heritage we *weave*. Skills we *pass on*.",
     "body": "DaMarios produces garments and spices for local and international markets, and trains the next generation in fashion design, culinary arts and beautification.",
+    "visible": true,
+    "data": null
+   }
+  },
+  "products": [
+   {
+    "id": "cmw9n41te0013s5eq0gch47fp",
+    "name": "[Garment product]",
+    "division": "GARMENT",
+    "description": "Ready-to-wear for the local market.",
+    "packSizes": "",
+    "markets": "Local",
+    "imageUrl": null,
+    "sortOrder": 1,
+    "published": true
+   },
+   {
+    "id": "cmw9n41te0014s5eqk6gj1olg",
+    "name": "[Garment product]",
+    "division": "GARMENT",
+    "description": "Bulk and private-label production.",
+    "packSizes": "",
+    "markets": "Local · Export",
+    "imageUrl": null,
+    "sortOrder": 2,
+    "published": true
+   },
+   {
+    "id": "cmw9n41te0015s5eqghuaq36y",
+    "name": "[Garment product]",
+    "division": "GARMENT",
+    "description": "Cultural garments.",
+    "packSizes": "",
+    "markets": "Local · Export",
+    "imageUrl": null,
+    "sortOrder": 3,
+    "published": true
+   },
+   {
+    "id": "cmw9n41te0016s5eq7a3ez7xt",
+    "name": "[e.g. Berbere]",
+    "division": "SPICE",
+    "description": "Cleaned, ground and packed.",
+    "packSizes": "250 g · 500 g · 1 kg · bulk",
+    "markets": "Retail · Wholesale · Export",
+    "imageUrl": null,
+    "sortOrder": 4,
+    "published": true
+   },
+   {
+    "id": "cmw9n41te0017s5eq3y0eeaml",
+    "name": "[e.g. Mitmita]",
+    "division": "SPICE",
+    "description": "Cleaned, ground and packed.",
+    "packSizes": "100 g · 250 g · bulk",
+    "markets": "Retail · Wholesale",
+    "imageUrl": null,
+    "sortOrder": 5,
+    "published": true
+   },
+   {
+    "id": "cmw9n41te0018s5eqilglgbt1",
+    "name": "[e.g. Shiro]",
+    "division": "SPICE",
+    "description": "Roasted and milled.",
+    "packSizes": "500 g · 1 kg · bulk",
+    "markets": "Retail · Wholesale · Export",
+    "imageUrl": null,
+    "sortOrder": 6,
+    "published": true
+   }
+  ],
+  "courses": [
+   {
+    "id": "cmw9n41tp0019s5eqzbl6xojo",
+    "name": "Basic sewing & tailoring",
+    "department": "FASHION",
+    "duration": "[3 months]",
+    "fee": "6000",
+    "description": "",
+    "published": true,
+    "sortOrder": 0
+   },
+   {
+    "id": "cmw9n41tt001as5eqrnqe4bu4",
+    "name": "Pattern making & design",
+    "department": "FASHION",
+    "duration": "[6 months]",
+    "fee": "9000",
+    "description": "",
+    "published": true,
+    "sortOrder": 1
+   },
+   {
+    "id": "cmw9n41tv001bs5eq6apb6uks",
+    "name": "Advanced fashion design",
+    "department": "FASHION",
+    "duration": "[1 year]",
+    "fee": "15000",
+    "description": "",
+    "published": true,
+    "sortOrder": 2
+   },
+   {
+    "id": "cmw9n41tw001cs5eq5cvkcvuk",
+    "name": "Basic cooking & food safety",
+    "department": "CULINARY",
+    "duration": "[3 months]",
+    "fee": "6000",
+    "description": "",
+    "published": true,
+    "sortOrder": 3
+   },
+   {
+    "id": "cmw9n41ty001ds5eqtixkc0h9",
+    "name": "Pastry & baking",
+    "department": "CULINARY",
+    "duration": "[4 months]",
+    "fee": "7000",
+    "description": "",
+    "published": true,
+    "sortOrder": 4
+   },
+   {
+    "id": "cmw9n41tz001es5eqxhy5jdv8",
+    "name": "Professional chef course",
+    "department": "CULINARY",
+    "duration": "[1 year]",
+    "fee": "15000",
+    "description": "",
+    "published": true,
+    "sortOrder": 5
+   },
+   {
+    "id": "cmw9n41u1001fs5eqtn7ehqpn",
+    "name": "Makeup artistry",
+    "department": "BEAUTY",
+    "duration": "[3 months]",
+    "fee": "6500",
+    "description": "",
+    "published": true,
+    "sortOrder": 6
+   },
+   {
+    "id": "cmw9n41u2001gs5eqh4mvcnr1",
+    "name": "Hairdressing & braiding",
+    "department": "BEAUTY",
+    "duration": "[4 months]",
+    "fee": "8000",
+    "description": "",
+    "published": true,
+    "sortOrder": 7
+   },
+   {
+    "id": "cmw9n41u4001hs5eqmaym9cb7",
+    "name": "Salon business basics",
+    "department": "BEAUTY",
+    "duration": "[1 month]",
+    "fee": "2500",
+    "description": "",
+    "published": true,
+    "sortOrder": 8
+   }
+  ],
+  "news": [
+   {
+    "id": "cmw9n41vw002as5eqaxrssium",
+    "title": "Registration open for all three departments",
+    "kind": "New intake",
+    "body": "[Details of the next intake.]",
+    "date": "2026-11-09T19:14:20.684Z",
+    "imageUrl": "/images/news-intake.jpg",
+    "published": true
+   },
+   {
+    "id": "cmw9n41vw002bs5eqz83zwroo",
+    "title": "First graduation ceremony",
+    "kind": "Graduation",
+    "body": "[Photos and names of the graduates.]",
+    "date": "2026-10-20T19:14:20.683Z",
+    "imageUrl": "/images/news-graduation.jpg",
+    "published": true
+   },
+   {
+    "id": "cmw9n41vw002cs5eqrrypecil",
+    "title": "[First export shipment / market fair]",
+    "kind": "Production",
+    "body": "[Details.]",
+    "date": "2026-09-25T19:14:20.683Z",
+    "imageUrl": "/images/news-market.jpg",
+    "published": true
+   }
+  ],
+  "gallery": [
+   {
+    "id": "cmw9n41vz002ds5eqdluyd497",
+    "title": "Garment production line",
+    "category": "GARMENTS",
+    "imageUrl": "/images/gallery-tailor.jpg",
+    "tall": true,
+    "published": true,
+    "createdAt": "2026-11-09T19:14:20.688Z"
+   },
+   {
+    "id": "cmw9n41vz002es5eq5lu9cllo",
+    "title": "Spice cleaning & grinding",
+    "category": "SPICES",
+    "imageUrl": "/images/gallery-chili.jpg",
+    "tall": false,
+    "published": true,
+    "createdAt": "2026-11-09T19:14:20.688Z"
+   },
+   {
+    "id": "cmw9n41vz002fs5eqswc73r06",
+    "title": "Fashion students at work",
+    "category": "TRAINING",
+    "imageUrl": "/images/gallery-studio.jpg",
+    "tall": false,
+    "published": true,
+    "createdAt": "2026-11-09T19:14:20.688Z"
+   },
+   {
+    "id": "cmw9n41vz002gs5eqwyepqicr",
+    "title": "Culinary class",
+    "category": "TRAINING",
+    "imageUrl": "/images/gallery-chef.jpg",
+    "tall": false,
+    "published": true,
+    "createdAt": "2026-11-09T19:14:20.688Z"
+   },
+   {
+    "id": "cmw9n41vz002hs5eqg92pfo6n",
+    "title": "Packed spices ready for market",
+    "category": "SPICES",
+    "imageUrl": "/images/gallery-spice-shop.jpg",
+    "tall": true,
+    "published": true,
+    "createdAt": "2026-11-09T19:14:20.688Z"
+   },
+   {
+    "id": "cmw9n41vz002is5eqff5ktj8z",
+    "title": "Bridal makeup practice",
+    "category": "TRAINING",
+    "imageUrl": "/images/gallery-makeup.jpg",
+    "tall": true,
+    "published": true,
+    "createdAt": "2026-11-09T19:14:20.688Z"
+   },
+   {
+    "id": "cmw9n41vz002js5eq26jbtaqh",
+    "title": "Finished garments",
+    "category": "GARMENTS",
+    "imageUrl": "/images/gallery-fabric.jpg",
+    "tall": false,
+    "published": true,
+    "createdAt": "2026-11-09T19:14:20.688Z"
+   },
+   {
+    "id": "cmw9n41vz002ks5eqgas8kjrb",
+    "title": "Graduation day",
+    "category": "EVENTS",
+    "imageUrl": "/images/gallery-graduation.jpg",
+    "tall": false,
+    "published": true,
+    "createdAt": "2026-11-09T19:14:20.688Z"
+   }
+  ],
+  "contact": {
+   "email": "info@[domain]",
+   "hours": "Mon–Sat · 8:00–18:00",
+   "phone": "+251 [sales phone]",
+   "mapUrl": "",
+   "tiktok": "",
+   "address": "[Kebele / landmark], Wolaita Sodo, Ethiopia",
+   "youtube": "",
+   "facebook": "",
+   "telegram": "@[damarios]",
+   "instagram": "",
+   "trainingPhone": "+251 [training phone]"
+  },
+  "openingDate": "2027-01-15"
+ },
+ "/public/site?lang=am": {
+  "content": {
+   "garments": {
+    "id": "cmwkggay100184942qt3f27w4",
+    "section": "garments",
+    "lang": "am",
+    "headline": "ለአገር ውስጥ እና ለዓለም አቀፍ ገበያ የሚሆኑ አልባሳት",
+    "body": "የኢትዮጵያ የእጅ ሽመና ጨርቅ እና የወላይታ ዲንጉዛ ወደ ዘመናዊ አልባሳት ተቀይረው ለአገር ውስጥ፣ ለዓለም አቀፍ እና በውጭ ለሚኖሩ ኢትዮጵያውያን ደንበኞች ይቀርባሉ። በእያንዳንዱ ደረጃ ጥራቱ ይፈተሻል፤ ለጅምላ እና ለኤክስፖርት ትዕዛዞች በቂ የማምረት አቅም አለን።",
+    "visible": true,
+    "data": null
+   },
+   "production": {
+    "id": "cmwkggaxy00174942yk7350zo",
+    "section": "production",
+    "lang": "am",
+    "headline": "በወላይታ ሶዶ የተመረተ፣ *ለዓለም*።",
+    "body": "በአንድ ጣሪያ ሥር ሁለት የምርት ዘርፎች፦ አልባሳት እና የኢትዮጵያ ቅመማ ቅመም፤ ለአገር ውስጥ ደንበኞች እና ለዓለም አቀፍ ገዢዎች።",
+    "visible": true,
+    "data": null
+   },
+   "spices": {
+    "id": "cmwkggay600194942euc7vnta",
+    "section": "spices",
+    "lang": "am",
+    "headline": "የኢትዮጵያ ቅመማ ቅመም፣ የተጣራ፣ የተፈጨ እና የታሸገ",
+    "body": "[የትኞቹ ቅመሞች፣ እንዴት እንደሚገኙ እና እንደሚዘጋጁ።] ለሱቆች፣ ለምግብ ቤቶች እና ለኤክስፖርት በችርቻሮ እና በጅምላ መጠን ይታሸጋል።",
+    "visible": true,
+    "data": null
+   },
+   "training": {
+    "id": "cmwkggaye001b4942emjwe0pa",
+    "section": "training",
+    "lang": "am",
+    "headline": "ክህሎት ይማሩ። *ነገዎን ይገንቡ።*",
+    "body": "በሥራ ላይ ባሉ ባለሙያዎች፣ በእውነተኛ የሥራ ቦታዎች የሚሰጥ የተግባር ስልጠና፤ ሲጨርሱ የምስክር ወረቀት ያገኛሉ።",
+    "visible": true,
+    "data": null
+   },
+   "dept-fashion": {
+    "id": "cmwkggayj001c4942kqnr84aa",
+    "section": "dept-fashion",
+    "lang": "am",
+    "headline": "ፋሽን ዲዛይን",
+    "body": "ከሥዕል እና ከፓተርን አሠራር ጀምሮ እስከ መቁረጥ፣ መስፋት እና ማጠናቀቅ። ሠልጣኞች በራሳችን የልብስ ስፌት ክፍል ውስጥ ይለማመዳሉ።",
+    "visible": true,
+    "data": null
+   },
+   "dept-culinary": {
+    "id": "cmwkggayp001d4942e3vbuxe4",
+    "section": "dept-culinary",
+    "lang": "am",
+    "headline": "የምግብ ዝግጅት",
+    "body": "የኢትዮጵያ እና የዓለም አቀፍ ምግብ ዝግጅት፣ ዳቦና ኬክ ጋገራ እና የኩሽና ንጽሕና፤ በእውነተኛ የስልጠና ኩሽና ውስጥ በተግባር።",
+    "visible": true,
+    "data": null
+   },
+   "dept-beauty": {
+    "id": "cmwkggayt001e4942ohah0tsr",
+    "section": "dept-beauty",
+    "lang": "am",
+    "headline": "የውበት ሙያ",
+    "body": "ፕሮፌሽናል ሜካፕ፣ የሙሽራ ውበት፣ የፀጉር ቁርጥ፣ ሹሩባ እና አሠራር፤ እንዲሁም የራስዎን የውበት ሳሎን እንዴት እንደሚያስተዳድሩ።",
+    "visible": true,
+    "data": null
+   },
+   "admissions": {
+    "id": "cmwkggayx001f4942zl8dhxuo",
+    "section": "admissions",
+    "lang": "am",
+    "headline": "በ*አራት ደረጃዎች* ያመልክቱ።",
+    "body": "ቀጣይ ምዝገባ፦ [ቀን]። የምዝገባ ክፍያ፦ ብር [·]፤ በቴሌብር፣ በሲቢኢ ብር ወይም በጥሬ ገንዘብ መክፈል ይቻላል።",
+    "visible": true,
+    "data": null
+   },
+   "gallery": {
+    "id": "cmwkggaz0001g4942lfup3amd",
+    "section": "gallery",
+    "lang": "am",
+    "headline": "ዳማሪዮስ *ከውስጥ*።",
+    "body": "",
+    "visible": true,
+    "data": null
+   },
+   "news": {
+    "id": "cmwkggaz5001h49426zywec3v",
+    "section": "news",
+    "lang": "am",
+    "headline": "ከ*ማዕከላችን* የተገኙ ታሪኮች።",
+    "body": "",
+    "visible": true,
+    "data": null
+   },
+   "contact": {
+    "id": "cmwkggaz8001i4942gdlpurh4",
+    "section": "contact",
+    "lang": "am",
+    "headline": "*ዳማሪዮስን* ይጎብኙ።",
+    "body": "",
+    "visible": true,
+    "data": null
+   },
+   "about": {
+    "id": "sc_about_am",
+    "section": "about",
+    "lang": "am",
+    "headline": "ስለ ዳማሪዮስ",
+    "body": "ኢትዮጵያ በሽመና ጥበብ እጅግ የበለፀገ ታሪክ እና በብዙዎች ዘንድ ያልተነካ ትልቅ እምቅ ሀብት አላት። የእኛ አላማ ይህንን ብዙ ትኩረት ያልተሰጠውን፣ ነገር ግን እጅግ ውብ የሆነውን የእጅ ጥበብ ስራ ከዘመናዊ የዲዛይን ጥበብ ጋር በማዋሃድ ወደ ላቀ ደረጃ ማሳደግ ነው። የአገር ውስጥ ሸማኞችን የተፈጥሮ ታለንት እና ክህሎት በመጠቀም፣ ጥራቱን የጠበቀና የወቅቱን የፋሽን ፍላጎት የሚያሟላ ምርት ለገበያ እናቀርባለን። ይህ ስራ የባህል እሴታችንን ጠብቆ ማቆየት ብቻ ሳይሆን፣ ለባለሙያዎቻችን የተሻለ የስራ እድል እና ገቢ የሚፈጥር፣ እንዲሁም የሀገራችንን ስም በአለም አቀፍ መድረክ የሚያስጠራ የፈጠራ ስራ ነው።",
+    "visible": true,
+    "data": null
+   },
+   "vision": {
+    "id": "sc_vision_am",
+    "section": "vision",
+    "lang": "am",
+    "headline": "ራዕያችን",
+    "body": "ራዕያችን በኢትዮጵያ በዝቅተኛ ደረጃ የሚታየውን የሽመና ዘርፍ ወደ ዘመናዊ፣ ከፍተኛ ጥራት ያለው እና ለአለም አቀፍ ገበያ የሚመጥን የፈጠራ ኢንዱስትሪ መለወጥ ነው።",
+    "visible": true,
+    "data": null
+   },
+   "enquiry": {
+    "id": "cmwkggaya001a49428sk0h6s7",
+    "section": "enquiry",
+    "lang": "am",
+    "headline": "ከ*ዳማሪዮስ* ይግዙ።",
+    "body": "ሱቆች፣ ምግብ ቤቶች፣ አከፋፋዮች፣ ዓለም አቀፍ ገዢዎች እና በውጭ የሚኖሩ ኢትዮጵያውያን፦ የሚፈልጉትን ይንገሩን፤ የዋጋ ማቅረቢያ እንልክልዎታለን።",
+    "visible": true,
+    "data": null
+   },
+   "hero": {
+    "id": "cmwkggaxj001449421vgf2lyz",
+    "section": "hero",
+    "lang": "am",
+    "headline": "ቅርሳችንን *እንሸምናለን*። ክህሎትን *እናስተላልፋለን*።",
+    "body": "ዳማሪዮስ ለአገር ውስጥ እና ለዓለም አቀፍ ገበያ አልባሳትና ቅመማ ቅመም ያመርታል፤ እንዲሁም ቀጣዩን ትውልድ በፋሽን ዲዛይን፣ በምግብ ዝግጅት እና በውበት ሙያ ያሠለጥናል።",
     "visible": true,
     "data": null
    }

@@ -288,7 +288,7 @@ function CertificateModal({ enrollment: e, onClose }: { enrollment: Enrollment; 
     <Modal open onClose={onClose} title="Certificate" wide>
       <div id="certificate" className="rounded-lg border-[6px] border-double border-gold-admin p-10 text-center">
         <p className="font-serif text-sm tracking-[.3em] text-muted">DAMARIOS GARMENT AND SKILL TRAINING CENTER</p>
-        <p className="mt-1 font-ethiopic text-sm text-muted">ዳማሪዮስ ጋርመንት እና የሙያ ስልጠና ማዕከል</p>
+        <p className="mt-1 font-ethiopic text-sm text-muted">ዳማሪዮስ ጋርመንት እና የክህሎት ማሠልጠኛ ማዕከል</p>
         <h3 className="mt-6 font-serif text-5xl">Certificate of Completion</h3>
         <p className="mt-6 text-muted">This certifies that</p>
         <p className="mt-2 font-serif text-4xl italic">{e.student.name}</p>

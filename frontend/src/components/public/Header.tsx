@@ -6,9 +6,32 @@ import Image from 'next/image';
 import clsx from 'clsx';
 import { Menu, X } from 'lucide-react';
 import { useSite } from './SiteContext';
+import type { Lang } from '@/lib/types';
+
+const LANGS: { id: Lang; short: string; name: string }[] = [
+  { id: 'en', short: 'EN', name: 'English' },
+  { id: 'am', short: 'አማ', name: 'አማርኛ' },
+];
+
+/** English / Amharic switch. */
+function LangSwitch({ dark = false, className = '' }: { dark?: boolean; className?: string }) {
+  const { lang, setLang, tx } = useSite();
+  return (
+    <div role="group" aria-label={tx('Language', 'ቋንቋ')}
+      className={clsx('flex flex-none rounded-full border p-[3px]', dark ? 'border-white/30' : 'border-ivory-line bg-white', className)}>
+      {LANGS.map((l) => (
+        <button key={l.id} type="button" onClick={() => setLang(l.id)} aria-pressed={lang === l.id} aria-label={l.name} lang={l.id}
+          className={clsx('min-h-[36px] min-w-[42px] rounded-full px-2.5 text-[13px] font-semibold transition-colors',
+            lang === l.id ? (dark ? 'bg-gold text-ink' : 'bg-ink text-white') : (dark ? 'text-white hover:text-gold' : 'text-ink hover:text-teal'))}>
+          {l.short}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 export default function Header() {
-  const { t } = useSite();
+  const { t, tx } = useSite();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
@@ -39,12 +62,12 @@ export default function Header() {
     <>
       <header className={clsx('sticky top-0 z-40 border-b transition-all duration-300', scrolled ? 'border-ivory-line bg-ivory/85 backdrop-blur-md' : 'border-ivory-line bg-ivory')}>
         <div className={clsx('wrap flex items-center justify-between gap-5 transition-all duration-300', scrolled ? 'min-h-[68px]' : 'min-h-[86px]')}>
-          <a href="#top" aria-label="DaMarios home" className="flex items-center gap-3.5 text-ink">
+          <a href="#top" aria-label={tx('DaMarios home', 'ዳማሪዮስ መነሻ')} className="flex items-center gap-3.5 text-ink">
             {/* The compact logo (mark + DAMARIOS) on every screen size: the full name is shown in the hero just below. */}
             <Image src="/brand/logo-compact.png" alt="DaMarios Garment and Skill Training Center" width={1200} height={301} priority
               className={clsx('w-auto transition-all duration-300', scrolled ? 'h-8 sm:h-9' : 'h-9 sm:h-11')} />
           </a>
-          <nav aria-label="Main" className="hidden items-center gap-6 xl:flex">
+          <nav aria-label={tx('Main', 'ዋና ማውጫ')} className="hidden items-center gap-6 xl:flex">
             {links.map((l) => (
               <a key={l.href} href={l.href} className="group relative py-3.5 text-sm font-medium tracking-wide text-ink">
                 {l.name}
@@ -53,6 +76,7 @@ export default function Header() {
             ))}
           </nav>
           <div className="flex items-center gap-2.5">
+            <LangSwitch />
             <a href="#enquiry" className="btn btn-line hidden min-h-[46px] px-6 lg:inline-flex">{t.enquire}</a>
             <a href="#apply" className="btn btn-ink hidden min-h-[46px] px-[22px] sm:inline-flex">{t.apply}</a>
             <button type="button" onClick={() => setOpen(true)} aria-label={t.menu} aria-expanded={open}
@@ -70,11 +94,11 @@ export default function Header() {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}>
             <div className="wrap flex min-h-[86px] items-center justify-between">
               <Image src="/brand/logo-compact-white.png" alt="DaMarios Garment and Skill Training Center" width={1200} height={301} className="h-9 w-auto" />
-              <button type="button" onClick={() => setOpen(false)} aria-label="Close menu" className="flex h-12 w-12 items-center justify-center rounded-full border border-white/40">
+              <button type="button" onClick={() => setOpen(false)} aria-label={tx('Close menu', 'ማውጫውን ዝጋ')} className="flex h-12 w-12 items-center justify-center rounded-full border border-white/40">
                 <X className="h-5 w-5" strokeWidth={1.6} />
               </button>
             </div>
-            <nav aria-label="Menu" className="wrap flex flex-1 flex-col justify-center gap-1 overflow-y-auto pb-8">
+            <nav aria-label={t.menu} className="wrap flex flex-1 flex-col justify-center gap-1 overflow-y-auto pb-8">
               {menuLinks.map((l, i) => (
                 <motion.a key={l.href} href={l.href} onClick={() => setOpen(false)}
                   initial={{ opacity: 0, x: -24 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.15 + i * 0.05 }}
@@ -83,6 +107,7 @@ export default function Header() {
                 </motion.a>
               ))}
             </nav>
+            <div className="wrap pb-8"><LangSwitch dark className="w-fit" /></div>
           </motion.div>
         )}
       </AnimatePresence>

@@ -20,6 +20,7 @@ const SESSION_KEY = 'dm-demo-session';
 
 export const DEMO_SAVE_MESSAGE = 'This is a preview: changes are not saved yet. Everything you add will work once the system goes live.';
 const DEMO_FORM_MESSAGE = 'This is a preview of the new website, so online forms are not open yet. Please call us or message us on Telegram.';
+const DEMO_FORM_MESSAGE_AM = 'ይህ የአዲሱ ድረ-ገጽ ቅድመ እይታ ስለሆነ የመስመር ላይ ቅጾች ገና አልተከፈቱም። እባክዎ ይደውሉልን ወይም በቴሌግራም መልዕክት ይላኩልን።';
 
 export class DemoError extends Error {
   constructor(public status: number, message: string) {
@@ -28,8 +29,8 @@ export class DemoError extends Error {
 }
 
 /** Public website content recorded from the API. */
-export function demoSite(): unknown {
-  return DATA['/public/site?lang=en'];
+export function demoSite(lang = 'en'): unknown {
+  return DATA[`/public/site?lang=${lang}`] ?? DATA['/public/site?lang=en'];
 }
 
 const signedIn = () => {
@@ -76,8 +77,9 @@ export async function demoApi<T>(path: string, method: string, body?: unknown): 
 
   // Public forms
   if (route.startsWith('/public/')) {
-    if (method === 'GET' && route === '/public/site') return DATA['/public/site?lang=en'] as T;
-    throw new DemoError(503, DEMO_FORM_MESSAGE);
+    if (method === 'GET' && route === '/public/site') return demoSite(params.get('lang') ?? 'en') as T;
+    const am = typeof document !== 'undefined' && document.documentElement.lang === 'am';
+    throw new DemoError(503, am ? DEMO_FORM_MESSAGE_AM : DEMO_FORM_MESSAGE);
   }
 
   // Staff panel

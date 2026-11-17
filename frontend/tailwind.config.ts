@@ -15,9 +15,9 @@ const config: Config = {
         paper: '#F5F8FC',
       },
       fontFamily: {
-        serif: ['var(--font-serif)', 'Georgia', 'serif'],
-        sans: ['var(--font-sans)', 'system-ui', 'sans-serif'],
-        display: ['var(--font-display)', 'system-ui', 'sans-serif'],
+        serif: ['var(--font-serif)', 'var(--font-ethiopic)', 'Georgia', 'serif'],
+        sans: ['var(--font-sans)', 'var(--font-ethiopic-sans)', 'system-ui', 'sans-serif'],
+        display: ['var(--font-display)', 'var(--font-ethiopic-sans)', 'system-ui', 'sans-serif'],
         ethiopic: ['var(--font-ethiopic)', 'serif'],
       },
       letterSpacing: { widest2: '.24em', widest3: '.36em' },

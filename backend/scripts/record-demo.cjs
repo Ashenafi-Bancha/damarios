@@ -39,7 +39,7 @@ const out = process.argv[2] || path.resolve(backend, '../frontend/src/lib/demo-d
       '/admin/finance/summary?months=6', '/admin/finance/transactions',
       '/admin/recruitment/jobs', '/admin/recruitment/applicants',
       '/admin/training/summary', '/admin/training/applications', '/admin/training/classes', '/admin/training/courses', '/admin/training/enrollments', '/admin/training/students',
-      '/public/site?lang=en',
+      '/public/site?lang=en', '/public/site?lang=am',
     ];
     const data = {};
     for (const p of paths) data[p.split('?')[0] + (p.includes('lang=') ? '?' + p.split('?')[1] : '')] = await get(p);

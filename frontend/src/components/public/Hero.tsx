@@ -31,7 +31,8 @@ function RiseText({ text }: { text: string }) {
 const fade = (delay: number) => ({ className: 'animate-fadeup', style: { animationDelay: `${delay}s` } });
 
 export default function Hero() {
-  const { t } = useSite();
+  const { t, tx, lang } = useSite();
+  const am = lang === 'am';
   const hero = useBlock('hero');
   const reduce = useReducedMotion();
   // The 3D scene loads only on larger screens without data saver, to keep phones fast on mobile data.
@@ -42,7 +43,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section aria-label="Welcome" className="dark relative overflow-hidden bg-ink text-white">
+    <section aria-label={tx('Welcome', 'እንኳን ደህና መጡ')} className="dark relative overflow-hidden bg-ink text-white">
       <div className="pointer-events-none absolute inset-y-0 right-0 w-full bg-[radial-gradient(ellipse_at_85%_30%,rgba(96,165,250,.35),transparent_55%)] opacity-90 lg:w-[55%]">
         {!reduce && use3D && <Hero3D />}
       </div>
@@ -54,25 +55,34 @@ export default function Hero() {
             {/* The organization's name as the page heading (text only), with a light-blue line drawing in beside it. */}
             <h1 className={'m-0 flex items-center gap-5 ' + fade(0.05).className} style={fade(0.05).style}>
               <span className="flex min-w-0 flex-col">
-                <span className="font-display text-[28px] font-bold uppercase leading-none tracking-[.14em] text-white md:text-[42px]">DaMarios</span>
-                <span className="mt-1.5 text-[11px] font-semibold uppercase leading-snug tracking-[.22em] text-gold md:mt-2 md:text-[13px] md:tracking-[.3em]">Garment &amp; Skill Training Center</span>
+                {am ? (
+                  <>
+                    <span className="font-ethiopic text-[30px] font-medium leading-none text-white md:text-[44px]">ዳማሪዮስ</span>
+                    <span className="mt-2 text-[14px] font-semibold leading-snug tracking-[.04em] text-gold md:text-[17px]">ጋርመንት እና የክህሎት ማሠልጠኛ ማዕከል</span>
+                  </>
+                ) : (
+                  <>
+                    <span className="font-display text-[28px] font-bold uppercase leading-none tracking-[.14em] text-white md:text-[42px]">DaMarios</span>
+                    <span className="mt-1.5 text-[11px] font-semibold uppercase leading-snug tracking-[.22em] text-gold md:mt-2 md:text-[13px] md:tracking-[.3em]">Garment &amp; Skill Training Center</span>
+                  </>
+                )}
               </span>
               <span aria-hidden="true" className="hidden h-px min-w-[40px] flex-1 origin-left animate-draw bg-gradient-to-r from-gold to-transparent sm:block" style={{ animationDelay: '.5s' }} />
             </h1>
-            <p className="m-0 font-serif text-[50px] font-medium leading-[.97] tracking-tight sm:text-[70px] lg:text-[88px]">
-              <RiseText text={hero.headline} />
+            <p className={'m-0 font-serif font-medium tracking-tight ' + (am ? 'text-[40px] leading-[1.15] sm:text-[56px] lg:text-[68px]' : 'text-[50px] leading-[.97] sm:text-[70px] lg:text-[88px]')}>
+              <RiseText key={lang} text={hero.headline} />
             </p>
           </div>
           <div className={'flex min-w-0 flex-[1_1_380px] flex-col gap-6 ' + fade(0.55).className} style={fade(0.55).style}>
             <a href="#vision" className="group flex max-w-[540px] items-center gap-4 rounded-xl border border-white/15 bg-white/[.06] p-3 pr-5 backdrop-blur-sm transition-colors hover:border-gold/60 md:gap-6 md:p-3.5 md:pr-7">
               <span className="relative block h-[150px] w-[128px] flex-none overflow-hidden rounded-lg md:h-[220px] md:w-[188px]">
-                <Image src="/images/shimena-loom.jpg" alt="Handwoven fabric on a loom" fill sizes="(min-width: 768px) 188px, 128px" priority className="object-cover transition-transform duration-700 group-hover:scale-110" />
+                <Image src="/images/shimena-loom.jpg" alt={tx('Handwoven fabric on a loom', 'በሽመና መሣሪያ ላይ ያለ የእጅ ሽመና ጨርቅ')} fill sizes="(min-width: 768px) 188px, 128px" priority className="object-cover transition-transform duration-700 group-hover:scale-110" />
               </span>
               <span className="flex min-w-0 flex-col gap-2 md:gap-2.5">
-                <span className="w-fit rounded-full bg-gold px-2.5 py-0.5 text-[11px] font-bold tracking-wider text-ink md:text-xs">COMING SOON</span>
-                <span className="font-serif text-2xl leading-tight text-white md:text-[32px]">Ethiopian weaving, made modern</span>
-                <span className="hidden text-sm leading-relaxed text-muted-mist sm:block">Handcraft from local weavers, blended with modern design.</span>
-                <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-gold">Our vision for ሽመና <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" /></span>
+                <span className="w-fit rounded-full bg-gold px-2.5 py-0.5 text-[11px] font-bold tracking-wider text-ink md:text-xs">{tx('COMING SOON', 'በቅርቡ')}</span>
+                <span className="font-serif text-2xl leading-tight text-white md:text-[32px]">{tx('Ethiopian weaving, made modern', 'የኢትዮጵያ ሽመና፣ በዘመናዊ ዲዛይን')}</span>
+                <span className="hidden text-sm leading-relaxed text-muted-mist sm:block">{tx('Handcraft from local weavers, blended with modern design.', 'የአገር ውስጥ ሸማኞች የእጅ ጥበብ ከዘመናዊ ዲዛይን ጋር ተዋሕዶ።')}</span>
+                <span className="inline-flex items-center gap-1.5 text-sm font-semibold text-gold">{tx('Our vision for ሽመና', 'የሽመና ራዕያችን')} <ArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" /></span>
               </span>
             </a>
             <p className="lead text-muted-mist">{hero.body}</p>
@@ -87,17 +97,17 @@ export default function Hero() {
           <a href="#production" className={'group relative flex min-h-[300px] flex-col justify-end overflow-hidden rounded-[10px] p-7 text-white transition-transform duration-300 hover:-translate-y-1 md:min-h-[340px] md:p-8 ' + fade(0.75).className} style={fade(0.75).style}>
             <Image src="/images/hero-production.jpg" alt="" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
             <span className="absolute inset-0 bg-gradient-to-t from-ink via-ink/60 to-ink/10" />
-            <span className="relative text-xs font-semibold tracking-widest2 text-gold">01 · {t.production.toUpperCase()}</span>
-            <span className="relative mb-3 mt-2.5 font-serif text-[40px] leading-none md:text-[46px]">Garments &amp; spices</span>
-            <span className="relative max-w-[440px] leading-relaxed text-muted-mist">Made in Wolaita Sodo for local and international markets.</span>
+            <span className="relative text-xs font-semibold tracking-widest2 text-gold">01 · {am ? t.production : t.production.toUpperCase()}</span>
+            <span className="relative mb-3 mt-2.5 font-serif text-[40px] leading-none md:text-[46px]">{tx('Garments & spices', 'አልባሳት እና ቅመማ ቅመም')}</span>
+            <span className="relative max-w-[440px] leading-relaxed text-muted-mist">{tx('Made in Wolaita Sodo for local and international markets.', 'በወላይታ ሶዶ ለአገር ውስጥ እና ለዓለም አቀፍ ገበያ የሚመረቱ።')}</span>
             <span className="relative mt-5 inline-flex items-center gap-2.5 font-semibold">{t.ourProduction} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
           </a>
           <a href="#training" className={'group relative flex min-h-[300px] flex-col justify-end overflow-hidden rounded-[10px] p-7 text-white transition-transform duration-300 hover:-translate-y-1 md:min-h-[340px] md:p-8 ' + fade(0.85).className} style={fade(0.85).style}>
             <Image src="/images/hero-training.jpg" alt="" fill sizes="(min-width: 768px) 50vw, 100vw" className="object-cover transition-transform duration-700 group-hover:scale-105" />
             <span className="absolute inset-0 bg-gradient-to-t from-[#003F87] via-teal/70 to-teal/20" />
-            <span className="relative text-xs font-semibold tracking-widest2 text-gold">02 · {t.training.toUpperCase()}</span>
-            <span className="relative mb-3 mt-2.5 font-serif text-[40px] leading-none md:text-[46px]">Learn a skill for life</span>
-            <span className="relative max-w-[440px] leading-relaxed text-[#D6E4F5]">Fashion design · Culinary arts · Beautification (makeup &amp; hairdressing)</span>
+            <span className="relative text-xs font-semibold tracking-widest2 text-gold">02 · {am ? t.training : t.training.toUpperCase()}</span>
+            <span className="relative mb-3 mt-2.5 font-serif text-[40px] leading-none md:text-[46px]">{tx('Learn a skill for life', 'ለሕይወት የሚሆን ክህሎት ይማሩ')}</span>
+            <span className="relative max-w-[440px] leading-relaxed text-[#D6E4F5]">{tx('Fashion design · Culinary arts · Beautification (makeup & hairdressing)', 'ፋሽን ዲዛይን · የምግብ ዝግጅት · የውበት ሙያ (ሜካፕ እና የፀጉር ሥራ)')}</span>
             <span className="relative mt-5 inline-flex items-center gap-2.5 font-semibold">{t.seeCourses} <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" /></span>
           </a>
         </div>
