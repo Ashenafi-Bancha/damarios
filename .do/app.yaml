@@ -1,0 +1,170 @@
+# DigitalOcean App Platform: the full DaMarios system.
+#
+#   https://damariosgarment.com/            → web  (Next.js: public website + admin panel)
+#   https://damariosgarment.com/api/...     → api  (Express REST API)
+#   https://damariosgarment.com/uploads/... → api  (only used when photos are stored locally)
+#   database: managed PostgreSQL cluster "damarios-db" (created first, see DEPLOY.md)
+#   photos:   DigitalOcean Spaces bucket "damarios-media" (created first, see DEPLOY.md)
+#
+# Everything is served from one domain, so the admin login cookie stays first-party.
+#
+# Create the app once with:   doctl apps create --spec .do/app.yaml
+# After that every push to main deploys by itself. Secrets (the values "SET_IN_DIGITALOCEAN_CONSOLE")
+# are entered in the control panel, never in this file. Don't re-apply this file over a running app
+# (it would reset the secrets): change settings in the control panel instead.
+
+name: damarios
+region: fra # Frankfurt, the closest region to Ethiopia
+
+domains:
+  - domain: damariosgarment.com
+    type: PRIMARY
+    zone: damariosgarment.com # DNS hosted at DigitalOcean (GoDaddy nameservers point here)
+    minimum_tls_version: "1.2"
+  - domain: www.damariosgarment.com
+    type: ALIAS
+    zone: damariosgarment.com
+    minimum_tls_version: "1.2"
+
+alerts:
+  - rule: DEPLOYMENT_FAILED
+  - rule: DOMAIN_FAILED
+
+ingress:
+  rules:
+    - match:
+        path:
+          prefix: /api
+      component:
+        name: api
+        preserve_path_prefix: true
+    - match:
+        path:
+          prefix: /uploads
+      component:
+        name: api
+        preserve_path_prefix: true
+    - match:
+        path:
+          prefix: /
+      component:
+        name: web
+
+databases:
+  - name: db
+    engine: PG
+    version: "16"
+    production: true
+    cluster_name: damarios-db
+    db_name: damarios # created in the cluster's "Users & Databases" tab; the app connects as the cluster's admin user
+
+services:
+  - name: api
+    github:
+      repo: Ashenafi-Bancha/damarios
+      branch: main
+      deploy_on_push: true
+    source_dir: backend
+    environment_slug: node-js
+    build_command: npm run build
+    run_command: npm start
+    http_port: 4000
+    instance_size_slug: apps-s-1vcpu-0.5gb
+    instance_count: 1
+    health_check:
+      http_path: /api/health
+      initial_delay_seconds: 10
+      period_seconds: 15
+      failure_threshold: 3
+    alerts:
+      - rule: RESTART_COUNT
+        operator: GREATER_THAN
+        value: 3
+        window: TEN_MINUTES
+    envs:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        scope: RUN_TIME
+        value: ${db.DATABASE_URL}
+      - key: FRONTEND_URL
+        scope: RUN_TIME
+        value: https://damariosgarment.com,https://www.damariosgarment.com,${APP_URL}
+      - key: JWT_SECRET # 64 random characters, e.g. from: openssl rand -hex 32
+        scope: RUN_TIME
+        type: SECRET
+        value: SET_IN_DIGITALOCEAN_CONSOLE
+      - key: SPACES_ENDPOINT
+        scope: RUN_TIME
+        value: https://fra1.digitaloceanspaces.com
+      - key: SPACES_BUCKET
+        scope: RUN_TIME
+        value: damarios-media
+      - key: SPACES_PUBLIC_URL
+        scope: RUN_TIME
+        value: https://damarios-media.fra1.cdn.digitaloceanspaces.com
+      - key: SPACES_KEY
+        scope: RUN_TIME
+        type: SECRET
+        value: SET_IN_DIGITALOCEAN_CONSOLE
+      - key: SPACES_SECRET
+        scope: RUN_TIME
+        type: SECRET
+        value: SET_IN_DIGITALOCEAN_CONSOLE
+      # Optional Telegram alerts for new orders and applications: add TELEGRAM_BOT_TOKEN (SECRET) and TELEGRAM_CHAT_ID.
+
+  - name: web
+    github:
+      repo: Ashenafi-Bancha/damarios
+      branch: main
+      deploy_on_push: true
+    source_dir: frontend
+    environment_slug: node-js
+    build_command: npm run build
+    run_command: npm start
+    http_port: 3000
+    instance_size_slug: apps-s-1vcpu-1gb-fixed
+    instance_count: 1
+    health_check:
+      http_path: /
+      initial_delay_seconds: 15
+      period_seconds: 30
+    envs:
+      - key: NODE_ENV
+        value: production
+      # The website reads its content from the API over the app's private network.
+      - key: BACKEND_URL
+        scope: RUN_AND_BUILD_TIME
+        value: ${api.PRIVATE_URL}
+      # The full system, not the Vercel preview.
+      - key: NEXT_PUBLIC_DEMO
+        scope: RUN_AND_BUILD_TIME
+        value: "false"
+
+jobs:
+  # Before each release: apply database changes; on the very first release also create the owner account and the
+  # website's starting content (skipped once any account exists, so live data is never touched).
+  - name: release
+    kind: PRE_DEPLOY
+    github:
+      repo: Ashenafi-Bancha/damarios
+      branch: main
+    source_dir: backend
+    environment_slug: node-js
+    build_command: npm run build
+    run_command: npm run release
+    instance_size_slug: apps-s-1vcpu-0.5gb
+    instance_count: 1
+    envs:
+      - key: NODE_ENV
+        value: production
+      - key: DATABASE_URL
+        scope: RUN_TIME
+        value: ${db.DATABASE_URL}
+      - key: SEED_OWNER_EMAIL # the owner's login for the admin panel
+        scope: RUN_TIME
+        value: SET_IN_DIGITALOCEAN_CONSOLE
+      - key: SEED_OWNER_PASSWORD # 12+ characters; only used on the first release
+        scope: RUN_TIME
+        type: SECRET
+        value: SET_IN_DIGITALOCEAN_CONSOLE

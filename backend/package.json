@@ -14,12 +14,14 @@
     "db:push": "prisma db push",
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio",
-    "demo:record": "node scripts/record-demo.cjs"
+    "demo:record": "node scripts/record-demo.cjs",
+    "release": "prisma migrate deploy && tsx prisma/seed.ts --first-run"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.1171.0",
     "@prisma/client": "^5.22.0",
     "bcryptjs": "^2.4.3",
     "cookie-parser": "^1.4.7",
@@ -31,6 +33,8 @@
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "multer": "^2.5.0",
+    "prisma": "^5.22.0",
+    "tsx": "^4.23.15",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -42,8 +46,9 @@
     "@types/morgan": "^1.9.9",
     "@types/multer": "^1.4.12",
     "@types/node": "^22.9.0",
-    "prisma": "^5.22.0",
-    "tsx": "^4.19.2",
     "typescript": "^5.6.3"
+  },
+  "engines": {
+    "node": "22.x"
   }
 }

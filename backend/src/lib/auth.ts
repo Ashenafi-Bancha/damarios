@@ -4,12 +4,10 @@ import type { Role } from '@prisma/client';
 import { prisma } from './prisma';
 import { HttpError } from './http';
 import type { ModuleName } from './modules';
+import { config } from '../config';
 
 export const COOKIE = 'dm_session';
-const SECRET = process.env.JWT_SECRET || 'dev-only-secret';
-if (!process.env.JWT_SECRET && process.env.NODE_ENV === 'production') {
-  throw new Error('JWT_SECRET must be set in production');
-}
+const SECRET = config.jwtSecret;
 
 export interface SessionUser {
   id: string;
@@ -33,7 +31,7 @@ export function signSession(user: SessionUser) {
 export const cookieOptions = {
   httpOnly: true,
   sameSite: 'lax' as const,
-  secure: process.env.NODE_ENV === 'production',
+  secure: config.isProd,
   maxAge: 12 * 60 * 60 * 1000,
   path: '/',
 };

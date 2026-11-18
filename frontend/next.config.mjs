@@ -18,7 +18,8 @@ const nextConfig = {
   // Makes the decision above visible to the site's code.
   env: { NEXT_PUBLIC_DEMO: DEMO ? 'true' : 'false' },
   // The browser talks to the API through the same origin, so the login cookie just works.
-  // In demo mode there is no API to forward to.
+  // Locally Next forwards /api to the API. On DigitalOcean the platform routes /api to the API itself
+  // (see .do/app.yaml), and BACKEND_URL is the API's private address. In demo mode there is no API.
   async rewrites() {
     if (DEMO) return [];
     return [

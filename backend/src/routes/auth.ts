@@ -1,14 +1,14 @@
 import { Router } from 'express';
 import bcrypt from 'bcryptjs';
-import rateLimit from 'express-rate-limit';
 import { z } from 'zod';
 import { prisma } from '../lib/prisma';
 import { ah, HttpError } from '../lib/http';
+import { perVisitorLimit } from '../lib/limits';
 import { COOKIE, cookieOptions, requireAuth, signSession, allowedModules } from '../lib/auth';
 
 const r = Router();
 
-const loginLimiter = rateLimit({ windowMs: 15 * 60 * 1000, limit: 20, standardHeaders: true, legacyHeaders: false });
+const loginLimiter = perVisitorLimit(15, 20);
 
 r.post('/login', loginLimiter, ah(async (req, res) => {
   const { email, password } = z.object({ email: z.string().email(), password: z.string().min(1) }).parse(req.body);
@@ -23,7 +23,9 @@ r.post('/login', loginLimiter, ah(async (req, res) => {
 }));
 
 r.post('/logout', (_req, res) => {
-  res.clearCookie(COOKIE, { path: '/' });
+  // Same options as when it was set (minus its lifetime), so browsers really remove it.
+  const { maxAge: _maxAge, ...clearOptions } = cookieOptions;
+  res.clearCookie(COOKIE, clearOptions);
   res.status(204).end();
 });
 

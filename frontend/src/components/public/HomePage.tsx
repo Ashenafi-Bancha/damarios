@@ -94,7 +94,7 @@ function Page({ initial }: { initial: SiteData }) {
         <a href="#enquiry" className="flex min-h-[48px] items-center justify-center rounded-full text-[13px] font-semibold text-white">{t.order}</a>
         <a href="#apply" className="flex min-h-[48px] items-center justify-center rounded-full bg-gold text-[13px] font-semibold text-ink">{t.applyShort}</a>
       </nav>
-      {site.offline && (
+      {site.offline && process.env.NODE_ENV === 'development' && (
         <p className="fixed bottom-20 left-3 z-40 rounded-full bg-[#FFF4DC] px-3 py-1.5 text-xs font-semibold text-[#6B4A00] shadow md:bottom-6 md:left-6">
           Sample content: the API is not connected
         </p>

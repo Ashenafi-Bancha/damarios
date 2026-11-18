@@ -9,7 +9,7 @@ import { crud } from '../../lib/crud';
 import { logActivity } from '../../lib/activity';
 import { MODULES } from '../../lib/modules';
 import { etPeriod } from '../../lib/ethiopian';
-import { imageUpload } from '../uploads';
+import { imageUploadRoute } from '../uploads';
 
 /** Dashboard, customers, website content, users, permissions, settings and uploads. */
 const r = Router();
@@ -194,9 +194,6 @@ r.put('/settings/:key', requireModule('settings'), ah(async (req, res) => {
 
 // ───── Uploads (any signed-in user) ─────
 
-r.post('/uploads', imageUpload(8), (req, res) => {
-  if (!req.file) throw new HttpError(400, 'No file received');
-  res.status(201).json({ url: `/uploads/${req.file.filename}` });
-});
+r.post('/uploads', ...imageUploadRoute(8));
 
 export default r;

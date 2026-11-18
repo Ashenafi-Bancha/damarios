@@ -1,15 +1,17 @@
 import { Router } from 'express';
-import rateLimit from 'express-rate-limit';
 import { z } from 'zod';
 import { OrderType, TrainingDept } from '@prisma/client';
 import { prisma } from '../lib/prisma';
 import { ah, HttpError } from '../lib/http';
 import { notifyTelegram } from '../lib/telegram';
-import { imageUpload } from './uploads';
+import { perVisitorLimit } from '../lib/limits';
+import { imageUploadRoute } from './uploads';
+import { isUploadedImageUrl } from '../lib/storage';
 
 const r = Router();
-const formLimiter = rateLimit({ windowMs: 10 * 60 * 1000, limit: 15, standardHeaders: true, legacyHeaders: false });
-const uploadPath = z.string().regex(/^\/uploads\/[\w-]+\.(jpg|png|webp)$/);
+const formLimiter = perVisitorLimit(10, 15);
+/** A photo address handed out by POST /uploads (local /uploads/… or the Spaces address). */
+const uploadPath = z.string().max(300).refine(isUploadedImageUrl, 'Invalid attachment');
 const optionalText = (max: number) => z.string().trim().max(max).optional().or(z.literal('')).transform((v) => v || undefined);
 
 /** Everything the public website needs, in one call. */
@@ -31,10 +33,7 @@ r.get('/site', ah(async (req, res) => {
   res.json({ content, products, courses, news, gallery, contact: contact?.value ?? null, openingDate: opening?.value ?? null });
 }));
 
-r.post('/uploads', formLimiter, imageUpload(5), (req, res) => {
-  if (!req.file) throw new HttpError(400, 'No file received');
-  res.status(201).json({ url: `/uploads/${req.file.filename}` });
-});
+r.post('/uploads', formLimiter, ...imageUploadRoute(5));
 
 /** Orders, wholesale and export enquiries. Buyers abroad may leave an email instead of a phone number. */
 const requestSchema = z.object({

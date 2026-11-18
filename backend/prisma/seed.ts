@@ -5,6 +5,9 @@
  * The admin's business records (orders, customers, staff, students, stock, finance…) start empty.
  * Made-up demo records for those are added only with SEED_SAMPLE=true.
  * Run with: npm run db:seed
+ *
+ * With --first-run (used by the deploy's release step) it does nothing once the database has any account,
+ * so later deploys never touch live data.
  */
 import 'dotenv/config';
 import bcrypt from 'bcryptjs';
@@ -53,8 +56,12 @@ const CONTENT_AM: Record<string, [string, string]> = {
 
 async function base() {
   const email = (process.env.SEED_OWNER_EMAIL || 'owner@damarios.local').toLowerCase();
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error('Set SEED_OWNER_EMAIL to the owner’s real email address before seeding.');
   const password = process.env.SEED_OWNER_PASSWORD;
-  if (!password || password.length < 8) throw new Error('Set SEED_OWNER_PASSWORD (8+ characters) in .env before seeding.');
+  const minLength = process.env.NODE_ENV === 'production' ? 12 : 8;
+  if (!password || password.length < minLength || /^(SET_IN_DIGITALOCEAN|CHANGE_ME|change-me)/i.test(password)) {
+    throw new Error(`Set SEED_OWNER_PASSWORD (${minLength}+ characters) before seeding.`);
+  }
   await prisma.user.upsert({
     where: { email },
     update: {},
@@ -205,9 +212,20 @@ async function sample() {
   console.log('Sample data added.');
 }
 
-base()
-  .then(() => siteStarter())
-  .then(() => (process.env.SEED_SAMPLE === 'true' ? sample() : undefined))
-  .then(() => console.log('Seed finished.'))
-  .catch((e) => { console.error(e); process.exit(1); })
+async function main() {
+  if (process.argv.includes('--first-run') && (await prisma.user.count()) > 0) {
+    console.log('Database already set up: nothing to seed.');
+    return;
+  }
+  await base();
+  await siteStarter();
+  if (process.env.SEED_SAMPLE === 'true') {
+    if (process.env.NODE_ENV === 'production') throw new Error('SEED_SAMPLE is for local testing only, not production.');
+    await sample();
+  }
+  console.log('Seed finished.');
+}
+
+main()
+  .catch((e) => { console.error(e); process.exitCode = 1; })
   .finally(() => prisma.$disconnect());
