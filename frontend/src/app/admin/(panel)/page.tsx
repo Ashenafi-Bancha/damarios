@@ -66,7 +66,7 @@ export default function Dashboard() {
           {data.requests.length === 0 ? <Empty>No new requests.</Empty> : data.requests.map((r) => (
             <div key={r.id} className="flex items-center justify-between gap-2.5 border-t border-[#ECF1F8] py-2.5">
               <div className="min-w-0"><div className="text-sm font-semibold">{r.name}</div><div className="truncate text-[13px] text-muted">{r.message || label(r.type)}</div></div>
-              <div className="flex flex-none flex-col items-end gap-1"><Pill tone={r.type === 'MODEL_CASTING' ? 'purple' : r.type === 'MODEL_BOOKING' ? 'blue' : 'teal'}>{label(r.type)}</Pill><span className="text-xs text-muted">{timeAgo(r.createdAt)}</span></div>
+              <div className="flex flex-none flex-col items-end gap-1"><Pill tone={r.type === 'EXPORT' ? 'blue' : 'teal'}>{label(r.type)}</Pill><span className="text-xs text-muted">{timeAgo(r.createdAt)}</span></div>
             </div>
           ))}
         </section>

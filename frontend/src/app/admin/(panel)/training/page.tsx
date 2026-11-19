@@ -58,7 +58,7 @@ export default function TrainingPage() {
       {tab === 'classes' && <Classes dept={dept} />}
       {tab === 'students' && <Students dept={dept} onChange={summary.reload} />}
       {tab === 'courses' && (
-        <ResourceManager<Course> key={dept} endpoint={`/admin/training/courses${dept ? `?department=${dept}` : ''}`} noun="course"
+        <ResourceManager<Course> key={dept} endpoint={`/admin/training/courses${dept ? `?department=${dept}` : ''}`} noun="course" publicContent
           columns={[
             { label: 'Course', render: (c) => <span className="font-semibold">{c.name}</span> },
             { label: 'Department', render: (c) => <Pill tone={DEPT_TONE[c.department]}>{DEPT_NAME[c.department]}</Pill> },
@@ -168,7 +168,7 @@ function Classes({ dept }: { dept: Dept | '' }) {
         { name: 'name', label: 'Group name', required: true, placeholder: 'Morning group' },
         { name: 'instructor', label: 'Instructor' },
         { name: 'schedule', label: 'Schedule', placeholder: 'Mon–Fri 8:30–11:30' },
-        { name: 'capacity', label: 'Places', type: 'number' },
+        { name: 'capacity', label: 'Places', type: 'number', min: 1, max: 1000 },
         { name: 'startDate', label: 'Starts', type: 'date' },
         { name: 'endDate', label: 'Ends', type: 'date' },
       ]}

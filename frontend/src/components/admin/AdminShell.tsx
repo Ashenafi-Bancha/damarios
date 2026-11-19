@@ -41,6 +41,12 @@ const NAV: { group: string; items: { href: string; label: string; module: string
   ] },
 ];
 
+function RedirectTo({ href }: { href: string }) {
+  const router = useRouter();
+  useEffect(() => { router.replace(href); }, [router, href]);
+  return null;
+}
+
 export default function AdminShell({ children }: { children: React.ReactNode }) {
   const [me, setMe] = useState<Me | null>(null);
   const [failed, setFailed] = useState(false);
@@ -70,6 +76,8 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   const logout = async () => { await api('/auth/logout', { method: 'POST' }).catch(() => {}); router.push('/admin/login'); };
   const current = NAV.flatMap((g) => g.items).filter((i) => active(i.href)).pop();
   const allowedHere = !current || can(current.module);
+  // People whose role can't see the dashboard start on the first section they can open.
+  const firstAllowed = NAV.flatMap((g) => g.items).find((i) => can(i.module));
 
   const sidebar = (
     <aside className="flex h-full flex-col gap-5 bg-ink-soft px-3.5 py-5 text-muted-mist">
@@ -124,15 +132,15 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
                 <span className="text-muted">{gcDate(new Date())}</span>
               </div>
               <Link href="/admin/orders?tab=requests" aria-label="Website requests" className="flex h-10 w-10 items-center justify-center rounded-[10px] border border-[#C9D5E8] hover:bg-paper"><Bell className="h-5 w-5" /></Link>
-              <div className="flex items-center gap-2.5">
+              <Link href="/admin/account" title="My account" className="flex items-center gap-2.5 rounded-[10px] pr-1.5 hover:bg-paper">
                 <span className="flex h-[38px] w-[38px] items-center justify-center rounded-full bg-gold-admin font-semibold">{me.name.charAt(0).toUpperCase()}</span>
                 <span className="hidden flex-col text-[13px] leading-tight md:flex"><span className="font-semibold">{me.name}</span><span className="capitalize text-muted">{me.role.toLowerCase()}</span></span>
-              </div>
+              </Link>
               <button type="button" onClick={logout} aria-label="Log out" title="Log out" className="flex h-10 w-10 items-center justify-center rounded-[10px] hover:bg-paper"><LogOut className="h-5 w-5" /></button>
             </div>
           </header>
           <main className="flex flex-col gap-5 p-4 pb-10 md:p-7">
-            {allowedHere ? children : (
+            {pathname === '/admin' && !can('dashboard') && firstAllowed ? <RedirectTo href={firstAllowed.href} /> : allowedHere ? children : (
               <div className="card text-center"><Shirt className="mx-auto mb-3 h-8 w-8 text-muted" /><p>Your role cannot open this section. Ask the owner for access.</p></div>
             )}
           </main>

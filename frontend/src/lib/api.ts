@@ -43,6 +43,12 @@ export async function api<T = unknown>(path: string, init: { method?: string; bo
   return data as T;
 }
 
+/** Asks the website to show content changes now instead of within a minute. Failures are ignored (it refreshes anyway). */
+export function refreshWebsite(): void {
+  if (DEMO) return;
+  fetch('/admin/revalidate', { method: 'POST', credentials: 'include' }).catch(() => {});
+}
+
 export async function uploadImage(file: File, scope: 'public' | 'admin' = 'admin'): Promise<string> {
   if (DEMO) throw new ApiError(403, DEMO_SAVE_MESSAGE);
   const body = new FormData();

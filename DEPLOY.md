@@ -178,6 +178,9 @@ Once the nameservers point to DigitalOcean (step 5), App Platform adds the recor
 2. She signs in and sets a new password under **Users** (edit her own account).
 3. She creates separate accounts for staff under **Users**, with only the roles they need.
 4. Remove `SEED_OWNER_PASSWORD` from the release job afterwards (it is never used again once accounts exist).
+5. In **Settings › Contact & social**, replace the placeholder phone numbers and add the real Telegram, WhatsApp
+   (with country code, for customers abroad), email and social links. The website updates right away.
+6. Optional: Telegram alerts (see Day-to-day), and which ones to receive in **Settings › Notifications**.
 
 ---
 
@@ -209,8 +212,16 @@ Once the nameservers point to DigitalOcean (step 5), App Platform adds the recor
 
 ## Local development
 
-Unchanged: Docker PostgreSQL on port 5436, `backend/.env` from `backend/.env.example`, `npm run dev` in
-`backend` and `frontend`. With the `SPACES_*` values empty, photos are saved in `backend/uploads/`.
+See the README: `npm run setup` once, then `npm run db:up` and `npm run dev` from the project folder.
+With the `SPACES_*` values empty, photos are saved in `backend/uploads/`.
+
+## Built into the app spec
+
+- **Ethiopian time** (`TZ=Africa/Addis_Ababa`) for the API, website and release job: cloud servers run on UTC, and
+  attendance, "today" and Ethiopian months must follow local time.
+- **`NEXT_PUBLIC_SITE_URL`** = https://damariosgarment.com for search engines and link previews (sitemap, robots.txt,
+  share images). Every page names the main address as its official one, so search engines list damariosgarment.com
+  rather than the temporary `*.ondigitalocean.app` address. The Vercel preview is kept out of search results entirely.
 
 ---
 

@@ -13,7 +13,8 @@ import { Vision } from './Vision';
 import { Admissions, Training } from './Training';
 import { Gallery, News } from './Gallery';
 import { Contact, Footer, telUrl, tgUrl } from './Contact';
-import { TelegramIcon } from './Icons';
+import { TelegramIcon, WhatsAppIcon } from './Icons';
+import { whatsappUrl } from '@/lib/forms';
 import { labels } from '@/lib/i18n';
 import { normalizeSite } from '@/lib/site';
 import { api } from '@/lib/api';
@@ -85,6 +86,12 @@ function Page({ initial }: { initial: SiteData }) {
         </main>
         <Footer />
       </div>
+      {whatsappUrl(site.contact?.whatsapp) && (
+        <a href={whatsappUrl(site.contact?.whatsapp)!} target="_blank" rel="noopener noreferrer" aria-label={tx('Chat with DaMarios on WhatsApp', 'ዳማሪዮስን በዋትስአፕ ያነጋግሩ')}
+          className="fixed bottom-[96px] right-6 z-40 hidden h-[60px] w-[60px] items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_10px_30px_rgba(0,0,0,.25)] transition-transform hover:scale-110 md:flex">
+          <WhatsAppIcon className="h-7 w-7" />
+        </a>
+      )}
       <a href={tgUrl(site.contact?.telegram)} target="_blank" rel="noopener noreferrer" aria-label={tx('Chat with DaMarios on Telegram', 'ዳማሪዮስን በቴሌግራም ያነጋግሩ')}
         className="fixed bottom-6 right-6 z-40 hidden h-[60px] w-[60px] items-center justify-center rounded-full bg-gold text-ink shadow-[0_10px_30px_rgba(0,0,0,.25)] transition-transform hover:scale-110 md:flex">
         <TelegramIcon className="h-6 w-6" />

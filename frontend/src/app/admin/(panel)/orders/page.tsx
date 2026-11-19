@@ -22,7 +22,7 @@ interface WebRequest {
 
 const STAGES = ['NEW', 'QUOTED', 'SAMPLE', 'IN_PRODUCTION', 'QUALITY_CHECK', 'READY', 'DELIVERED'];
 const TYPES = ['WHOLESALE', 'EXPORT', 'PRODUCTION', 'CUSTOM_DESIGN', 'BESPOKE', 'CULTURAL'];
-const TYPE_TONE: Record<string, string> = { WHOLESALE: 'teal', EXPORT: 'blue', CULTURAL: 'orange', CUSTOM_DESIGN: 'purple', BESPOKE: 'purple', PRODUCTION: 'blue', MODEL_BOOKING: 'teal', MODEL_CASTING: 'teal', SHOW_SEAT: 'yellow' };
+const TYPE_TONE: Record<string, string> = { WHOLESALE: 'teal', EXPORT: 'blue', CULTURAL: 'orange', CUSTOM_DESIGN: 'purple', BESPOKE: 'purple', PRODUCTION: 'blue' };
 
 function OrdersPage() {
   const params = useSearchParams();
@@ -135,7 +135,7 @@ function NewOrder({ open, onClose, onCreated }: { open: boolean; onClose: () => 
     { name: 'customerId', label: 'Customer', type: 'select', options: (customers.data ?? []).map((c) => ({ value: c.id, label: c.name })) },
     { name: 'type', label: 'Type', type: 'select', required: true, options: TYPES.map((t) => ({ value: t, label: label(t) })) },
     { name: 'title', label: 'What is being made', required: true, full: true, placeholder: 'e.g. Bridal cultural set' },
-    { name: 'quantity', label: 'Quantity', type: 'number' },
+    { name: 'quantity', label: 'Quantity', type: 'number', min: 1 },
     { name: 'total', label: 'Total price (ETB)', type: 'number' },
     { name: 'dueDate', label: 'Due date', type: 'date' },
     { name: 'assignedTo', label: 'Assigned to', placeholder: 'Design studio, Line 1…' },
@@ -186,7 +186,7 @@ function RequestsList({ data, loading, error, reload }: { data: WebRequest[] | n
               <div className="flex flex-wrap gap-2">
                 {r.phone && <a href={`tel:${r.phone}`} className="a-btn a-btn-line">Call</a>}
                 {r.email && <a href={`mailto:${r.email}`} className="a-btn a-btn-line">Email</a>}
-                {r.status !== 'CONVERTED' && r.type !== 'MODEL_CASTING' && <button type="button" disabled={busy} onClick={() => run(() => api(`/admin/requests/${r.id}/convert`, { method: 'POST', body: {} })).then(reload)} className="a-btn a-btn-ink">Make order</button>}
+                {r.status !== 'CONVERTED' && <button type="button" disabled={busy} onClick={() => run(() => api(`/admin/requests/${r.id}/convert`, { method: 'POST', body: {} })).then(reload)} className="a-btn a-btn-ink">Make order</button>}
                 {r.status === 'NEW' && <button type="button" disabled={busy} onClick={() => run(() => api(`/admin/requests/${r.id}`, { method: 'PATCH', body: { status: 'CONTACTED' } })).then(reload)} className="a-btn a-btn-line">Mark contacted</button>}
                 {r.status !== 'CLOSED' && r.status !== 'CONVERTED' && <button type="button" disabled={busy} onClick={() => run(() => api(`/admin/requests/${r.id}`, { method: 'PATCH', body: { status: 'CLOSED' } })).then(reload)} className="a-btn text-muted hover:bg-paper">Close</button>}
               </div>

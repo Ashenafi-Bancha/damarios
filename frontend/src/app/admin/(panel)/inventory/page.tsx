@@ -58,7 +58,7 @@ export default function InventoryPage() {
                 { name: 'name', label: 'Item name', required: true, full: true },
                 { name: 'category', label: 'Category', type: 'select', required: true, options: CATS.map((c) => ({ value: c, label: label(c) })) },
                 { name: 'unit', label: 'Unit', placeholder: 'm, rolls, pcs, cones' },
-                { name: 'quantity', label: 'Quantity now', type: 'number' },
+                { name: 'quantity', label: 'Starting quantity', type: 'number', createOnly: true, help: 'After this, use Stock in / Stock out so every change is recorded.' },
                 { name: 'minLevel', label: 'Minimum level', type: 'number' },
                 { name: 'unitCost', label: 'Unit cost (ETB)', type: 'number' },
                 { name: 'supplierId', label: 'Supplier', type: 'select', options: (suppliers.data ?? []).map((s) => ({ value: s.id, label: s.name })) },
@@ -115,7 +115,7 @@ export default function InventoryPage() {
           fields={[
             { name: 'name', label: 'Name', required: true },
             { name: 'location', label: 'Location' },
-            { name: 'phone', label: 'Phone' },
+            { name: 'phone', label: 'Phone', type: 'tel' },
             { name: 'supplies', label: 'What they supply', full: true },
           ]}
         />

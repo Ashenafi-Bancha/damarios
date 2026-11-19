@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
-import { api } from '@/lib/api';
+import { api, refreshWebsite } from '@/lib/api';
 import { gcDate, label } from '@/lib/format';
 import { ErrorNote, Loading, PageHeader, Pill, Tabs, useAction, useApi } from '@/components/admin/ui';
 import ResourceManager from '@/components/admin/ResourceManager';
@@ -16,7 +16,7 @@ const SECTIONS: { id: string; name: string }[] = [
   { id: 'dept-beauty', name: 'Beautification' }, { id: 'admissions', name: 'Admissions' },
   { id: 'gallery', name: 'Gallery' }, { id: 'news', name: 'News & graduates' }, { id: 'contact', name: 'Contact' },
 ];
-const LANGS = [{ id: 'en', name: 'English' }, { id: 'am', name: 'አማርኛ' }, { id: 'wal', name: 'Wolayttatto' }];
+const LANGS = [{ id: 'en', name: 'English' }, { id: 'am', name: 'አማርኛ' }];
 
 interface Block { section: string; lang: string; headline: string; body: string; visible: boolean }
 type R = { id: string; [k: string]: unknown };
@@ -38,7 +38,7 @@ export default function WebsitePage() {
       <Tabs<Tab> value={tab} onChange={setTab} tabs={[{ id: 'text', name: 'Page text' }, { id: 'gallery', name: 'Gallery' }, { id: 'news', name: 'News' }]} />
       {tab === 'text' && <TextEditor />}
       {tab === 'gallery' && (
-        <ResourceManager<R> endpoint="/admin/fashion/gallery" noun="photo" search={false}
+        <ResourceManager<R> endpoint="/admin/fashion/gallery" noun="photo" search={false} publicContent
           columns={[
             { label: 'Photo', render: (g) => thumb(g.imageUrl) },
             { label: 'Title', render: (g) => <span className="font-semibold">{String(g.title)}</span> },
@@ -55,7 +55,7 @@ export default function WebsitePage() {
         />
       )}
       {tab === 'news' && (
-        <ResourceManager<R> endpoint="/admin/news" noun="news post"
+        <ResourceManager<R> endpoint="/admin/news" noun="news post" publicContent
           columns={[
             { label: 'Photo', render: (n) => thumb(n.imageUrl) },
             { label: 'Title', render: (n) => <span className="font-semibold">{String(n.title)}</span> },
@@ -96,6 +96,7 @@ function TextEditor() {
     e.preventDefault();
     if (await act.run(() => api(`/admin/content/${section}/${lang}`, { method: 'PUT', body: form }))) {
       setSaved(true);
+      refreshWebsite();
       reload();
       if (lang === 'en') english.reload();
     }

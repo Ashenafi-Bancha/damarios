@@ -30,37 +30,38 @@ da-marios/
 
 ## Run it locally
 
-You need Node.js 20+ and either Docker Desktop or your own PostgreSQL.
+You need **Node.js 22** and **Docker Desktop** (or your own PostgreSQL).
 
-**1. Database**
+**First time** (from the project folder):
 
 ```bash
-docker compose up -d
+cp backend/.env.example backend/.env
+cp frontend/.env.example frontend/.env.local
+npm install
+npm run setup
 ```
 
-(Or use your own PostgreSQL: create a `damarios` database and put its address in `backend/.env` as `DATABASE_URL`.)
+Fill in `backend/.env` before `npm run setup` (at least `SEED_OWNER_EMAIL` and `SEED_OWNER_PASSWORD`).
+`setup` installs both apps, starts the database (Docker, port 5436), applies the migrations and seeds the starting data.
 
-**2. Backend** (API on http://localhost:4000)
+**Every day:**
 
 ```bash
-cd backend
-cp .env.example .env        # then fill in the values (skip if .env already exists)
-npm install
-npx prisma migrate dev --name init
-npm run db:seed
+npm run db:up
 npm run dev
 ```
 
-`db:seed` creates the owner account from `SEED_OWNER_EMAIL` / `SEED_OWNER_PASSWORD` in `backend/.env`, default role permissions, settings, the website text (English and Amharic) and the starter products, courses, gallery and news. The admin's business records start empty; `SEED_SAMPLE=true npm run db:seed` adds made-up records for trying things out (never in production).
+- Website: http://localhost:3000 · Admin: http://localhost:3000/admin (sign in with `SEED_OWNER_EMAIL` / `SEED_OWNER_PASSWORD`)
+- API: http://localhost:4000/api/health
 
-**3. Frontend** (website on http://localhost:3000, admin on http://localhost:3000/admin)
+`db:seed` creates the owner account, role permissions, settings, the website text (English and Amharic) and the starter
+products, courses, gallery and news. The admin's business records start empty; `SEED_SAMPLE=true npm run db:seed`
+(in `backend`) adds made-up records for trying things out (never in production).
 
-```bash
-cd frontend
-cp .env.example .env.local
-npm install
-npm run dev
-```
+**Changing the database:** edit `backend/prisma/schema.prisma`, then `cd backend && npx prisma migrate dev --name what-changed`,
+and commit the new folder in `prisma/migrations`. Production applies it on the next deploy.
+
+Other root commands: `npm run typecheck`, `npm run lint`, `npm run build`.
 
 The website still shows sample content if the API is not running, so the design can be shown without a database.
 

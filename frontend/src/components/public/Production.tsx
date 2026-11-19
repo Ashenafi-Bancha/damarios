@@ -9,6 +9,7 @@ import { Headline } from './Sections';
 import Reveal from './Reveal';
 import Photo from './Photo';
 import { api } from '@/lib/api';
+import { isEmail, isPhone, PHONE_PATTERN } from '@/lib/forms';
 import type { Division, Product } from '@/lib/types';
 
 const PROCESS = {
@@ -99,8 +100,14 @@ export function Enquiry() {
     e.preventDefault();
     setError('');
     const f = new FormData(e.currentTarget);
-    const country = String(f.get('country') || '');
-    const isExport = country !== '' && !/^ethiopia$/i.test(country.trim());
+    const country = String(f.get('country') || '').trim();
+    const isExport = country !== '' && !/^(ethiopia|ኢትዮጵያ)$/i.test(country);
+    const phone = String(f.get('phone') || '').trim();
+    const email = String(f.get('email') || '').trim();
+    // Buyers abroad often prefer email, so either one is enough, but at least one is needed to reply.
+    if (!phone && !email) return setError(tx('Please give a phone number or an email address so we can reply.', 'መልስ እንድንሰጥዎ እባክዎ ስልክ ቁጥር ወይም ኢሜይል ያስገቡ።'));
+    if (phone && !isPhone(phone)) return setError(tx('Please check the phone number, e.g. +251 911 234 567.', 'እባክዎ ስልክ ቁጥሩን ያረጋግጡ፤ ለምሳሌ 0911 234 567።'));
+    if (email && !isEmail(email)) return setError(tx('Please check the email address.', 'እባክዎ ኢሜይሉን ያረጋግጡ።'));
     setState('sending');
     try {
       await api('/public/requests', {
@@ -108,13 +115,14 @@ export function Enquiry() {
         body: {
           type: isExport ? 'EXPORT' : 'WHOLESALE',
           name: f.get('name'), company: f.get('company'), country, product: enquiryProduct,
-          quantity: f.get('quantity'), currency, phone: f.get('phone'), email: f.get('email'), message: f.get('message') || '',
+          quantity: f.get('quantity'), currency, phone, email, message: f.get('message') || '', website: f.get('website') || '',
         },
       });
       setState('sent');
     } catch (err) {
       setState('idle');
-      setError(err instanceof Error ? err.message : tx('Could not send. Please try again.', 'መላክ አልተቻለም። እባክዎ እንደገና ይሞክሩ።'));
+      const detail = err instanceof Error ? err.message : '';
+      setError(lang === 'am' ? `መላክ አልተቻለም። እባክዎ መረጃውን ያረጋግጡ ወይም በቴሌግራም ያግኙን።${detail ? ` (${detail})` : ''}` : detail || 'Could not send. Please try again.');
     }
   }
 
@@ -146,7 +154,9 @@ export function Enquiry() {
                 <button type="button" onClick={() => setState('idle')} className="btn btn-ghost">{tx('Send another enquiry', 'ሌላ ጥያቄ ይላኩ')}</button>
               </motion.div>
             ) : (
-              <motion.form key="f" onSubmit={submit} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="grid gap-4 sm:grid-cols-2">
+              <motion.form key="f" onSubmit={submit} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="relative grid gap-4 sm:grid-cols-2">
+                {/* Left empty by people (it is hidden); spam bots fill it in and are ignored by the server. */}
+                <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] h-px w-px opacity-0" />
                 <fieldset className={clsx(field, 'sm:col-span-2')}>
                   <legend className="mb-2">{tx('Product', 'ምርት')}</legend>
                   <div className="flex flex-wrap gap-2">
@@ -156,12 +166,12 @@ export function Enquiry() {
                     ))}
                   </div>
                 </fieldset>
-                <label className={field}>{tx('Company / business', 'ድርጅት / ንግድ')}<input className={input} name="company" placeholder={tx('Company name', 'የድርጅቱ ስም')} /></label>
-                <label className={field}>{tx('Your name', 'ስምዎ')}<input className={input} name="name" required minLength={2} autoComplete="name" /></label>
-                <label className={field}>{tx('Country', 'አገር')}<input className={input} name="country" placeholder={tx('Ethiopia, Kenya, UAE…', 'ኢትዮጵያ፣ ኬንያ፣ ዱባይ…')} autoComplete="country-name" /></label>
-                <label className={field}>{tx('Quantity', 'ብዛት')}<input className={input} name="quantity" placeholder={tx('e.g. 2,000 pcs or 500 kg', 'ለምሳሌ 2,000 ቁራጭ ወይም 500 ኪ.ግ')} /></label>
-                <label className={field}>{tx('Phone', 'ስልክ')}<input className={input} name="phone" type="tel" autoComplete="tel" placeholder="+251…" /></label>
-                <label className={field}>{tx('Email', 'ኢሜይል')}<input className={input} name="email" type="email" autoComplete="email" /></label>
+                <label className={field}>{tx('Company / business', 'ድርጅት / ንግድ')}<input className={input} name="company" maxLength={120} autoComplete="organization" placeholder={tx('Company name', 'የድርጅቱ ስም')} /></label>
+                <label className={field}>{tx('Your name', 'ስምዎ')}<input className={input} name="name" required minLength={2} maxLength={120} autoComplete="name" /></label>
+                <label className={field}>{tx('Country', 'አገር')}<input className={input} name="country" maxLength={60} placeholder={tx('Ethiopia, Kenya, UAE…', 'ኢትዮጵያ፣ ኬንያ፣ ዱባይ…')} autoComplete="country-name" /></label>
+                <label className={field}>{tx('Quantity', 'ብዛት')}<input className={input} name="quantity" maxLength={120} placeholder={tx('e.g. 2,000 pcs or 500 kg', 'ለምሳሌ 2,000 ቁራጭ ወይም 500 ኪ.ግ')} /></label>
+                <label className={field}>{tx('Phone', 'ስልክ')}<input className={input} name="phone" type="tel" inputMode="tel" pattern={PHONE_PATTERN} maxLength={25} autoComplete="tel" placeholder="+251…" /></label>
+                <label className={field}>{tx('Email', 'ኢሜይል')}<input className={input} name="email" type="email" maxLength={120} autoComplete="email" /></label>
                 <fieldset className={clsx(field, 'sm:col-span-2')}>
                   <legend className="mb-2">{tx('Quotation currency', 'የዋጋ ማቅረቢያ ገንዘብ')}</legend>
                   <div className="flex gap-2">
@@ -171,7 +181,7 @@ export function Enquiry() {
                     ))}
                   </div>
                 </fieldset>
-                <label className={clsx(field, 'sm:col-span-2')}>{tx('Details', 'ዝርዝር')}<textarea className={input} name="message" rows={3} placeholder={tx('Products, sizes, packaging, delivery date…', 'ምርቶች፣ መጠኖች፣ ማሸጊያ፣ የሚደርስበት ቀን…')} /></label>
+                <label className={clsx(field, 'sm:col-span-2')}>{tx('Details', 'ዝርዝር')}<textarea className={input} name="message" rows={3} maxLength={3000} placeholder={tx('Products, sizes, packaging, delivery date…', 'ምርቶች፣ መጠኖች፣ ማሸጊያ፣ የሚደርስበት ቀን…')} /></label>
                 {error && <p role="alert" className="rounded-lg bg-[#3A1D1B] px-4 py-3 text-sm text-[#F4A29A] sm:col-span-2">{error}</p>}
                 <p className="text-xs text-muted-dark sm:col-span-2">{tx('Please give a phone number or an email address so we can reply.', 'መልስ እንድንሰጥዎ እባክዎ ስልክ ቁጥር ወይም ኢሜይል ያስገቡ።')}</p>
                 <button type="submit" disabled={state === 'sending'} className="btn btn-gold sm:col-span-2">

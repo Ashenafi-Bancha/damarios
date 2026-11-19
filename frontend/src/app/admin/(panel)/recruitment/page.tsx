@@ -90,7 +90,7 @@ function HireModal({ applicant, onClose, onDone }: { applicant: Applicant; onClo
       <form className="flex flex-col gap-3.5" onSubmit={async (e) => { e.preventDefault(); if (await act.run(() => api(`/admin/recruitment/applicants/${applicant.id}/hire`, { method: 'POST', body: { ...v, rate: Number(v.rate || 0) } }))) onDone(); }}>
         <p className="text-sm text-muted">This creates their employee record in Employees, with the job title “{applicant.job?.title ?? 'New hire'}”.</p>
         <label className="a-label">Department<input className="a-input" required value={v.department} onChange={(e) => setV({ ...v, department: e.target.value })} /></label>
-        <label className="a-label">Pay type<select className="a-input" value={v.payType} onChange={(e) => setV({ ...v, payType: e.target.value })}><option value="MONTHLY">Monthly salary</option><option value="PIECE_RATE">Piece rate</option><option value="PER_BOOKING">Per day / booking</option></select></label>
+        <label className="a-label">Pay type<select className="a-input" value={v.payType} onChange={(e) => setV({ ...v, payType: e.target.value })}><option value="MONTHLY">Monthly salary</option><option value="PIECE_RATE">Piece rate</option><option value="DAILY">Daily (per day worked)</option></select></label>
         <label className="a-label">Salary or rate (ETB)<input className="a-input" type="number" min="0" value={v.rate} onChange={(e) => setV({ ...v, rate: e.target.value })} /></label>
         <ErrorNote error={act.error} />
         <div className="flex justify-end gap-2"><button type="button" onClick={onClose} className="a-btn a-btn-line">Cancel</button><button disabled={act.busy} className="a-btn a-btn-ink">Create employee record</button></div>

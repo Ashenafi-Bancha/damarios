@@ -15,6 +15,11 @@ export interface SessionUser {
   role: Role;
 }
 
+/** What the login token carries: who it is, and which session version it was issued for. */
+interface TokenPayload extends SessionUser {
+  v: number;
+}
+
 declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Express {
@@ -24,8 +29,9 @@ declare global {
   }
 }
 
-export function signSession(user: SessionUser) {
-  return jwt.sign(user, SECRET, { expiresIn: '12h' });
+export function signSession(user: SessionUser & { sessionVersion: number }) {
+  const payload: TokenPayload = { id: user.id, name: user.name, role: user.role, v: user.sessionVersion };
+  return jwt.sign(payload, SECRET, { expiresIn: '12h', algorithm: 'HS256' });
 }
 
 export const cookieOptions = {
@@ -40,15 +46,17 @@ export const cookieOptions = {
 export async function requireAuth(req: Request, _res: Response, next: NextFunction) {
   const token = req.cookies?.[COOKIE] || req.headers.authorization?.replace(/^Bearer /, '');
   if (!token) return next(new HttpError(401, 'Please log in'));
-  let payload: SessionUser;
+  let payload: TokenPayload;
   try {
-    payload = jwt.verify(token, SECRET) as SessionUser;
+    payload = jwt.verify(token, SECRET, { algorithms: ['HS256'] }) as TokenPayload;
   } catch {
     return next(new HttpError(401, 'Your session has expired. Please log in again.'));
   }
   try {
-    const user = await prisma.user.findUnique({ where: { id: payload.id }, select: { id: true, name: true, role: true, active: true } });
+    const user = await prisma.user.findUnique({ where: { id: payload.id }, select: { id: true, name: true, role: true, active: true, sessionVersion: true } });
     if (!user || !user.active) return next(new HttpError(401, 'This account is not active. Please contact the owner.'));
+    // Signed out when the password, role or active status changed after this login.
+    if ((payload.v ?? 0) !== user.sessionVersion) return next(new HttpError(401, 'Your session has ended. Please log in again.'));
     req.user = { id: user.id, name: user.name, role: user.role };
     next();
   } catch (e) {

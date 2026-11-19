@@ -11,6 +11,12 @@ services:
       POSTGRES_DB: damarios
     ports:
       - "5436:5432"
+    # Lets "docker compose up --wait" (npm run db:up) return only once the database accepts connections.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U damarios -d damarios"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
     volumes:
       - pgdata:/var/lib/postgresql/data
 

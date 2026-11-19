@@ -42,9 +42,9 @@ export default function CustomersPage() {
         fields={[
           { name: 'name', label: 'Name', required: true },
           { name: 'type', label: 'Type', type: 'select', required: true, options: [{ value: 'INDIVIDUAL', label: 'Individual' }, { value: 'BUSINESS', label: 'Business / brand' }, { value: 'GROUP', label: 'Group' }] },
-          { name: 'phone', label: 'Phone' },
+          { name: 'phone', label: 'Phone', type: 'tel', placeholder: '0911 234 567 or +251…' },
           { name: 'telegram', label: 'Telegram' },
-          { name: 'email', label: 'Email' },
+          { name: 'email', label: 'Email', type: 'email', maxLength: 120 },
           { name: 'notes', label: 'Notes', type: 'textarea' },
         ]}
         defaults={{ type: 'INDIVIDUAL' }}

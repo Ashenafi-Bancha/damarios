@@ -5,6 +5,7 @@ import { api } from '@/lib/api';
 import { label, timeAgo } from '@/lib/format';
 import { ErrorNote, Loading, Modal, PageHeader, Pill, useAction, useApi } from '@/components/admin/ui';
 import { useMe } from '@/components/admin/AdminShell';
+import { PHONE_PATTERN } from '@/components/admin/ResourceManager';
 
 interface User { id: string; name: string; email: string; phone: string | null; role: string; active: boolean; lastActiveAt: string | null }
 interface Perms { modules: string[]; roles: string[]; granted: string[] }
@@ -20,6 +21,8 @@ export default function UsersPage() {
   const log = useApi<Activity[]>('/admin/activity');
   const [editing, setEditing] = useState<User | 'new' | null>(null);
   const act = useAction();
+  // Only the owner adds people, changes accounts and sets permissions (the server enforces this too).
+  const isOwner = me?.role === 'OWNER';
 
   async function toggle(role: string, module: string, allowed: boolean) {
     if (!perms.data) return;
@@ -32,7 +35,7 @@ export default function UsersPage() {
   return (
     <>
       <PageHeader title="Users & roles" sub="Who can log in to the admin panel, and what each role can open.">
-        <button type="button" onClick={() => setEditing('new')} className="a-btn a-btn-gold">+ Invite user</button>
+        {isOwner && <button type="button" onClick={() => setEditing('new')} className="a-btn a-btn-gold">+ Invite user</button>}
       </PageHeader>
       <ErrorNote error={users.error || act.error} />
       <div className="flex flex-wrap items-start gap-4">
@@ -48,7 +51,7 @@ export default function UsersPage() {
                   <td className="td text-muted">{u.email}</td>
                   <td className="td"><Pill tone={u.active ? 'green' : 'gray'}>{u.active ? 'Active' : 'Disabled'}</Pill></td>
                   <td className="td text-muted">{u.lastActiveAt ? timeAgo(u.lastActiveAt) : 'Never'}</td>
-                  <td className="td text-right"><button type="button" onClick={() => setEditing(u)} className="font-semibold text-teal">Edit</button></td>
+                  <td className="td text-right">{isOwner && <button type="button" onClick={() => setEditing(u)} className="font-semibold text-teal">Edit</button>}</td>
                 </tr>
               ))}</tbody>
             </table>
@@ -68,7 +71,7 @@ export default function UsersPage() {
       <section className="card overflow-x-auto p-0">
         <div className="flex flex-wrap items-center justify-between gap-2 px-[18px] pb-1.5 pt-4">
           <h2 className="font-display text-[17px] font-bold">What each role can open</h2>
-          <span className="text-[13px] text-muted">Tick a box to give or remove access. The owner always has everything.</span>
+          <span className="text-[13px] text-muted">{isOwner ? 'Tick a box to give or remove access. The owner always has everything.' : 'Only the owner can change access.'}</span>
         </div>
         {perms.data && (
           <table className="w-full border-collapse">
@@ -79,7 +82,7 @@ export default function UsersPage() {
                 <td className="td text-center"><input type="checkbox" checked disabled aria-label={`Owner can open ${m}`} className="h-[18px] w-[18px] accent-teal" /></td>
                 {perms.data!.roles.map((r) => {
                   const on = perms.data!.granted.includes(`${r}|${m}`);
-                  return <td key={r} className="td text-center"><input type="checkbox" checked={on} onChange={() => toggle(r, m, !on)} aria-label={`${ROLE_NAME[r]} can open ${m}`} className="h-[18px] w-[18px] accent-teal" /></td>;
+                  return <td key={r} className="td text-center"><input type="checkbox" checked={on} disabled={!isOwner || act.busy} onChange={() => toggle(r, m, !on)} aria-label={`${ROLE_NAME[r]} can open ${m}`} className="h-[18px] w-[18px] accent-teal" /></td>;
                 })}
               </tr>
             ))}</tbody>
@@ -87,7 +90,7 @@ export default function UsersPage() {
         )}
       </section>
 
-      {editing && <UserModal user={editing === 'new' ? null : editing} isOwner={me?.role === 'OWNER'} onClose={() => setEditing(null)} onSaved={() => { setEditing(null); users.reload(); log.reload(); }} />}
+      {editing && isOwner && <UserModal user={editing === 'new' ? null : editing} isOwner onClose={() => setEditing(null)} onSaved={() => { setEditing(null); users.reload(); log.reload(); }} />}
     </>
   );
 }
@@ -101,16 +104,17 @@ function UserModal({ user, isOwner, onClose, onSaved }: { user: User | null; isO
       <form className="grid gap-3.5 sm:grid-cols-2" onSubmit={async (e) => {
         e.preventDefault();
         const ok = await act.run(() => user
-          ? api(`/admin/users/${user.id}`, { method: 'PATCH', body: { name: v.name, phone: v.phone, role: v.role, active: v.active, ...(v.password ? { password: v.password } : {}) } })
+          ? api(`/admin/users/${user.id}`, { method: 'PATCH', body: { name: v.name, phone: v.phone || null, role: v.role, active: v.active, ...(v.password ? { password: v.password } : {}) } })
           : api('/admin/users', { method: 'POST', body: { name: v.name, email: v.email, phone: v.phone || undefined, role: v.role, password: v.password } }));
         if (ok) onSaved();
       }}>
-        <label className="a-label">Full name<input className="a-input" required value={v.name} onChange={(e) => setV({ ...v, name: e.target.value })} /></label>
+        <label className="a-label">Full name<input className="a-input" required minLength={2} maxLength={120} value={v.name} onChange={(e) => setV({ ...v, name: e.target.value })} /></label>
         <label className="a-label">Role<select className="a-input" value={v.role} onChange={(e) => setV({ ...v, role: e.target.value })}>{roles.map((r) => <option key={r} value={r}>{ROLE_NAME[r]}</option>)}</select></label>
-        <label className="a-label">Email (for login)<input className="a-input" type="email" required disabled={!!user} value={v.email} onChange={(e) => setV({ ...v, email: e.target.value })} /></label>
-        <label className="a-label">Phone<input className="a-input" value={v.phone} onChange={(e) => setV({ ...v, phone: e.target.value })} /></label>
-        <label className="a-label sm:col-span-2">{user ? 'New password (leave empty to keep)' : 'Temporary password (8+ characters)'}
-          <input className="a-input" type="password" autoComplete="new-password" minLength={8} required={!user} value={v.password} onChange={(e) => setV({ ...v, password: e.target.value })} />
+        <label className="a-label">Email (for login)<input className="a-input" type="email" required maxLength={120} disabled={!!user} value={v.email} onChange={(e) => setV({ ...v, email: e.target.value })} /></label>
+        <label className="a-label">Phone<input className="a-input" type="tel" pattern={PHONE_PATTERN} title="A phone number, e.g. 0911 234 567 or +251 911 234 567" value={v.phone} onChange={(e) => setV({ ...v, phone: e.target.value })} /></label>
+        <label className="a-label sm:col-span-2">{user ? 'New password (leave empty to keep)' : 'Temporary password'}
+          <input className="a-input" type="password" autoComplete="new-password" minLength={8} maxLength={200} required={!user} value={v.password} onChange={(e) => setV({ ...v, password: e.target.value })} />
+          <span className="text-xs font-normal text-muted">At least 8 characters, with letters and numbers. A new password signs this person out everywhere.</span>
         </label>
         {user && <label className="flex items-center gap-2.5 text-sm sm:col-span-2"><input type="checkbox" checked={v.active} onChange={(e) => setV({ ...v, active: e.target.checked })} className="h-[18px] w-[18px] accent-teal" />Account active (untick to block login)</label>}
         <div className="sm:col-span-2"><ErrorNote error={act.error} /></div>

@@ -2,7 +2,8 @@ import { Router } from 'express';
 import { z } from 'zod';
 import { PayMethod, TxKind } from '@prisma/client';
 import { prisma } from '../../lib/prisma';
-import { ah } from '../../lib/http';
+import { ah, HttpError } from '../../lib/http';
+import { optionalDate, positiveMoney, text } from '../../lib/validate';
 import { requireModule } from '../../lib/auth';
 import { crud } from '../../lib/crud';
 import { etPeriod, etPeriodLabel, etPeriodRange } from '../../lib/ethiopian';
@@ -46,16 +47,25 @@ r.get('/summary', guard, ah(async (req, res) => {
   });
 }));
 
+const SOURCE_SCREEN = { ORDER: 'Orders', TRAINING: 'Training center', PAYROLL: 'Payroll' } as const;
+
+/** Entries made by another screen (order payments, training fees, payroll) can't be edited or deleted here. */
+r.use('/transactions/:id', guard, ah(async (req, _res, next) => {
+  if (req.method !== 'PATCH' && req.method !== 'DELETE') return next();
+  const tx = await prisma.transaction.findUniqueOrThrow({ where: { id: req.params.id }, select: { source: true } });
+  if (tx.source !== 'MANUAL') throw new HttpError(400, `This entry was recorded in ${SOURCE_SCREEN[tx.source]}. Change it there.`);
+  next();
+}));
+
 r.use('/transactions', crud({
-  model: 'transaction', module: 'finance', orderBy: { date: 'desc' }, filters: ['kind', 'method'], search: ['description', 'category'],
+  model: 'transaction', module: 'finance', orderBy: { date: 'desc' }, filters: ['kind', 'method', 'source'], search: ['description', 'category'],
   schema: z.object({
     kind: z.nativeEnum(TxKind),
-    category: z.string().min(2),
-    amount: z.coerce.number().positive(),
+    category: text(2, 80),
+    amount: positiveMoney,
     method: z.nativeEnum(PayMethod).default('CASH'),
-    description: z.string().default(''),
-    date: z.coerce.date().optional(),
-    orderId: z.string().nullable().optional(),
+    description: z.string().max(300).default(''),
+    date: optionalDate,
   }),
 }));
 

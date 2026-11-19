@@ -7,8 +7,9 @@ import { useBlock, useSite } from './SiteContext';
 import { Headline } from './Sections';
 import Reveal from './Reveal';
 import Photo from './Photo';
-import { FacebookIcon, InstagramIcon, TelegramIcon, TikTokIcon, YouTubeIcon } from './Icons';
+import { FacebookIcon, InstagramIcon, TelegramIcon, TikTokIcon, WhatsAppIcon, YouTubeIcon } from './Icons';
 import { api } from '@/lib/api';
+import { isEmail, isPhone, isTelegram, whatsappUrl } from '@/lib/forms';
 
 export const tgUrl = (handle?: string) => `https://t.me/${(handle || '').replace(/^@|\[|\]/g, '')}`;
 export const telUrl = (phone?: string) => `tel:${(phone || '').replace(/[^\d+]/g, '')}`;
@@ -17,6 +18,7 @@ export function Contact() {
   const { site, tx } = useSite();
   const block = useBlock('contact');
   const c = site.contact!;
+  const wa = whatsappUrl(c.whatsapp);
   const rows: [string, React.ReactNode][] = [
     [tx('ADDRESS', 'አድራሻ'), c.address],
     [tx('HOURS', 'የሥራ ሰዓት'), c.hours],
@@ -24,9 +26,11 @@ export function Contact() {
     [tx('TRAINING CENTER', 'ማሠልጠኛ ማዕከል'), <a key="tp" href={telUrl(c.trainingPhone || c.phone)} className="hover:text-teal">{c.trainingPhone || c.phone}</a>],
     [tx('EMAIL', 'ኢሜይል'), <a key="e" href={`mailto:${c.email}`} className="hover:text-teal">{c.email}</a>],
     [tx('TELEGRAM', 'ቴሌግራም'), <a key="t" href={tgUrl(c.telegram)} className="hover:text-teal">{c.telegram}</a>],
+    ...(wa ? [[tx('WHATSAPP', 'ዋትስአፕ'), <a key="w" href={wa} target="_blank" rel="noopener noreferrer" className="hover:text-teal">{c.whatsapp}</a>] as [string, React.ReactNode]] : []),
   ];
   const social = [
     { name: 'Telegram', href: tgUrl(c.telegram), Icon: TelegramIcon },
+    ...(wa ? [{ name: 'WhatsApp', href: wa, Icon: WhatsAppIcon }] : []),
     { name: 'Facebook', href: c.facebook || 'https://facebook.com/', Icon: FacebookIcon },
     { name: 'Instagram', href: c.instagram || 'https://instagram.com/', Icon: InstagramIcon },
     { name: 'TikTok', href: c.tiktok || 'https://tiktok.com/', Icon: TikTokIcon },
@@ -74,15 +78,24 @@ export function Contact() {
 export function Footer() {
   const { tx } = useSite();
   const [contact, setContact] = useState('');
-  const [joined, setJoined] = useState<'idle' | 'ok' | 'err'>('idle');
+  const [joined, setJoined] = useState<'idle' | 'sending' | 'ok' | 'err'>('idle');
+  const [joinError, setJoinError] = useState('');
 
-  async function join(e: React.FormEvent) {
+  async function join(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    try {
-      await api('/public/subscribe', { method: 'POST', body: { contact } });
-      setJoined('ok');
-    } catch {
+    const value = contact.trim();
+    if (!isPhone(value) && !isEmail(value) && !isTelegram(value)) {
       setJoined('err');
+      setJoinError(tx('Enter a phone number, an email address or a Telegram @username.', 'ስልክ ቁጥር፣ ኢሜይል ወይም የቴሌግራም @ስም ያስገቡ።'));
+      return;
+    }
+    setJoined('sending');
+    try {
+      await api('/public/subscribe', { method: 'POST', body: { contact: value, website: new FormData(e.currentTarget).get('website') || '' } });
+      setJoined('ok');
+    } catch (err) {
+      setJoined('err');
+      setJoinError(err instanceof Error && err.message ? err.message : tx('Could not sign you up. Please try again.', 'መመዝገብ አልተቻለም። እባክዎ እንደገና ይሞክሩ።'));
     }
   }
 
@@ -100,18 +113,19 @@ export function Footer() {
             <Image src="/brand/logo-horizontal-white.png" alt="DaMarios Garment and Skill Training Center" width={1400} height={320} className="h-14 w-auto self-start" />
             <span className="font-ethiopic text-[#E6EEF8]">ዳማሪዮስ ጋርመንት እና የክህሎት ማሠልጠኛ ማዕከል</span>
             <span>{tx('Wolaita Sodo, Ethiopia', 'ወላይታ ሶዶ፣ ኢትዮጵያ')}</span>
-            <form onSubmit={join} className="mt-3 flex flex-col gap-2">
+            <form onSubmit={join} className="relative mt-3 flex flex-col gap-2">
+              <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] h-px w-px opacity-0" />
               <label htmlFor="nl" className="text-[13px] text-white">{tx('Get news about new intakes and products', 'ስለ አዲስ ምዝገባ እና ምርቶች መረጃ ያግኙ')}</label>
               {joined === 'ok' ? (
                 <p role="status" className="font-semibold text-gold">{tx('You’re on the list. Thank you.', 'ተመዝግበዋል። እናመሰግናለን።')}</p>
               ) : (
                 <div className="flex gap-2">
-                  <input id="nl" value={contact} onChange={(e) => setContact(e.target.value)} required minLength={4} placeholder={tx('Phone or Telegram', 'ስልክ ወይም ቴሌግራም')}
+                  <input id="nl" value={contact} onChange={(e) => { setContact(e.target.value); if (joined === 'err') setJoined('idle'); }} required maxLength={80} placeholder={tx('Phone, email or Telegram', 'ስልክ፣ ኢሜይል ወይም ቴሌግራም')}
                     className="min-h-[48px] min-w-0 flex-1 rounded-full border border-[#24497A] bg-[#0A2A52] px-4 text-[15px] text-white placeholder:text-[#6B7480] focus:border-gold focus:outline-none" />
-                  <button type="submit" className="btn btn-gold min-h-[48px] px-[22px]"><TelegramIcon className="h-4 w-4" />{tx('Join', 'ይመዝገቡ')}</button>
+                  <button type="submit" disabled={joined === 'sending'} className="btn btn-gold min-h-[48px] px-[22px]"><TelegramIcon className="h-4 w-4" />{tx('Join', 'ይመዝገቡ')}</button>
                 </div>
               )}
-              {joined === 'err' && <p role="alert" className="text-sm text-[#F4A29A]">{tx('Could not sign you up. Please try again.', 'መመዝገብ አልተቻለም። እባክዎ እንደገና ይሞክሩ።')}</p>}
+              {joined === 'err' && <p role="alert" className="text-sm text-[#F4A29A]">{joinError}</p>}
             </form>
           </div>
           <div className="grid grid-cols-2 gap-8 text-[15px] sm:grid-cols-3">

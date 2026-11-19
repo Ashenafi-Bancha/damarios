@@ -103,7 +103,7 @@ export default function ProductionPage() {
         </section>
       </div>
 
-      <ResourceManager<Product> endpoint="/admin/production/products" noun="product" title="Product catalog (shown on the website)"
+      <ResourceManager<Product> endpoint="/admin/production/products" noun="product" publicContent title="Product catalog (shown on the website)"
         columns={[
           // eslint-disable-next-line @next/next/no-img-element
           { label: 'Photo', render: (p) => (p.imageUrl ? <img src={p.imageUrl} alt="" className="h-10 w-10 rounded-lg object-cover" /> : <span className="ph block h-10 w-10 rounded-lg" />) },

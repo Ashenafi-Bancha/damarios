@@ -10,6 +10,8 @@
  * so later deploys never touch live data.
  */
 import 'dotenv/config';
+
+process.env.TZ = process.env.TZ || 'Africa/Addis_Ababa';
 import bcrypt from 'bcryptjs';
 import { PrismaClient, Role, TrainingDept } from '@prisma/client';
 import { DEFAULT_PERMISSIONS } from '../src/lib/modules';
@@ -77,7 +79,7 @@ async function base() {
   const settings: Record<string, unknown> = {
     openingDate: '2027-01-15',
     contact: {
-      phone: '+251 [sales phone]', trainingPhone: '+251 [training phone]', email: 'info@[domain]', telegram: '@[damarios]',
+      phone: '+251 [sales phone]', trainingPhone: '+251 [training phone]', whatsapp: '', email: 'info@damariosgarment.com', telegram: '@[damarios]',
       address: '[Kebele / landmark], Wolaita Sodo, Ethiopia', hours: 'Mon–Sat · 8:00–18:00',
       instagram: '', tiktok: '', facebook: '', youtube: '', mapUrl: '',
     },
@@ -86,7 +88,7 @@ async function base() {
     payroll: { pensionEmployee: 7, pensionEmployer: 11, overtimeMultiplier: 1.5, brackets: [] },
     calendar: { main: 'ethiopian', showGregorian: true, adminLanguage: 'en' },
     payments: { telebirr: '', cbeBirr: '', bank: '', depositPercent: 50 },
-    notifications: { newRequest: true, newApplication: true, lowStock: true, overdue: true, dailySummary: false, payment: true },
+    notifications: { newRequest: true, newApplication: true, lowStock: true, payment: true },
   };
   for (const [key, value] of Object.entries(settings)) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

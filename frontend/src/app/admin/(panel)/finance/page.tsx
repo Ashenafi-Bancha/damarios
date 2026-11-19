@@ -62,6 +62,8 @@ export default function FinancePage() {
         </>
       )}
       <ResourceManager<Tx> endpoint="/admin/finance/transactions" noun="transaction" title="Transactions"
+        // Order payments, training fees and payroll are changed where they were recorded, not here.
+        rowEditable={(t) => !t.source || t.source === 'MANUAL'}
         columns={[
           { label: 'Date', render: (t) => gcDate(t.date) },
           { label: 'Description', render: (t) => <span className="font-semibold">{t.description || t.category}</span> },
@@ -69,14 +71,15 @@ export default function FinancePage() {
           { label: 'Method', render: (t) => label(t.method) },
           { label: 'Amount', render: (t) => <span className={t.kind === 'INCOME' ? 'font-semibold text-[#1E6B34]' : 'font-semibold text-[#9B1C14]'}>{t.kind === 'INCOME' ? '+' : '−'} {etb(t.amount)}</span> },
           { label: 'Kind', render: (t) => <Pill tone={t.kind === 'INCOME' ? 'green' : 'red'}>{label(t.kind)}</Pill> },
+          { label: 'Recorded in', render: (t) => ({ ORDER: 'Orders', TRAINING: 'Training', PAYROLL: 'Payroll' } as Record<string, string>)[String(t.source)] ?? 'Finance' },
         ]}
         fields={[
           { name: 'kind', label: 'Money in or out', type: 'select', required: true, options: [{ value: 'INCOME', label: 'Income' }, { value: 'EXPENSE', label: 'Expense' }] },
           { name: 'category', label: 'Category', type: 'select', required: true, options: CATEGORIES.map((c) => ({ value: c, label: c })) },
-          { name: 'amount', label: 'Amount (ETB)', type: 'number', required: true },
+          { name: 'amount', label: 'Amount (ETB)', type: 'number', required: true, min: 0.01 },
           { name: 'method', label: 'Method', type: 'select', required: true, options: [{ value: 'TELEBIRR', label: 'Telebirr' }, { value: 'CBE_BIRR', label: 'CBE Birr' }, { value: 'BANK', label: 'Bank transfer' }, { value: 'CASH', label: 'Cash' }] },
           { name: 'date', label: 'Date', type: 'date', required: true },
-          { name: 'description', label: 'Description', full: true },
+          { name: 'description', label: 'Description', full: true, maxLength: 300 },
         ]}
         defaults={{ kind: 'EXPENSE', category: 'Fabric & materials', method: 'CASH', date: new Date().toISOString() }}
         onChange={reload}

@@ -3,20 +3,28 @@
 import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { Plus, Trash2 } from 'lucide-react';
-import { api } from '@/lib/api';
+import { api, refreshWebsite } from '@/lib/api';
 import { ErrorNote, Loading, PageHeader, useAction, useApi } from '@/components/admin/ui';
 
 type S = Record<string, unknown>;
-type Tab = 'business' | 'contact' | 'opening' | 'payroll' | 'payments' | 'notifications';
+type Tab = 'business' | 'contact' | 'payroll' | 'payments' | 'notifications';
 interface Bracket { from: number; to: number | null; rate: number; deduction: number }
 
 const TABS: { id: Tab; name: string }[] = [
-  { id: 'business', name: 'Business details' }, { id: 'contact', name: 'Contact & social' }, { id: 'opening', name: 'Opening date' },
+  { id: 'business', name: 'Business details' }, { id: 'contact', name: 'Contact & social' },
   { id: 'payroll', name: 'Payroll & tax' }, { id: 'payments', name: 'Payment methods' }, { id: 'notifications', name: 'Notifications' },
 ];
 
-function Text({ label, value, onChange, placeholder, type = 'text', className }: { label: string; value: unknown; onChange: (v: string) => void; placeholder?: string; type?: string; className?: string }) {
-  return <label className={clsx('a-label', className)}>{label}<input className="a-input" type={type} value={String(value ?? '')} placeholder={placeholder} onChange={(e) => onChange(e.target.value)} /></label>;
+function Text({ label, value, onChange, placeholder, type = 'text', className, help, maxLength = 200, min, max }: {
+  label: string; value: unknown; onChange: (v: string) => void; placeholder?: string; type?: string; className?: string; help?: string; maxLength?: number; min?: number; max?: number;
+}) {
+  return (
+    <label className={clsx('a-label', className)}>{label}
+      <input className="a-input" type={type} value={String(value ?? '')} placeholder={placeholder} maxLength={type === 'number' ? undefined : maxLength} min={min} max={max}
+        pattern={type === 'url' ? 'https://.+' : undefined} title={type === 'url' ? 'A link starting with https://' : undefined} onChange={(e) => onChange(e.target.value)} />
+      {help && <span className="text-xs font-normal text-muted">{help}</span>}
+    </label>
+  );
 }
 
 export default function SettingsPage() {
@@ -27,13 +35,14 @@ export default function SettingsPage() {
   const act = useAction();
   useEffect(() => { if (data) setDraft(structuredClone(data)); }, [data]);
 
-  const key = tab === 'opening' ? 'openingDate' : tab;
+  const key = tab;
   const get = (k: string) => (draft[key] as S | undefined)?.[k];
   const set = (k: string, v: unknown) => { setSaved(false); setDraft((d) => ({ ...d, [key]: { ...((d[key] as S) ?? {}), [k]: v } })); };
 
-  async function save() {
-    const value = draft[key];
-    if (await act.run(() => api(`/admin/settings/${key}`, { method: 'PUT', body: { value } }))) { setSaved(true); reload(); }
+  async function save(e?: React.FormEvent) {
+    e?.preventDefault();
+    const value = draft[key] ?? {};
+    if (await act.run(() => api(`/admin/settings/${key}`, { method: 'PUT', body: { value } }))) { setSaved(true); reload(); if (key === 'contact') refreshWebsite(); }
   }
 
   if (loading && !data) return <Loading />;
@@ -51,7 +60,7 @@ export default function SettingsPage() {
               className={clsx('min-h-[46px] rounded-[10px] px-3.5 text-left text-sm', tab === t.id ? 'bg-[#EAF1FB] font-bold' : 'hover:bg-paper')}>{t.name}</button>
           ))}
         </nav>
-        <section className="card flex flex-[3_1_560px] flex-col gap-4 p-[22px]">
+        <form onSubmit={save} className="card flex flex-[3_1_560px] flex-col gap-4 p-[22px]">
           {tab === 'business' && (
             <>
               <h2 className="font-display text-xl font-bold">Business details</h2>
@@ -70,36 +79,30 @@ export default function SettingsPage() {
               <h2 className="font-display text-xl font-bold">Contact &amp; social</h2>
               <p className="-mt-2 text-sm text-muted">Shown in the Contact section and footer of the public website.</p>
               <div className="grid gap-3.5 sm:grid-cols-2">
-                <Text label="Production & sales phone" value={get('phone')} onChange={(v) => set('phone', v)} />
-                <Text label="Training center phone" value={get('trainingPhone')} onChange={(v) => set('trainingPhone', v)} />
-                <Text label="Email" value={get('email')} onChange={(v) => set('email', v)} />
+                <Text label="Production & sales phone" type="tel" value={get('phone')} onChange={(v) => set('phone', v)} placeholder="+251 9…" />
+                <Text label="Training center phone" type="tel" value={get('trainingPhone')} onChange={(v) => set('trainingPhone', v)} placeholder="+251 9…" />
+                <Text label="WhatsApp number" type="tel" value={get('whatsapp')} onChange={(v) => set('whatsapp', v)} placeholder="+251 9…"
+                  help="With the country code. Shows a WhatsApp button for customers abroad. Leave empty to hide it." />
+                <Text label="Email" type="email" value={get('email')} onChange={(v) => set('email', v)} placeholder="info@damariosgarment.com" />
                 <Text label="Telegram username" value={get('telegram')} onChange={(v) => set('telegram', v)} placeholder="@damarios" />
                 <Text label="Opening hours" value={get('hours')} onChange={(v) => set('hours', v)} />
                 <Text label="Address" value={get('address')} onChange={(v) => set('address', v)} className="sm:col-span-2" />
-                <Text label="Instagram link" value={get('instagram')} onChange={(v) => set('instagram', v)} placeholder="https://instagram.com/…" />
-                <Text label="TikTok link" value={get('tiktok')} onChange={(v) => set('tiktok', v)} />
-                <Text label="Facebook link" value={get('facebook')} onChange={(v) => set('facebook', v)} />
-                <Text label="YouTube link" value={get('youtube')} onChange={(v) => set('youtube', v)} />
-                <Text label="Google Maps embed link" value={get('mapUrl')} onChange={(v) => set('mapUrl', v)} placeholder="https://www.google.com/maps/embed?pb=…" className="sm:col-span-2" />
+                <Text label="Instagram link" type="url" value={get('instagram')} onChange={(v) => set('instagram', v)} placeholder="https://instagram.com/…" maxLength={400} />
+                <Text label="TikTok link" type="url" value={get('tiktok')} onChange={(v) => set('tiktok', v)} placeholder="https://tiktok.com/@…" maxLength={400} />
+                <Text label="Facebook link" type="url" value={get('facebook')} onChange={(v) => set('facebook', v)} placeholder="https://facebook.com/…" maxLength={400} />
+                <Text label="YouTube link" type="url" value={get('youtube')} onChange={(v) => set('youtube', v)} placeholder="https://youtube.com/@…" maxLength={400} />
+                <Text label="Google Maps embed link" type="url" value={get('mapUrl')} onChange={(v) => set('mapUrl', v)} placeholder="https://www.google.com/maps/embed?pb=…" className="sm:col-span-2" maxLength={400}
+                  help="In Google Maps: Share › Embed a map › copy only the link inside src=&quot;…&quot;." />
               </div>
-            </>
-          )}
-          {tab === 'opening' && (
-            <>
-              <h2 className="font-display text-xl font-bold">Grand opening date</h2>
-              <p className="-mt-2 text-sm text-muted">Drives the countdown on the website.</p>
-              <label className="a-label max-w-xs">Date<input className="a-input" type="date" value={typeof draft.openingDate === 'string' ? (draft.openingDate as unknown as string) : ''}
-                onChange={(e) => { setSaved(false); setDraft((d) => ({ ...d, openingDate: e.target.value as unknown as S })); }} /></label>
             </>
           )}
           {tab === 'payroll' && (
             <>
               <h2 className="font-display text-xl font-bold">Payroll &amp; tax</h2>
               <p className="rounded-[10px] bg-[#FFF4DC] px-3.5 py-3 text-sm font-medium text-[#6B4A00]">Ethiopian tax and pension rules change. Ask the company’s accountant to confirm every value here before the first payroll.</p>
-              <div className="grid gap-3.5 sm:grid-cols-3">
-                <Text label="Pension: employee (%)" type="number" value={get('pensionEmployee')} onChange={(v) => set('pensionEmployee', Number(v))} />
-                <Text label="Pension: employer (%)" type="number" value={get('pensionEmployer')} onChange={(v) => set('pensionEmployer', Number(v))} />
-                <Text label="Overtime (× hourly pay)" type="number" value={get('overtimeMultiplier')} onChange={(v) => set('overtimeMultiplier', Number(v))} />
+              <div className="grid gap-3.5 sm:grid-cols-2">
+                <Text label="Pension: employee (%)" type="number" min={0} max={100} value={get('pensionEmployee')} onChange={(v) => set('pensionEmployee', Number(v))} />
+                <Text label="Pension: employer (%)" type="number" min={0} max={100} value={get('pensionEmployer')} onChange={(v) => set('pensionEmployer', Number(v))} />
               </div>
               <div>
                 <div className="mb-2 text-[13px] font-medium">Monthly income tax brackets (ETB)</div>
@@ -109,7 +112,7 @@ export default function SettingsPage() {
                     {brackets.map((b, i) => (
                       <tr key={i}>
                         {(['from', 'to', 'rate', 'deduction'] as const).map((k) => (
-                          <td key={k} className="border-b border-[#ECF1F8] p-1.5"><input aria-label={k} className="a-input min-h-[38px]" type="number" value={b[k] ?? ''} onChange={(e) => setBracket(i, k, e.target.value)} /></td>
+                          <td key={k} className="border-b border-[#ECF1F8] p-1.5"><input aria-label={k} className="a-input min-h-[38px]" type="number" min={0} max={k === 'rate' ? 100 : undefined} step="any" value={b[k] ?? ''} onChange={(e) => setBracket(i, k, e.target.value)} /></td>
                         ))}
                         <td className="border-b border-[#ECF1F8] p-1.5"><button type="button" aria-label="Remove bracket" onClick={() => set('brackets', brackets.filter((_, j) => j !== i))} className="flex h-9 w-9 items-center justify-center rounded-lg text-[#B42318] hover:bg-[#FDE7E5]"><Trash2 className="h-4 w-4" /></button></td>
                       </tr>
@@ -128,27 +131,27 @@ export default function SettingsPage() {
                 <Text label="Telebirr merchant / short code" value={get('telebirr')} onChange={(v) => set('telebirr', v)} />
                 <Text label="CBE Birr account" value={get('cbeBirr')} onChange={(v) => set('cbeBirr', v)} />
                 <Text label="Bank name and account" value={get('bank')} onChange={(v) => set('bank', v)} className="sm:col-span-2" />
-                <Text label="Deposit for custom orders (%)" type="number" value={get('depositPercent')} onChange={(v) => set('depositPercent', Number(v))} />
+                <Text label="Deposit for custom orders (%)" type="number" min={0} max={100} value={get('depositPercent')} onChange={(v) => set('depositPercent', Number(v))} />
               </div>
             </>
           )}
           {tab === 'notifications' && (
             <>
               <h2 className="font-display text-xl font-bold">Telegram notifications</h2>
-              <p className="-mt-2 text-sm text-muted">The bot itself is connected in the server’s .env file (TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID).</p>
-              {[['newRequest', 'New request from the website'], ['newApplication', 'New job or model application'], ['lowStock', 'Low stock alert'], ['overdue', 'Order is overdue'], ['dailySummary', 'Daily summary every evening'], ['payment', 'Payment received']].map(([k, l]) => (
+              <p className="-mt-2 text-sm text-muted">Messages go to the owner’s Telegram. The bot is connected on the server (TELEGRAM_BOT_TOKEN and TELEGRAM_CHAT_ID).</p>
+              {[['newRequest', 'New order or enquiry from the website'], ['newApplication', 'New training or job application'], ['payment', 'Payment received (orders and training fees)'], ['lowStock', 'An item drops below its minimum stock']].map(([k, l]) => (
                 <label key={k} className="flex min-h-[48px] items-center justify-between gap-3 border-t border-[#ECF1F8] text-sm">
-                  {l}<input type="checkbox" checked={!!get(k)} onChange={(e) => set(k, e.target.checked)} className="h-5 w-5 accent-teal" />
+                  {l}<input type="checkbox" checked={get(k) !== false} onChange={(e) => set(k, e.target.checked)} className="h-5 w-5 accent-teal" />
                 </label>
               ))}
             </>
           )}
           <ErrorNote error={act.error} />
           <div className="flex items-center gap-3 border-t border-[#ECF1F8] pt-4">
-            <button type="button" disabled={act.busy} onClick={save} className="a-btn a-btn-gold min-h-[44px]">{act.busy ? 'Saving…' : 'Save settings'}</button>
+            <button type="submit" disabled={act.busy} className="a-btn a-btn-gold min-h-[44px]">{act.busy ? 'Saving…' : 'Save settings'}</button>
             {saved && <span role="status" className="text-sm font-semibold text-[#1E6B34]">Saved</span>}
           </div>
-        </section>
+        </form>
       </div>
     </>
   );

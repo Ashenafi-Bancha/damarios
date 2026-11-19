@@ -12,7 +12,7 @@ type Tab = 'staff' | 'attendance' | 'leave' | 'payroll';
 interface Employee { id: string; code: string; name: string; role: string; department: string; payType: string; rate: string; phone: string | null; joinedAt: string; active: boolean; [k: string]: unknown }
 
 const ATT_TONE: Record<string, string> = { PRESENT: 'green', LATE: 'yellow', ABSENT: 'red', LEAVE: 'gray' };
-const PAY_TYPES = [{ value: 'MONTHLY', label: 'Monthly salary' }, { value: 'PIECE_RATE', label: 'Piece rate' }, { value: 'PER_BOOKING', label: 'Per day / booking' }];
+const PAY_TYPES = [{ value: 'MONTHLY', label: 'Monthly salary' }, { value: 'PIECE_RATE', label: 'Piece rate' }, { value: 'DAILY', label: 'Daily (per day worked)' }];
 
 function EmployeesPage() {
   const params = useSearchParams();
@@ -33,16 +33,16 @@ function EmployeesPage() {
             { label: 'Role', render: (e) => e.role },
             { label: 'Department', render: (e) => e.department },
             { label: 'Pay type', render: (e) => PAY_TYPES.find((p) => p.value === e.payType)?.label },
-            { label: 'Rate', render: (e) => `${etb(e.rate)}${e.payType === 'PIECE_RATE' ? ' / pc' : e.payType === 'PER_BOOKING' ? ' / day' : ''}` },
+            { label: 'Rate', render: (e) => `${etb(e.rate)}${e.payType === 'PIECE_RATE' ? ' / pc' : e.payType === 'DAILY' ? ' / day' : ''}` },
             { label: 'Phone', render: (e) => e.phone || '—' },
             { label: 'Joined', render: (e) => <span className="font-ethiopic">{etDateShort(e.joinedAt)}</span> },
             { label: 'Status', render: (e) => <Pill tone={e.active ? 'green' : 'gray'}>{e.active ? 'Active' : 'Left'}</Pill> },
           ]}
           fields={[
-            { name: 'code', label: 'Employee ID', required: true, placeholder: 'DM-E005' }, { name: 'name', label: 'Full name', required: true },
+            { name: 'code', label: 'Employee ID', placeholder: 'Leave empty to number it automatically' }, { name: 'name', label: 'Full name', required: true },
             { name: 'role', label: 'Role', required: true, placeholder: 'Fashion designer' }, { name: 'department', label: 'Department', required: true, placeholder: 'Design studio' },
             { name: 'payType', label: 'Pay type', type: 'select', required: true, options: PAY_TYPES }, { name: 'rate', label: 'Salary or rate (ETB)', type: 'number' },
-            { name: 'phone', label: 'Phone' }, { name: 'joinedAt', label: 'Joined on', type: 'date', required: true }, { name: 'active', label: 'Currently working here', type: 'checkbox' },
+            { name: 'phone', label: 'Phone', type: 'tel' }, { name: 'joinedAt', label: 'Joined on', type: 'date', required: true }, { name: 'active', label: 'Currently working here', type: 'checkbox' },
           ]}
           defaults={{ payType: 'MONTHLY', active: true, joinedAt: new Date().toISOString() }}
         />

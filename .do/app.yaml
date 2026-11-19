@@ -84,6 +84,8 @@ services:
     envs:
       - key: NODE_ENV
         value: production
+      - key: TZ # Ethiopian time for attendance, business days and Ethiopian months
+        value: Africa/Addis_Ababa
       - key: DATABASE_URL
         scope: RUN_TIME
         value: ${db.DATABASE_URL}
@@ -132,6 +134,12 @@ services:
     envs:
       - key: NODE_ENV
         value: production
+      - key: TZ # Ethiopian time for attendance, business days and Ethiopian months
+        value: Africa/Addis_Ababa
+      # The public address, for search engines and link previews.
+      - key: NEXT_PUBLIC_SITE_URL
+        scope: RUN_AND_BUILD_TIME
+        value: https://damariosgarment.com
       # The website reads its content from the API over the app's private network.
       - key: BACKEND_URL
         scope: RUN_AND_BUILD_TIME
@@ -158,6 +166,8 @@ jobs:
     envs:
       - key: NODE_ENV
         value: production
+      - key: TZ # Ethiopian time for attendance, business days and Ethiopian months
+        value: Africa/Addis_Ababa
       - key: DATABASE_URL
         scope: RUN_TIME
         value: ${db.DATABASE_URL}

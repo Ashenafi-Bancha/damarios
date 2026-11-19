@@ -6,6 +6,10 @@
 import 'dotenv/config';
 import { z } from 'zod';
 
+// Business days, attendance times and Ethiopian months follow Ethiopian time (UTC+3), wherever the server runs.
+// Cloud servers run on UTC, so this is set before any date is used. TZ in the environment overrides it.
+process.env.TZ = process.env.TZ || 'Africa/Addis_Ababa';
+
 const PLACEHOLDER = /^(SET_IN_DIGITALOCEAN|CHANGE_ME|change-me)/i;
 const isProd = process.env.NODE_ENV === 'production';
 

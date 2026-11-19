@@ -29,13 +29,13 @@ const out = process.argv[2] || path.resolve(backend, '../frontend/src/lib/demo-d
     const get = async (p) => { const r = await fetch(API + p, { headers: { cookie } }); if (!r.ok) throw new Error(p + ' ' + r.status + ' ' + await r.text()); return r.json(); };
     const today = new Date().toISOString().slice(0, 10);
     const paths = [
-      '/auth/me', '/admin/dashboard', '/admin/customers', '/admin/content?lang=en', '/admin/content?lang=am', '/admin/content?lang=wal',
+      '/auth/me', '/admin/dashboard', '/admin/customers', '/admin/content?lang=en', '/admin/content?lang=am',
       '/admin/news', '/admin/subscribers', '/admin/users', '/admin/permissions', '/admin/activity', '/admin/settings',
       '/admin/orders', '/admin/requests',
       '/admin/production/lines', '/admin/production/output', '/admin/production/products',
       '/admin/people/employees', '/admin/people/attendance?date=' + today, '/admin/people/leave', '/admin/people/payroll',
       '/admin/inventory/items', '/admin/inventory/suppliers', '/admin/inventory/movements',
-      '/admin/fashion/designs', '/admin/fashion/models', '/admin/fashion/events', '/admin/fashion/bookings', '/admin/fashion/collections', '/admin/fashion/looks', '/admin/fashion/gallery',
+      '/admin/fashion/designs', '/admin/fashion/events', '/admin/fashion/gallery',
       '/admin/finance/summary?months=6', '/admin/finance/transactions',
       '/admin/recruitment/jobs', '/admin/recruitment/applicants',
       '/admin/training/summary', '/admin/training/applications', '/admin/training/classes', '/admin/training/courses', '/admin/training/enrollments', '/admin/training/students',

@@ -349,7 +349,6 @@
    "data": null
   }
  ],
- "/admin/content?lang=wal": [],
  "/admin/news": [
   {
    "id": "cmw9n41vw002as5eqaxrssium",
@@ -388,8 +387,8 @@
    "phone": null,
    "role": "OWNER",
    "active": true,
-   "lastActiveAt": "2026-11-17T08:54:01.230Z",
-   "createdAt": "2026-11-17T08:54:01.230Z"
+   "lastActiveAt": "2026-11-19T08:34:40.093Z",
+   "createdAt": "2026-11-19T08:34:40.093Z"
   }
  ],
  "/admin/permissions": {
@@ -576,11 +575,7 @@
  "/admin/inventory/suppliers": [],
  "/admin/inventory/movements": [],
  "/admin/fashion/designs": [],
- "/admin/fashion/models": [],
  "/admin/fashion/events": [],
- "/admin/fashion/bookings": [],
- "/admin/fashion/collections": [],
- "/admin/fashion/looks": [],
  "/admin/fashion/gallery": [
   {
    "id": "cmw9n41vz002ds5eqdluyd497",

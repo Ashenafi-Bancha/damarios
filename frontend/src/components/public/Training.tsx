@@ -9,6 +9,7 @@ import { Headline } from './Sections';
 import Reveal from './Reveal';
 import Photo from './Photo';
 import { api } from '@/lib/api';
+import { isPhone, PHONE_PATTERN } from '@/lib/forms';
 import { etb } from '@/lib/format';
 import type { TrainingDept } from '@/lib/types';
 
@@ -106,6 +107,7 @@ export function Admissions() {
     e.preventDefault();
     setError('');
     const f = new FormData(e.currentTarget);
+    if (!isPhone(String(f.get('phone') || ''))) return setError(tx('Please check the phone number, e.g. 0911 234 567.', 'እባክዎ ስልክ ቁጥሩን ያረጋግጡ፤ ለምሳሌ 0911 234 567።'));
     setState('sending');
     try {
       await api('/public/training-applications', {
@@ -113,13 +115,14 @@ export function Admissions() {
         body: {
           department: dept, courseId: realCourses ? courseId : '',
           name: f.get('name'), phone: f.get('phone'), preferredTime: f.get('time'), education: f.get('education'),
-          age: f.get('age') || '', message: f.get('message') || '',
+          age: f.get('age') || '', message: f.get('message') || '', website: f.get('website') || '',
         },
       });
       setState('sent');
     } catch (err) {
       setState('idle');
-      setError(err instanceof Error ? err.message : tx('Could not send. Please try again or call us.', 'መላክ አልተቻለም። እባክዎ እንደገና ይሞክሩ ወይም ይደውሉልን።'));
+      const detail = err instanceof Error ? err.message : '';
+      setError(am ? `መላክ አልተቻለም። እባክዎ መረጃውን ያረጋግጡ ወይም ይደውሉልን።${detail ? ` (${detail})` : ''}` : detail || 'Could not send. Please try again or call us.');
     }
   }
 
@@ -152,7 +155,9 @@ export function Admissions() {
                 <button type="button" onClick={() => setState('idle')} className="btn btn-line">{tx('Send another application', 'ሌላ ማመልከቻ ይላኩ')}</button>
               </motion.div>
             ) : (
-              <motion.form key="f" onSubmit={submit} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="flex flex-col gap-5">
+              <motion.form key="f" onSubmit={submit} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="relative flex flex-col gap-5">
+                {/* Left empty by people (it is hidden); spam bots fill it in and are ignored by the server. */}
+                <input type="text" name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" className="absolute -left-[9999px] h-px w-px opacity-0" />
                 <fieldset className="field">
                   <legend className="mb-2">{tx('Department', 'የስልጠና ክፍል')}</legend>
                   <div className="flex flex-wrap gap-2">
@@ -163,8 +168,8 @@ export function Admissions() {
                   </div>
                 </fieldset>
                 <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="field">{tx('Full name', 'ሙሉ ስም')}<input className="input" name="name" required minLength={2} autoComplete="name" /></label>
-                  <label className="field">{tx('Phone', 'ስልክ')}<input className="input" name="phone" type="tel" required minLength={7} autoComplete="tel" placeholder="09…" /></label>
+                  <label className="field">{tx('Full name', 'ሙሉ ስም')}<input className="input" name="name" required minLength={2} maxLength={120} autoComplete="name" /></label>
+                  <label className="field">{tx('Phone', 'ስልክ')}<input className="input" name="phone" type="tel" inputMode="tel" required pattern={PHONE_PATTERN} maxLength={25} autoComplete="tel" placeholder="09…" /></label>
                   <label className="field">{tx('Course', 'ኮርስ')}
                     <select className="input" value={courseId} onChange={(e) => setCourseId(e.target.value)}>
                       <option value="">{tx('Not sure yet', 'ገና አልወሰንኩም')}</option>
@@ -180,7 +185,7 @@ export function Admissions() {
                   </label>
                   <label className="field">{tx('Age', 'ዕድሜ')}<input className="input" name="age" type="number" min={10} max={90} /></label>
                 </div>
-                <label className="field">{tx('Why do you want to join?', 'ለምን መቀላቀል ይፈልጋሉ?')}<textarea className="input" name="message" rows={3} placeholder={tx('Tell us a little about yourself…', 'ስለራስዎ ትንሽ ይንገሩን…')} /></label>
+                <label className="field">{tx('Why do you want to join?', 'ለምን መቀላቀል ይፈልጋሉ?')}<textarea className="input" name="message" rows={3} maxLength={2000} placeholder={tx('Tell us a little about yourself…', 'ስለራስዎ ትንሽ ይንገሩን…')} /></label>
                 {error && <p role="alert" className="rounded-lg bg-[#FDE7E5] px-4 py-3 text-sm text-[#9B1C14]">{error}</p>}
                 <button type="submit" disabled={state === 'sending'} className="btn btn-ink w-full">
                   {state === 'sending' ? <><Loader2 className="h-4 w-4 animate-spin" />{tx('Sending…', 'በመላክ ላይ…')}</> : t.sendApplication}

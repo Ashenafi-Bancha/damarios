@@ -2,18 +2,32 @@
 
 import { useMemo, useState } from 'react';
 import { Pencil, Plus, Search, Trash2, Upload } from 'lucide-react';
-import { api, uploadImage } from '@/lib/api';
+import { api, refreshWebsite, uploadImage } from '@/lib/api';
 import { Empty, ErrorNote, Loading, Modal, useAction, useApi } from './ui';
 
 export type FieldDef = {
   name: string;
   label: string;
-  type?: 'text' | 'number' | 'date' | 'textarea' | 'select' | 'checkbox' | 'image';
+  type?: 'text' | 'number' | 'date' | 'textarea' | 'select' | 'checkbox' | 'image' | 'tel' | 'email';
   options?: { value: string; label: string }[];
   required?: boolean;
   placeholder?: string;
   full?: boolean;
+  /** Checked by the browser before saving (the server checks the same rules again). */
+  minLength?: number;
+  maxLength?: number;
+  min?: number;
+  max?: number;
+  /** A short hint under the field. */
+  help?: string;
+  /** Only shown when adding (e.g. the starting stock quantity, which later changes through stock movements). */
+  createOnly?: boolean;
 };
+
+/** Phone numbers from Ethiopia or abroad: digits with optional +, spaces, dashes and brackets. */
+// String.raw keeps the regex as written; brackets and dots are escaped so it also works in the browser's
+// strict (v-flag) pattern mode.
+export const PHONE_PATTERN = String.raw`\+?[0-9\s\-\(\)\.]{7,25}`;
 
 export type Column<T> = { label: string; render: (row: T) => React.ReactNode };
 
@@ -38,8 +52,12 @@ function fromForm(fields: FieldDef[], values: Record<string, unknown>) {
 
 /** A searchable table with add, edit and delete, driven by a list of fields. Used by most admin screens. */
 export default function ResourceManager<T extends Row>({
-  endpoint, columns, fields, title, noun, defaults = {}, search = true, canDelete = true, extraActions, toolbar, transform, onChange,
+  endpoint, columns, fields, title, noun, defaults = {}, search = true, canDelete = true, extraActions, toolbar, transform, onChange, publicContent, rowEditable,
 }: {
+  /** The records are shown on the public website: refresh it right after a change. */
+  publicContent?: boolean;
+  /** Whether a row can be edited or deleted here (e.g. finance entries made by another screen can't). */
+  rowEditable?: (row: T) => boolean;
   /** Called after any add, edit or delete, e.g. to refresh totals elsewhere on the page. */
   onChange?: () => void;
   endpoint: string;
@@ -60,28 +78,38 @@ export default function ResourceManager<T extends Row>({
   const [editing, setEditing] = useState<T | 'new' | null>(null);
   const [values, setValues] = useState<Record<string, unknown>>({});
   const { busy, error: saveError, run, setError } = useAction();
+  const [listError, setListError] = useState('');
   const base = endpoint.split('?')[0];
+  const visibleFields = editing === 'new' ? fields : fields.filter((f) => !f.createOnly);
 
   function open(row: T | 'new') {
     setError('');
     setEditing(row);
     const src = row === 'new' ? defaults : row;
-    setValues(Object.fromEntries(fields.map((f) => [f.name, toInput((src as Record<string, unknown>)[f.name], f.type)])));
+    const shown = row === 'new' ? fields : fields.filter((f) => !f.createOnly);
+    setValues(Object.fromEntries(shown.map((f) => [f.name, toInput((src as Record<string, unknown>)[f.name], f.type)])));
   }
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
-    let body = fromForm(fields, values);
+    if (busy) return;
+    let body = fromForm(visibleFields, values);
     if (transform) body = transform(body);
     const ok = await run(() => (editing === 'new' ? api(base, { method: 'POST', body }) : api(`${base}/${(editing as T).id}`, { method: 'PATCH', body })));
-    if (ok) { setEditing(null); reload(); onChange?.(); }
+    if (ok) { setEditing(null); reload(); onChange?.(); if (publicContent) refreshWebsite(); }
   }
 
   async function remove(row: T) {
     if (!window.confirm(`Delete this ${noun}? This cannot be undone.`)) return;
-    await run(() => api(`${base}/${row.id}`, { method: 'DELETE' }));
-    reload();
-    onChange?.();
+    setListError('');
+    try {
+      await api(`${base}/${row.id}`, { method: 'DELETE' });
+      reload();
+      onChange?.();
+      if (publicContent) refreshWebsite();
+    } catch (e) {
+      setListError(e instanceof Error ? e.message : 'Could not delete');
+    }
   }
 
   return (
@@ -100,7 +128,7 @@ export default function ResourceManager<T extends Row>({
           <button type="button" onClick={() => open('new')} className="a-btn a-btn-gold"><Plus className="h-4 w-4" />Add {noun}</button>
         </div>
       </div>
-      <div className="px-[18px]"><ErrorNote error={error} /></div>
+      <div className="flex flex-col gap-2 px-[18px]"><ErrorNote error={error} /><ErrorNote error={listError} /></div>
       {loading && !data ? <div className="px-5"><Loading /></div> : data && data.length === 0 ? <Empty>No {noun}s yet.</Empty> : (
         <div className="overflow-x-auto">
           <table className="w-full border-collapse">
@@ -112,8 +140,8 @@ export default function ResourceManager<T extends Row>({
                   <td className="td text-right">
                     <span className="inline-flex items-center gap-1">
                       {extraActions?.(row, reload)}
-                      <button type="button" onClick={() => open(row)} aria-label={`Edit ${noun}`} className="flex h-9 w-9 items-center justify-center rounded-lg hover:bg-paper"><Pencil className="h-4 w-4" /></button>
-                      {canDelete && <button type="button" onClick={() => remove(row)} aria-label={`Delete ${noun}`} className="flex h-9 w-9 items-center justify-center rounded-lg text-[#B42318] hover:bg-[#FDE7E5]"><Trash2 className="h-4 w-4" /></button>}
+                      {(!rowEditable || rowEditable(row)) && <button type="button" onClick={() => open(row)} aria-label={`Edit ${noun}`} className="flex h-9 w-9 items-center justify-center rounded-lg hover:bg-paper"><Pencil className="h-4 w-4" /></button>}
+                      {canDelete && (!rowEditable || rowEditable(row)) && <button type="button" onClick={() => remove(row)} aria-label={`Delete ${noun}`} className="flex h-9 w-9 items-center justify-center rounded-lg text-[#B42318] hover:bg-[#FDE7E5]"><Trash2 className="h-4 w-4" /></button>}
                     </span>
                   </td>
                 </tr>
@@ -125,7 +153,7 @@ export default function ResourceManager<T extends Row>({
 
       <Modal open={editing !== null} onClose={() => setEditing(null)} title={editing === 'new' ? `Add ${noun}` : `Edit ${noun}`} wide={fields.length > 6}>
         <form onSubmit={save} className="grid gap-4 sm:grid-cols-2">
-          {fields.map((f) => <FieldInput key={f.name} field={f} value={values[f.name]} onChange={(v) => setValues((s) => ({ ...s, [f.name]: v }))} />)}
+          {visibleFields.map((f) => <FieldInput key={f.name} field={f} value={values[f.name]} onChange={(v) => setValues((s) => ({ ...s, [f.name]: v }))} />)}
           <div className="sm:col-span-2"><ErrorNote error={saveError} /></div>
           <div className="flex justify-end gap-2 sm:col-span-2">
             <button type="button" onClick={() => setEditing(null)} className="a-btn a-btn-line">Cancel</button>
@@ -152,7 +180,7 @@ export function FieldInput({ field: f, value, onChange }: { field: FieldDef; val
     <label className={`a-label ${span}`}>
       {f.label}{f.required && <span className="sr-only"> (required)</span>}
       {f.type === 'textarea' ? (
-        <textarea className="a-input py-2.5" rows={3} value={String(value ?? '')} placeholder={f.placeholder} onChange={(e) => onChange(e.target.value)} />
+        <textarea className="a-input py-2.5" rows={3} value={String(value ?? '')} placeholder={f.placeholder} required={f.required} minLength={f.minLength} maxLength={f.maxLength ?? 5000} onChange={(e) => onChange(e.target.value)} />
       ) : f.type === 'select' ? (
         <select className="a-input" value={String(value ?? '')} required={f.required} onChange={(e) => onChange(e.target.value)}>
           {!f.required && <option value="">—</option>}
@@ -178,8 +206,14 @@ export function FieldInput({ field: f, value, onChange }: { field: FieldDef; val
           {err && <span className="text-sm text-[#B42318]">{err}</span>}
         </span>
       ) : (
-        <input className="a-input" type={f.type ?? 'text'} step={f.type === 'number' ? 'any' : undefined} value={String(value ?? '')} required={f.required} placeholder={f.placeholder} onChange={(e) => onChange(e.target.value)} />
+        <input className="a-input" type={f.type ?? 'text'} step={f.type === 'number' ? 'any' : undefined} value={String(value ?? '')} required={f.required}
+          placeholder={f.placeholder} minLength={f.minLength} maxLength={f.maxLength ?? (f.type === 'number' || f.type === 'date' ? undefined : 200)}
+          min={f.type === 'number' ? (f.min ?? 0) : undefined} max={f.max}
+          pattern={f.type === 'tel' ? PHONE_PATTERN : undefined} title={f.type === 'tel' ? 'A phone number, e.g. 0911 234 567 or +251 911 234 567' : undefined}
+          inputMode={f.type === 'tel' ? 'tel' : f.type === 'number' ? 'decimal' : undefined}
+          onChange={(e) => onChange(e.target.value)} />
       )}
+      {f.help && <span className="text-xs font-normal text-muted">{f.help}</span>}
     </label>
   );
 }
